@@ -1,4 +1,4 @@
-<specifications>
+<specifications xml:base='branch/'>
   <branch name='cipublish'>
     <specification name='xslt-40'>
       <html>errata.html</html>
