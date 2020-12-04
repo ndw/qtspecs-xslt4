@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--XSLT Processor: Saxonica SAXON HE 9.6.0.7-->
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:rddl="http://www.rddl.org/"
+         xmlns:rddlx="http://www.rddl.org/natures#"
+         xmlns:fn="http://www.w3.org/2005/xpath-functions"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns:rddlp="http://www.rddl.org/purposes#"
+         xmlns:owl="http://www.w3.org/2002/07/owl#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+   <owl:Ontology rdf:about="">
+      <owl:imports rdf:resource="link.rdf"/>
+      <owl:imports rdf:resource="rddl.owl"/>
+   </owl:Ontology>
+   <owl:Ontology rdf:about="link.rdf"/>
+   <owl:Ontology rdf:about="rddl.owl"/>
+   <rdf:Description rdf:about="http://www.w3.org/2005/xpath-functions/collation/xqt-errors">
+      <rdf:type rdf:resource="http://www.w3.org/2007/ont/link#Document"/>err:FOAP0001err:FOAR0001err:FOAR0002err:FOAY0001err:FOAY0002err:FOCA0001err:FOCA0002err:FOCA0003err:FOCA0005err:FOCA0006err:FOCH0001err:FOCH0002err:FOCH0003err:FOCH0004err:FODC0001err:FODC0002err:FODC0003err:FODC0004err:FODC0005err:FODC0006err:FODC0010err:FODF1280err:FODF1310err:FODT0001err:FODT0002err:FODT0003err:FOER0000err:FOFD1340err:FOFD1350err:FOJS0001err:FOJS0003err:FOJS0004err:FOJS0005err:FOJS0006err:FOJS0007err:FONS0004err:FONS0005err:FOQM0001err:FOQM0002err:FOQM0003err:FOQM0005err:FOQM0006err:FORG0001err:FORG0002err:FORG0003err:FORG0004err:FORG0005err:FORG0006err:FORG0008err:FORG0009err:FORG0010err:FORX0001err:FORX0002err:FORX0003err:FORX0004err:FOTY0012err:FOTY0013err:FOTY0014err:FOTY0015err:FOUT1170err:FOUT1190err:FOUT1200err:FOXT0001err:FOXT0002err:FOXT0003err:FOXT0004err:FOXT0006XSL Transformations (XSLT) Version 3.0
+        (7 February 2017 version)
+      XQuery 3.1: An XML Query Language
+        (21 March 2017 version)
+      XML Path Language (XPath) 3.1
+        (21 March 2017 version)
+      XQuery and XPath Functions and Operators 3.1
+        (21 March 2017 version)
+      XSLT and XQuery Serialization 3.1
+        (21 March 2017 version)
+      
+Resource Directory Description Language (RDDL) (4 July 2007)
+
+Gleaning Resource Descriptions from Dialects of Languages (GRDDL)
+(Recommendation of 11 September 2007)
+
+Resource Description Framework (RDF):
+Concepts and Abstract Syntax (Recommendation of 10 February 2004)
+</rdf:Description>
+</rdf:RDF>
