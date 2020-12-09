@@ -330,6 +330,8 @@
          Returns an xs:QName value formed using a supplied namespace URI and lexical QName.
       random-number-generatorrandom-number-generator() as item-type(rng)random-number-generator(xs:anyAtomicType?) as item-type(rng)
          Returns a random number generator, which can be used to generate sequences of random numbers.
+      rangerange(item()*, (function(item()) as xs:boolean)?) as item()*range(item()*, (function(item()) as xs:boolean)?, (function(item()) as xs:boolean)?) as item()*range(item()*, (function(item()) as xs:boolean)?, (function(item()) as xs:boolean)?, record) as item()*
+         Returns a sequence containing selected members from a supplied input.
       removeremove(item()*, xs:integer) as item()*
          Returns a new sequence containing all the items of $target except the item
             at position $position.
@@ -372,6 +374,8 @@
       sliceslice(item()*, xs:integer*) as item()*
          Returns a sequence containing the members from a supplied input sequence at given positions,
             counting from either end of the sequence.
+      slice-20201203slice-20201203(item()*, record) as item()*
+         Returns a sequence containing selected members from a supplied input.
       somesome(item()*, function(item()) as xs:boolean) as xs:integer*
          Returns true if at least one item in the input sequence matches a supplied predicate.
       sortsort(item()*) as item()*sort(item()*, xs:string?) as item()*sort(item()*, xs:string?, function(item()) as xs:anyAtomicType*) as item()*
@@ -467,16 +471,13 @@
       zero-or-onezero-or-one(item()*) as item()?
          Returns $arg if it contains zero or one items. Otherwise, raises an
             error.
-      accumulator-afteraccumulator-after(xs:string) as item()*
+      accumulator-afteraccumulator-after(union(xs:QName, xs:string)) as item()*
          Returns the post-descent value of the selected accumulator at the context node.
-      accumulator-beforeaccumulator-before(xs:string) as item()*
+      accumulator-beforeaccumulator-before(union(xs:QName, xs:string)) as item()*
          Returns the pre-descent value of the selected accumulator at the context node.
       available-system-propertiesavailable-system-properties() as xs:QName*
          Returns a list of system property names that are suitable for passing to
             the system-property function, as a sequence of QNames.
-      collation-keycollation-key(xs:string) as xs:base64Binarycollation-key(xs:string, xs:string) as xs:base64Binary
-         Given a string value and a collation, generates an internal value called a collation key, with the property that
-            the matching and ordering of collation keys reflects the matching and ordering of strings under the specified collation.
       copy-ofcopy-of() as item()copy-of(item()*) as item()*
          Returns a deep copy of the sequence supplied as the $input argument, or of the
             context item if the argument is absent.
@@ -497,8 +498,11 @@
          Returns the merge key of the 
             merge group currently being processed using the
                xsl:merge instruction.
+      current-modecurrent-mode() as xs:QName?
+         Returns the value of the .
       current-output-uricurrent-output-uri() as xs:anyURI?
-         Returns the value of the .deep-equaldeep-equal(item()*, item()*) as xs:booleandeep-equal(item()*, item()*, xs:string) as xs:boolean
+         Returns the value of the .
+      deep-equaldeep-equal(item()*, item()*) as xs:booleandeep-equal(item()*, item()*, xs:string) as xs:boolean
          This function assesses whether two sequences are deep-equal to each other. The function
             as described here extends the definition of the XPath 3.0
                deep-equal to explain how it should handle maps; it is
@@ -506,18 +510,16 @@
             stage in the future.
       documentdocument(item()*) as node()*document(item()*, node()) as node()*
          Provides access to XML documents identified by a URI.
-      element-availableelement-available(xs:string) as xs:boolean
+      element-availableelement-available(union(xs:QName, xs:string)) as xs:boolean
          Determines whether a particular instruction is or is not available for use. The function
             is particularly useful for calling within an [xsl:]use-when attribute (see
-               ) to test whether a particular  is available.
-      function-availablefunction-available(xs:string) as xs:booleanfunction-available(xs:string, xs:integer) as xs:boolean
+               ) to test whether a particular
+             is available.
+      function-availablefunction-available(union(xs:QName, xs:string)) as xs:booleanfunction-available(union(xs:QName, xs:string), xs:integer) as xs:boolean
          Determines whether a particular function is or is not available for use. The function is
             particularly useful for calling within an [xsl:]use-when attribute (see
                ) to test whether a particular  is available.
-      json-to-xmljson-to-xml(xs:string) as document-node()json-to-xml(xs:string, map(*)) as document-node()
-         Parses a string supplied in the form of a JSON text, returning the results in the form
-            of an XML document node.
-      keykey(xs:string, xs:anyAtomicType*) as node()*key(xs:string, xs:anyAtomicType*, node()) as node()*
+      keykey(union(xs:string, xs:QName), xs:anyAtomicType*) as node()*key(union(xs:string, xs:QName), xs:anyAtomicType*, node()) as node()*
          Returns the nodes that match a supplied key value.
       regex-groupregex-group(xs:integer) as xs:string
          Returns the string captured by a parenthesized subexpression of the regular expression
@@ -527,9 +529,9 @@
             attributes and namespaces.
       stream-availablestream-available(xs:string?) as xs:boolean
          Determines, as far as possible, whether a document is available for streamed processing using xsl:source-document.
-      system-propertysystem-property(xs:string) as xs:string
+      system-propertysystem-property(union(xs:QName, xs:string)) as xs:string
          Returns the value of a system property
-      type-availabletype-available(xs:string) as xs:boolean
+      type-availabletype-available(union(xs:QName, xs:string)) as xs:boolean
          
          Used to control how a stylesheet behaves if a particular schema type is or is not
             available in the static context.
@@ -538,9 +540,6 @@
          Returns the public identifier of an unparsed entity
       unparsed-entity-uriunparsed-entity-uri(xs:string) as xs:anyURIunparsed-entity-uri(xs:string, node()) as xs:anyURI
          Returns the URI (system identifier) of an unparsed entity
-      xml-to-jsonxml-to-json(node()?) as xs:string?xml-to-json(node()?, map(*)) as xs:string?
-         Converts an XML tree, whose format corresponds to the XML representation of JSON defined
-            in this specification, into a string conforming to the JSON grammar.
       putput(node(), xs:string) as empty-sequence()Stores a document or element to the location specified by $uri. This function is normally invoked to create a resource 
           on an external storage system such as a file system or a database.The external effects of fn:put are implementation-defined, since they occur outside the domain of XQuery. 
             The intent is that, if fn:put is invoked on a document node and no error is raised, a subsequent query can access 

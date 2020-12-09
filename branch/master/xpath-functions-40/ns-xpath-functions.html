@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--XSLT Processor: Saxonica SAXON HE 9.6.0.7-->
+<!--XSLT Processor: Saxonica-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="EN" xml:lang="EN">
@@ -814,6 +814,16 @@ namespace URI and lexical QName.</p>
 item-type(rng)</p>
 <p>Returns a random number generator, which can be used to generate
 sequences of random numbers.</p>
+<h3><a name="range" id="range"></a>range</h3>
+<p><strong>range</strong>(item()*, (function(item()) as
+xs:boolean)?) as item()*</p>
+<p><strong>range</strong>(item()*, (function(item()) as
+xs:boolean)?, (function(item()) as xs:boolean)?) as item()*</p>
+<p><strong>range</strong>(item()*, (function(item()) as
+xs:boolean)?, (function(item()) as xs:boolean)?, record) as
+item()*</p>
+<p>Returns a sequence containing selected members from a supplied
+input.</p>
 <h3><a name="remove" id="remove"></a>remove</h3>
 <p><strong>remove</strong>(item()*, xs:integer) as item()*</p>
 <p>Returns a new sequence containing all the items of
@@ -903,6 +913,11 @@ string.</p>
 <p>Returns a sequence containing the members from a supplied input
 sequence at given positions, counting from either end of the
 sequence.</p>
+<h3><a name="slice-20201203" id=
+"slice-20201203"></a>slice-20201203</h3>
+<p><strong>slice-20201203</strong>(item()*, record) as item()*</p>
+<p>Returns a sequence containing selected members from a supplied
+input.</p>
 <h3><a name="some" id="some"></a>some</h3>
 <p><strong>some</strong>(item()*, function(item()) as xs:boolean)
 as xs:integer*</p>
@@ -1142,12 +1157,14 @@ XPath 3.0, the normative specification in this case is the one that
 appears in the XSLT 3.0 specification.</em></p>
 <h3><a name="accumulator-after" id=
 "accumulator-after"></a>accumulator-after</h3>
-<p><strong>accumulator-after</strong>(xs:string) as item()*</p>
+<p><strong>accumulator-after</strong>(union(xs:QName, xs:string))
+as item()*</p>
 <p>Returns the post-descent value of the selected accumulator at
 the context node.</p>
 <h3><a name="accumulator-before" id=
 "accumulator-before"></a>accumulator-before</h3>
-<p><strong>accumulator-before</strong>(xs:string) as item()*</p>
+<p><strong>accumulator-before</strong>(union(xs:QName, xs:string))
+as item()*</p>
 <p>Returns the pre-descent value of the selected accumulator at the
 context node.</p>
 <h3><a name="available-system-properties" id=
@@ -1156,21 +1173,12 @@ context node.</p>
 <p>Returns a list of system property names that are suitable for
 passing to the <code>system-property</code> function, as a sequence
 of QNames.</p>
-<h3><a name="collation-key" id=
-"collation-key"></a>collation-key</h3>
-<p><strong>collation-key</strong>(xs:string) as xs:base64Binary</p>
-<p><strong>collation-key</strong>(xs:string, xs:string) as
-xs:base64Binary</p>
-<p>Given a string value and a collation, generates an internal
-value called a collation key, with the property that the matching
-and ordering of collation keys reflects the matching and ordering
-of strings under the specified collation.</p>
 <h3><a name="copy-of" id="copy-of"></a>copy-of</h3>
 <p><strong>copy-of</strong>() as item()</p>
 <p><strong>copy-of</strong>(item()*) as item()*</p>
-<p>Returns a deep copy of the <span>sequence</span> supplied as the
-<code>$input</code> argument, or of the context <span>item</span>
-if the argument is absent.</p>
+<p>Returns a deep copy of the sequence supplied as the
+<code>$input</code> argument, or of the context item if the
+argument is absent.</p>
 <h3><a name="current" id="current"></a>current</h3>
 <p><strong>current</strong>() as item()</p>
 <p>Returns the item that is the context item for the evaluation of
@@ -1194,9 +1202,11 @@ using the <code>xsl:for-each-group</code> instruction.</p>
 <h3><a name="current-merge-key" id=
 "current-merge-key"></a>current-merge-key</h3>
 <p><strong>current-merge-key</strong>() as xs:anyAtomicType*</p>
-<p>Returns the <span>merge</span> key of the <span>merge</span>
-group currently being processed using the <code>xsl:merge</code>
-instruction.</p>
+<p>Returns the merge key of the merge group currently being
+processed using the <code>xsl:merge</code> instruction.</p>
+<h3><a name="current-mode" id="current-mode"></a>current-mode</h3>
+<p><strong>current-mode</strong>() as xs:QName?</p>
+<p>Returns the value of the .</p>
 <h3><a name="current-output-uri" id=
 "current-output-uri"></a>current-output-uri</h3>
 <p><strong>current-output-uri</strong>() as xs:anyURI?</p>
@@ -1216,31 +1226,27 @@ handle maps; it is intended to replace the existing
 <p>Provides access to XML documents identified by a URI.</p>
 <h3><a name="element-available" id=
 "element-available"></a>element-available</h3>
-<p><strong>element-available</strong>(xs:string) as xs:boolean</p>
+<p><strong>element-available</strong>(union(xs:QName, xs:string))
+as xs:boolean</p>
 <p>Determines whether a particular instruction is or is not
 available for use. The function is particularly useful for calling
 within an <code>[xsl:]use-when</code> attribute (see ) to test
 whether a particular is available.</p>
 <h3><a name="function-available" id=
 "function-available"></a>function-available</h3>
-<p><strong>function-available</strong>(xs:string) as xs:boolean</p>
-<p><strong>function-available</strong>(xs:string, xs:integer) as
-xs:boolean</p>
+<p><strong>function-available</strong>(union(xs:QName, xs:string))
+as xs:boolean</p>
+<p><strong>function-available</strong>(union(xs:QName, xs:string),
+xs:integer) as xs:boolean</p>
 <p>Determines whether a particular function is or is not available
 for use. The function is particularly useful for calling within an
 <code>[xsl:]use-when</code> attribute (see ) to test whether a
 particular is available.</p>
-<h3><a name="json-to-xml" id="json-to-xml"></a>json-to-xml</h3>
-<p><strong>json-to-xml</strong>(xs:string) as document-node()</p>
-<p><strong>json-to-xml</strong>(xs:string, map(*)) as
-document-node()</p>
-<p>Parses a string supplied in the form of a JSON text, returning
-the results in the form of an XML <span>document node</span>.</p>
 <h3><a name="key" id="key"></a>key</h3>
-<p><strong>key</strong>(xs:string, xs:anyAtomicType*) as
-node()*</p>
-<p><strong>key</strong>(xs:string, xs:anyAtomicType*, node()) as
-node()*</p>
+<p><strong>key</strong>(union(xs:string, xs:QName),
+xs:anyAtomicType*) as node()*</p>
+<p><strong>key</strong>(union(xs:string, xs:QName),
+xs:anyAtomicType*, node()) as node()*</p>
 <p>Returns the nodes that match a supplied key value.</p>
 <h3><a name="regex-group" id="regex-group"></a>regex-group</h3>
 <p><strong>regex-group</strong>(xs:integer) as xs:string</p>
@@ -1260,11 +1266,13 @@ their attributes and namespaces.</p>
 for streamed processing using <code>xsl:source-document</code>.</p>
 <h3><a name="system-property" id=
 "system-property"></a>system-property</h3>
-<p><strong>system-property</strong>(xs:string) as xs:string</p>
+<p><strong>system-property</strong>(union(xs:QName, xs:string)) as
+xs:string</p>
 <p>Returns the value of a system property</p>
 <h3><a name="type-available" id=
 "type-available"></a>type-available</h3>
-<p><strong>type-available</strong>(xs:string) as xs:boolean</p>
+<p><strong>type-available</strong>(union(xs:QName, xs:string)) as
+xs:boolean</p>
 <p>Used to control how a stylesheet behaves if a particular schema
 type is or is not available in the static context.</p>
 <h3><a name="unparsed-entity-public-id" id=
@@ -1280,12 +1288,6 @@ xs:string</p>
 <p><strong>unparsed-entity-uri</strong>(xs:string, node()) as
 xs:anyURI</p>
 <p>Returns the URI (system identifier) of an unparsed entity</p>
-<h3><a name="xml-to-json" id="xml-to-json"></a>xml-to-json</h3>
-<p><strong>xml-to-json</strong>(node()?) as xs:string?</p>
-<p><strong>xml-to-json</strong>(node()?, map(*)) as xs:string?</p>
-<p>Converts an XML tree, whose format corresponds to the XML
-representation of JSON defined in this specification, into a string
-conforming to the JSON grammar.</p>
 </div>
 <div class="resource">
 <h2><a id="xqupdate-summary" name="xqupdate-summary"></a>4 XQuery

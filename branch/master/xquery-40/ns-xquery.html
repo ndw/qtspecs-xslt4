@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--XSLT Processor: Saxonica SAXON HE 9.6.0.7-->
+<!--XSLT Processor: Saxonica-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="EN" xml:lang="EN">
 <head>
 <meta name="generator" content=
-"HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.18.4), see www.w3.org" />
+"HTML Tidy for HTML5 for Linux version 5.6.0" />
 <meta http-equiv="Content-Type" content=
 "text/html; charset=utf-8" />
 <title>XQuery Annotations and Optional Features Namespace
 Document</title>
+
+<style type="text/css"></style>
 <link rel="stylesheet" type="text/css" href=
 "http://www.w3.org/StyleSheets/TR/base.css" />
 </head>
@@ -70,18 +72,14 @@ defined in other namespaces as well).</p>
 <ul>
 <li>
 <div class="exampleInner">
-<pre>
-%public
-</pre></div>
+<pre>%public</pre></div>
 Public variables and public functions are accessible to module
 import. (Variables declared without either a <code>%public</code>
 or <code>%private</code> annotation are, by default, public
 variables.)</li>
 <li>
 <div class="exampleInner">
-<pre>
-%private
-</pre></div>
+<pre>%private</pre></div>
 Private variables and private functions are hidden from module
 import.</li>
 </ul>
@@ -93,18 +91,14 @@ that are used to control the use of other, optional features.</p>
 <ul>
 <li>
 <div class="exampleInner">
-<pre>
-qfa:require-feature
-</pre></div>
+<pre>qfa:require-feature</pre></div>
 identifies features that must be enabled for the module in which
 the option declaration occurs; if any of these QNames corresponds
 to a feature that the implementation does not support, a static
 error is raised.</li>
 <li>
 <div class="exampleInner">
-<pre>
-qfa:prohibit-feature
-</pre></div>
+<pre>qfa:prohibit-feature</pre></div>
 identifies features that must not be enabled in the module in which
 the option declaration occurs; if any of these QNames corresponds
 to a feature that the implementation supports, it must disable that
@@ -116,33 +110,23 @@ meaning:</p>
 <ul>
 <li>
 <div class="exampleInner">
-<pre>
-qfa:schema-aware
-</pre></div>
+<pre>qfa:schema-aware</pre></div>
 </li>
 <li>
 <div class="exampleInner">
-<pre>
-qfa:static-typing
-</pre></div>
+<pre>qfa:static-typing</pre></div>
 </li>
 <li>
 <div class="exampleInner">
-<pre>
-qfa:module
-</pre></div>
+<pre>qfa:module</pre></div>
 </li>
 <li>
 <div class="exampleInner">
-<pre>
-qfa:serialization
-</pre></div>
+<pre>qfa:serialization</pre></div>
 </li>
 <li>
 <div class="exampleInner">
-<pre>
-qfa:higher-order-function
-</pre></div>
+<pre>qfa:higher-order-function</pre></div>
 </li>
 </ul>
 </div>

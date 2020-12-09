@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--XSLT Processor: Saxonica SAXON HE 9.6.0.7--><html xmlns="http://www.w3.org/1999/xhtml" lang="EN">
+<!--XSLT Processor: Saxonica--><html xmlns="http://www.w3.org/1999/xhtml" lang="EN">
    <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
       <title>XQuery, XPath, and XSLT Functions and Operators Namespace Document </title>
@@ -1522,6 +1522,21 @@
                </p>
                
             </rddl:resource>
+            <rddl:resource xmlns:rddl="http://www.rddl.org/" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:role="http://www.rddl.org/natures#term" xlink:arcrole="http://www.rddl.org/purposes#definition" xlink:title="Function named fn:range" xlink:href="#func-range">
+               <h3><a name="range" id="range"></a>range
+               </h3>
+               <p><strong>range</strong>(item()*, (function(item()) as xs:boolean)?) as item()*
+               </p>
+               <p><strong>range</strong>(item()*, (function(item()) as xs:boolean)?, (function(item()) as xs:boolean)?) as
+                  item()*
+               </p>
+               <p><strong>range</strong>(item()*, (function(item()) as xs:boolean)?, (function(item()) as xs:boolean)?, record)
+                  as item()*
+               </p>
+               
+               <p>Returns a sequence containing selected members from a supplied input.</p>
+               
+            </rddl:resource>
             <rddl:resource xmlns:rddl="http://www.rddl.org/" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:role="http://www.rddl.org/natures#term" xlink:arcrole="http://www.rddl.org/purposes#definition" xlink:title="Function named fn:remove" xlink:href="#func-remove">
                <h3><a name="remove" id="remove"></a>remove
                </h3>
@@ -1695,6 +1710,15 @@
                   positions,
                   counting from either end of the sequence.
                </p>
+               
+            </rddl:resource>
+            <rddl:resource xmlns:rddl="http://www.rddl.org/" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:role="http://www.rddl.org/natures#term" xlink:arcrole="http://www.rddl.org/purposes#definition" xlink:title="Function named fn:slice-20201203" xlink:href="#func-slice-20201203">
+               <h3><a name="slice-20201203" id="slice-20201203"></a>slice-20201203
+               </h3>
+               <p><strong>slice-20201203</strong>(item()*, record) as item()*
+               </p>
+               
+               <p>Returns a sequence containing selected members from a supplied input.</p>
                
             </rddl:resource>
             <rddl:resource xmlns:rddl="http://www.rddl.org/" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:role="http://www.rddl.org/natures#term" xlink:arcrole="http://www.rddl.org/purposes#definition" xlink:title="Function named fn:some" xlink:href="#func-some">
@@ -2144,7 +2168,7 @@
             <rddl:resource xmlns:rddl="http://www.rddl.org/" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:role="http://www.rddl.org/natures#term" xlink:arcrole="http://www.rddl.org/purposes#definition" xlink:title="Function named fn:accumulator-after" xlink:href="#func-accumulator-after">
                <h3><a name="accumulator-after" id="accumulator-after"></a>accumulator-after
                </h3>
-               <p><strong>accumulator-after</strong>(xs:string) as item()*
+               <p><strong>accumulator-after</strong>(union(xs:QName, xs:string)) as item()*
                </p>
                
                <p>Returns the post-descent value of the selected accumulator at the context node.</p>
@@ -2153,7 +2177,7 @@
             <rddl:resource xmlns:rddl="http://www.rddl.org/" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:role="http://www.rddl.org/natures#term" xlink:arcrole="http://www.rddl.org/purposes#definition" xlink:title="Function named fn:accumulator-before" xlink:href="#func-accumulator-before">
                <h3><a name="accumulator-before" id="accumulator-before"></a>accumulator-before
                </h3>
-               <p><strong>accumulator-before</strong>(xs:string) as item()*
+               <p><strong>accumulator-before</strong>(union(xs:QName, xs:string)) as item()*
                </p>
                
                <p>Returns the pre-descent value of the selected accumulator at the context node.</p>
@@ -2170,21 +2194,6 @@
                </p>
                
             </rddl:resource>
-            <rddl:resource xmlns:rddl="http://www.rddl.org/" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:role="http://www.rddl.org/natures#term" xlink:arcrole="http://www.rddl.org/purposes#definition" xlink:title="Function named fn:collation-key" xlink:href="#func-collation-key">
-               <h3><a name="collation-key" id="collation-key"></a>collation-key
-               </h3>
-               <p><strong>collation-key</strong>(xs:string) as xs:base64Binary
-               </p>
-               <p><strong>collation-key</strong>(xs:string, xs:string) as xs:base64Binary
-               </p>
-               
-               <p>Given a string value and a collation, generates an internal value called a collation
-                  key, with the property that
-                  the matching and ordering of collation keys reflects the matching and ordering of
-                  strings under the specified collation.
-               </p>
-               
-            </rddl:resource>
             <rddl:resource xmlns:rddl="http://www.rddl.org/" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:role="http://www.rddl.org/natures#term" xlink:arcrole="http://www.rddl.org/purposes#definition" xlink:title="Function named fn:copy-of" xlink:href="#func-copy-of">
                <h3><a name="copy-of" id="copy-of"></a>copy-of
                </h3>
@@ -2193,8 +2202,8 @@
                <p><strong>copy-of</strong>(item()*) as item()*
                </p>
                
-               <p>Returns a deep copy of the <span>sequence</span> supplied as the <code>$input</code> argument, or of the
-                  context <span>item</span> if the argument is absent.
+               <p>Returns a deep copy of the sequence supplied as the <code>$input</code> argument, or of the
+                  context item if the argument is absent.
                </p>
                
             </rddl:resource>
@@ -2251,10 +2260,19 @@
                <p><strong>current-merge-key</strong>() as xs:anyAtomicType*
                </p>
                
-               <p>Returns the <span>merge</span> key of the 
-                  <span>merge</span> group currently being processed using the
+               <p>Returns the merge key of the 
+                  merge group currently being processed using the
                   <code>xsl:merge</code> instruction.
                </p>
+               
+            </rddl:resource>
+            <rddl:resource xmlns:rddl="http://www.rddl.org/" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:role="http://www.rddl.org/natures#term" xlink:arcrole="http://www.rddl.org/purposes#definition" xlink:title="Function named fn:current-mode" xlink:href="#func-current-mode">
+               <h3><a name="current-mode" id="current-mode"></a>current-mode
+               </h3>
+               <p><strong>current-mode</strong>() as xs:QName?
+               </p>
+               
+               <p>Returns the value of the .</p>
                
             </rddl:resource>
             <rddl:resource xmlns:rddl="http://www.rddl.org/" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:role="http://www.rddl.org/natures#term" xlink:arcrole="http://www.rddl.org/purposes#definition" xlink:title="Function named fn:current-output-uri" xlink:href="#func-current-output-uri">
@@ -2264,6 +2282,7 @@
                </p>
                
                <p>Returns the value of the .</p>
+               
             </rddl:resource>
             <rddl:resource xmlns:rddl="http://www.rddl.org/" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:role="http://www.rddl.org/natures#term" xlink:arcrole="http://www.rddl.org/purposes#definition" xlink:title="Function named fn:deep-equal" xlink:href="#func-deep-equal">
                <h3><a name="deep-equal" id="deep-equal"></a>deep-equal
@@ -2295,21 +2314,22 @@
             <rddl:resource xmlns:rddl="http://www.rddl.org/" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:role="http://www.rddl.org/natures#term" xlink:arcrole="http://www.rddl.org/purposes#definition" xlink:title="Function named fn:element-available" xlink:href="#func-element-available">
                <h3><a name="element-available" id="element-available"></a>element-available
                </h3>
-               <p><strong>element-available</strong>(xs:string) as xs:boolean
+               <p><strong>element-available</strong>(union(xs:QName, xs:string)) as xs:boolean
                </p>
                
                <p>Determines whether a particular instruction is or is not available for use. The function
                   is particularly useful for calling within an <code>[xsl:]use-when</code> attribute (see
-                  ) to test whether a particular  is available.
+                  ) to test whether a particular
+                  is available.
                </p>
                
             </rddl:resource>
             <rddl:resource xmlns:rddl="http://www.rddl.org/" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:role="http://www.rddl.org/natures#term" xlink:arcrole="http://www.rddl.org/purposes#definition" xlink:title="Function named fn:function-available" xlink:href="#func-function-available">
                <h3><a name="function-available" id="function-available"></a>function-available
                </h3>
-               <p><strong>function-available</strong>(xs:string) as xs:boolean
+               <p><strong>function-available</strong>(union(xs:QName, xs:string)) as xs:boolean
                </p>
-               <p><strong>function-available</strong>(xs:string, xs:integer) as xs:boolean
+               <p><strong>function-available</strong>(union(xs:QName, xs:string), xs:integer) as xs:boolean
                </p>
                
                <p>Determines whether a particular function is or is not available for use. The function
@@ -2319,26 +2339,12 @@
                </p>
                
             </rddl:resource>
-            <rddl:resource xmlns:rddl="http://www.rddl.org/" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:role="http://www.rddl.org/natures#term" xlink:arcrole="http://www.rddl.org/purposes#definition" xlink:title="Function named fn:json-to-xml" xlink:href="#func-json-to-xml">
-               <h3><a name="json-to-xml" id="json-to-xml"></a>json-to-xml
-               </h3>
-               <p><strong>json-to-xml</strong>(xs:string) as document-node()
-               </p>
-               <p><strong>json-to-xml</strong>(xs:string, map(*)) as document-node()
-               </p>
-               
-               <p>Parses a string supplied in the form of a JSON text, returning the results in the
-                  form
-                  of an XML <span>document node</span>.
-               </p>
-               
-            </rddl:resource>
             <rddl:resource xmlns:rddl="http://www.rddl.org/" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:role="http://www.rddl.org/natures#term" xlink:arcrole="http://www.rddl.org/purposes#definition" xlink:title="Function named fn:key" xlink:href="#func-key">
                <h3><a name="key" id="key"></a>key
                </h3>
-               <p><strong>key</strong>(xs:string, xs:anyAtomicType*) as node()*
+               <p><strong>key</strong>(union(xs:string, xs:QName), xs:anyAtomicType*) as node()*
                </p>
-               <p><strong>key</strong>(xs:string, xs:anyAtomicType*, node()) as node()*
+               <p><strong>key</strong>(union(xs:string, xs:QName), xs:anyAtomicType*, node()) as node()*
                </p>
                
                <p>Returns the nodes that match a supplied key value.</p>
@@ -2383,7 +2389,7 @@
             <rddl:resource xmlns:rddl="http://www.rddl.org/" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:role="http://www.rddl.org/natures#term" xlink:arcrole="http://www.rddl.org/purposes#definition" xlink:title="Function named fn:system-property" xlink:href="#func-system-property">
                <h3><a name="system-property" id="system-property"></a>system-property
                </h3>
-               <p><strong>system-property</strong>(xs:string) as xs:string
+               <p><strong>system-property</strong>(union(xs:QName, xs:string)) as xs:string
                </p>
                
                <p>Returns the value of a system property</p>
@@ -2392,7 +2398,7 @@
             <rddl:resource xmlns:rddl="http://www.rddl.org/" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:role="http://www.rddl.org/natures#term" xlink:arcrole="http://www.rddl.org/purposes#definition" xlink:title="Function named fn:type-available" xlink:href="#func-type-available">
                <h3><a name="type-available" id="type-available"></a>type-available
                </h3>
-               <p><strong>type-available</strong>(xs:string) as xs:boolean
+               <p><strong>type-available</strong>(union(xs:QName, xs:string)) as xs:boolean
                </p>
                
                
@@ -2422,19 +2428,6 @@
                </p>
                
                <p>Returns the URI (system identifier) of an unparsed entity</p>
-               
-            </rddl:resource>
-            <rddl:resource xmlns:rddl="http://www.rddl.org/" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:role="http://www.rddl.org/natures#term" xlink:arcrole="http://www.rddl.org/purposes#definition" xlink:title="Function named fn:xml-to-json" xlink:href="#func-xml-to-json">
-               <h3><a name="xml-to-json" id="xml-to-json"></a>xml-to-json
-               </h3>
-               <p><strong>xml-to-json</strong>(node()?) as xs:string?
-               </p>
-               <p><strong>xml-to-json</strong>(node()?, map(*)) as xs:string?
-               </p>
-               
-               <p>Converts an XML tree, whose format corresponds to the XML representation of JSON defined
-                  in this specification, into a string conforming to the JSON grammar.
-               </p>
                
             </rddl:resource>
          </div>
@@ -2497,7 +2490,7 @@
                <dd>
                   <div class="resource">
                      
-                     <rddl:resource xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:rddl="http://www.rddl.org/" xlink:title="XQuery and XPath Functions and Operators 3.1" xlink:role="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional" xlink:arcrole="http://www.rddl.org/purposes#normative-reference" xlink:href="https://www.w3.org/TR/xpath-functions-31/">
+                     <rddl:resource xmlns:rddl="http://www.rddl.org/" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:title="XQuery and XPath Functions and Operators 3.1" xlink:role="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional" xlink:arcrole="http://www.rddl.org/purposes#normative-reference" xlink:href="https://www.w3.org/TR/xpath-functions-31/">
                         <p><a href="https://www.w3.org/TR/xpath-functions-31/">XQuery and XPath Functions and Operators 3.1</a>
                            (21 March 2017 version)
                            
@@ -2510,7 +2503,7 @@
                <dd>
                   <div class="resource">
                      
-                     <rddl:resource xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:rddl="http://www.rddl.org/" xlink:title="XSL Transformations (XSLT) Version 3.0" xlink:role="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional" xlink:arcrole="http://www.rddl.org/purposes#normative-reference" xlink:href="https://www.w3.org/TR/xslt-30/">
+                     <rddl:resource xmlns:rddl="http://www.rddl.org/" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:title="XSL Transformations (XSLT) Version 3.0" xlink:role="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional" xlink:arcrole="http://www.rddl.org/purposes#normative-reference" xlink:href="https://www.w3.org/TR/xslt-30/">
                         <p><a href="https://www.w3.org/TR/xslt-30/">XSL Transformations (XSLT) Version 3.0</a>
                            (7 February 2017 version)
                            
@@ -2523,7 +2516,7 @@
                <dd>
                   <div class="resource">
                      
-                     <rddl:resource xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:rddl="http://www.rddl.org/" xlink:title="XQuery Update Facility 1.0" xlink:role="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional" xlink:arcrole="http://www.rddl.org/purposes#normative-reference" xlink:href="https://www.w3.org/TR/xquery-update-10/">
+                     <rddl:resource xmlns:rddl="http://www.rddl.org/" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:title="XQuery Update Facility 1.0" xlink:role="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional" xlink:arcrole="http://www.rddl.org/purposes#normative-reference" xlink:href="https://www.w3.org/TR/xquery-update-10/">
                         <p><a href="https://www.w3.org/TR/xquery-update-10/">XQuery Update Facility 1.0</a>
                            (25 January 2011 version)
                            
@@ -2543,7 +2536,7 @@
                <dd>
                   <div class="resource">
                      
-                     <rddl:resource xmlns:rddl="http://www.rddl.org/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:e="http://www.w3.org/1999/XSL/Spec/ElementSyntax">
+                     <rddl:resource xmlns:e="http://www.w3.org/1999/XSL/Spec/ElementSyntax" xmlns:rddl="http://www.rddl.org/" xmlns:xlink="http://www.w3.org/1999/xlink">
                         
                         <p><a href="http://www.rddl.org/">Resource Directory Description Language (RDDL)</a> (4 July 2007)
                         </p>
@@ -2556,7 +2549,7 @@
                <dd>
                   <div class="resource">
                      
-                     <rddl:resource xmlns:rddl="http://www.rddl.org/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:e="http://www.w3.org/1999/XSL/Spec/ElementSyntax">
+                     <rddl:resource xmlns:e="http://www.w3.org/1999/XSL/Spec/ElementSyntax" xmlns:rddl="http://www.rddl.org/" xmlns:xlink="http://www.w3.org/1999/xlink">
                         
                         <p><a href="http://www.w3.org/TR/grddl/">Gleaning Resource Descriptions from Dialects of Languages (GRDDL)</a>
                            (Recommendation of 11 September 2007)
@@ -2570,7 +2563,7 @@
                <dd>
                   <div class="resource">
                      
-                     <rddl:resource xmlns:rddl="http://www.rddl.org/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:e="http://www.w3.org/1999/XSL/Spec/ElementSyntax">
+                     <rddl:resource xmlns:e="http://www.w3.org/1999/XSL/Spec/ElementSyntax" xmlns:rddl="http://www.rddl.org/" xmlns:xlink="http://www.w3.org/1999/xlink">
                         
                         <p><a href="http://www.w3.org/TR/rdf-concepts/">Resource Description Framework (RDF):
                               Concepts and Abstract Syntax</a> (Recommendation of 10 February 2004)
