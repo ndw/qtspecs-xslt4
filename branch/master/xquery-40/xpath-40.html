@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 
 <!--{xml-fix} XSLT Processor: Saxonica SAXON HE 9.6.0.7-->
-<!--This document was created at 20201227 0758--><html xmlns="http://www.w3.org/1999/xhtml" lang="EN">
+<!--This document was created at 20210412 1429--><html xmlns="http://www.w3.org/1999/xhtml" lang="EN">
    <head>
       <title>XML Path Language (XPath) 4.0 WG Review Draft</title>
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><style type="text/css">
@@ -120,7 +120,7 @@ a.env:visited, a.env:link               { color: black;
          <h1><a id="title"></a>XML Path Language (XPath) 4.0 WG Review Draft
          </h1>
          
-         <h2><a id="w3c-doctype"></a>W3C Editor's Draft 27&nbsp;December&nbsp;2020
+         <h2><a id="w3c-doctype"></a>W3C Editor's Draft 12&nbsp;April&nbsp;2021
          </h2>
          <dl>
             <dt>This version:</dt>
@@ -366,7 +366,6 @@ a.env:visited, a.env:link               { color: black;
                            <a href="#id-postfix-lookup"><span class="secno">4.14.3.2 </span><span class="content">Postfix Lookup</span></a>
                            
                         </li>
-                        <li><a href="#id-composite-atomic-values"><span class="secno">4.14.4 </span><span class="content">Composite Atomic Values</span></a></li>
                      </ol>
                   </li>
                   <li><a href="#id-conditionals"><span class="secno">4.15 </span><span class="content">Conditional Expressions</span></a></li>
@@ -453,8 +452,8 @@ a.env:visited, a.env:link               { color: black;
             </li>
             <li><a href="#id-incompatibilities"><span class="secno">H </span><span class="content">Backwards Compatibility</span></a> (Non-Normative)
                <ol class="toc">
-                  <li><a href="#d2e26937"><span class="secno">H.1 </span><span class="content">Incompatibilities relative to XPath 3.0</span></a></li>
-                  <li><a href="#d2e26957"><span class="secno">H.2 </span><span class="content">Incompatibilities relative to XPath 2.0
+                  <li><a href="#d2e25879"><span class="secno">H.1 </span><span class="content">Incompatibilities relative to XPath 3.0</span></a></li>
+                  <li><a href="#d2e25899"><span class="secno">H.2 </span><span class="content">Incompatibilities relative to XPath 2.0
                            </span></a></li>
                   <li><a href="#id-backwards-compatibility"><span class="secno">H.3 </span><span class="content">Incompatibilities relative to XPath 1.0</span></a><ol class="toc">
                         <li><a href="#id-incompat-in-true-mode"><span class="secno">H.3.1 </span><span class="content">Incompatibilities when Compatibility Mode is true</span></a></li>
@@ -5109,8 +5108,7 @@ else
                               </td>
                               <td><code><a href="#prod-xpath40-SelfReference">SelfReference</a></code></td>
                               <td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
-                              <td><code>".."  <a href="#doc-xpath40-OccurrenceIndicator">OccurrenceIndicator</a>
-                                    </code></td>
+                              <td><code>".."  <a href="#doc-xpath40-OccurrenceIndicator">OccurrenceIndicator</a>?</code></td>
                               <td></td>
                            </tr>
                         </tbody>
@@ -5168,6 +5166,15 @@ else
                         		                <code>record(first as xs:string, middle? as xs:string?, last as xs:string, *)</code> also allows
                         		             the entry with key <code>"middle"</code> to be present but empty.
                      </p>
+                     <div class="note">
+                        <p class="prefix"><b>Note:</b></p>
+                        <p>Within an extensible record test, a <code>FieldDeclaration</code> that is marked optional 
+                           and has no declared type does not constrain the
+                           map in any way, so it serves no practical purpose, but it is permitted because it
+                           may have
+                           documentary value.
+                        </p>
+                     </div>
                      <p>If a field is declared using <code>..</code> (optionally followed
                         by an occurrence indicator) in place of a <code>SequenceType</code>,
                         this indicates that the record type is recursive: the value
@@ -5219,11 +5226,11 @@ declare function flatten($tree as tree) as item()* {
                      </div>
                      <div class="note">
                         <p class="prefix"><b>Note:</b></p>
-                        <p>Within an extensible record test, a <code>FieldDeclaration</code> that is marked optional 
-                           and has no declared type does not constrain the
-                           		             map in any way, so it serves no practical purpose, but it is permitted
-                           because it may have
-                           		             documentary value.
+                        <p>If a <code>RecordTest</code> contains a <code>SelfReference</code> field that is not optional,
+                           and whose type does not permit an empty sequence, then it will not be possible to
+                           construct an instance.
+                           So a <code>RecordTest</code> such as <code>record(a as ..)</code> serves no practical
+                           purpose; but it is not disallowed.
                         </p>
                      </div>
                      <p>Record tests describe a subset of the value space of maps. They do not define any
@@ -5297,7 +5304,7 @@ declare function flatten($tree as tree) as item()* {
                      
                      <h5><a id="id-array-test"></a>3.6.4.4 Array Test
                      </h5>
-                     <a id="d2e7623"></a><table class="scrap">
+                     <a id="d2e7638"></a><table class="scrap">
                         <tbody>
                            <tr style="vertical-align:baseline;">
                               <td><a id="doc-xpath40-ArrayTest"></a>[129]&nbsp;&nbsp;&nbsp;
@@ -6562,7 +6569,7 @@ declare function flatten($tree as tree) as item()* {
                
                
             </p>
-            <a id="d2e9578"></a><table class="scrap">
+            <a id="d2e9593"></a><table class="scrap">
                <tbody>
                   <tr style="vertical-align:baseline;">
                      <td><a id="doc-xpath40-XPath"></a>[1]&nbsp;&nbsp;&nbsp;
@@ -6625,7 +6632,7 @@ declare function flatten($tree as tree) as item()* {
                
                <h3><a id="with-expressions"></a>4.1 Setting Namespace Context
                </h3>
-               <a id="d2e9685"></a><table class="scrap">
+               <a id="d2e9700"></a><table class="scrap">
                   <tbody>
                      <tr style="vertical-align:baseline;">
                         <td><a id="doc-xpath40-WithExpr"></a>[9]&nbsp;&nbsp;&nbsp;
@@ -6651,7 +6658,7 @@ declare function flatten($tree as tree) as item()* {
                   </tbody>
                   <tbody>
                      <tr style="vertical-align:baseline;">
-                        <td><a id="noid_d3e8995.doc-xpath40-EnclosedExpr"></a>[6]&nbsp;&nbsp;&nbsp;
+                        <td><a id="noid_d3e9010.doc-xpath40-EnclosedExpr"></a>[6]&nbsp;&nbsp;&nbsp;
                         </td>
                         <td><code>EnclosedExpr</code></td>
                         <td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
@@ -6725,7 +6732,7 @@ declare function flatten($tree as tree) as item()* {
                
                <h3><a id="comments"></a>4.2 Comments
                </h3>
-               <a id="d2e9826"></a><table class="scrap">
+               <a id="d2e9841"></a><table class="scrap">
                   <tbody>
                      <tr style="vertical-align:baseline;">
                         <td><a id="doc-xpath40-Comment"></a>[143]&nbsp;&nbsp;&nbsp;
@@ -6772,7 +6779,7 @@ declare function flatten($tree as tree) as item()* {
                   
                   
                </p>
-               <a id="d2e9887"></a><table class="scrap">
+               <a id="d2e9902"></a><table class="scrap">
                   <tbody>
                      <tr style="vertical-align:baseline;">
                         <td><a id="doc-xpath40-PrimaryExpr"></a>[69]&nbsp;&nbsp;&nbsp;
@@ -6815,7 +6822,7 @@ declare function flatten($tree as tree) as item()* {
                      		atomic value.] XPath 4.0 supports two kinds of literals: numeric literals and
                      		string literals.
                   </p>
-                  <a id="d2e9963"></a><table class="scrap">
+                  <a id="d2e9978"></a><table class="scrap">
                      <tbody>
                         <tr style="vertical-align:baseline;">
                            <td><a id="doc-xpath40-Literal"></a>[70]&nbsp;&nbsp;&nbsp;
@@ -7053,7 +7060,7 @@ declare function flatten($tree as tree) as item()* {
                   
                   <h4><a id="id-variables"></a>4.3.2 Variable References
                   </h4>
-                  <a id="d2e10283"></a><table class="scrap">
+                  <a id="d2e10298"></a><table class="scrap">
                      <tbody>
                         <tr style="vertical-align:baseline;">
                            <td><a id="doc-xpath40-VarRef"></a>[72]&nbsp;&nbsp;&nbsp;
@@ -7102,7 +7109,7 @@ declare function flatten($tree as tree) as item()* {
                   
                   <h4><a id="id-paren-expressions"></a>4.3.3 Parenthesized Expressions
                   </h4>
-                  <a id="d2e10336"></a><table class="scrap">
+                  <a id="d2e10351"></a><table class="scrap">
                      <tbody>
                         <tr style="vertical-align:baseline;">
                            <td><a id="doc-xpath40-ParenthesizedExpr"></a>[74]&nbsp;&nbsp;&nbsp;
@@ -7128,7 +7135,7 @@ declare function flatten($tree as tree) as item()* {
                   
                   <h4><a id="id-context-item-expression"></a>4.3.4 Context Item Expression
                   </h4>
-                  <a id="d2e10364"></a><table class="scrap">
+                  <a id="d2e10379"></a><table class="scrap">
                      <tbody>
                         <tr style="vertical-align:baseline;">
                            <td><a id="doc-xpath40-ContextItemExpr"></a>[75]&nbsp;&nbsp;&nbsp;
@@ -7157,7 +7164,7 @@ declare function flatten($tree as tree) as item()* {
                   </h4>
                   <p>
                      
-                     <a id="d2e10402"></a></p>
+                     <a id="d2e10417"></a></p>
                   <table class="scrap">
                      <tbody>
                         <tr style="vertical-align:baseline;">
@@ -7564,7 +7571,7 @@ declare function flatten($tree as tree) as item()* {
                      
                      <h5><a id="id-function-calls"></a>4.4.1.1 Static Function Call Syntax
                      </h5>
-                     <a id="d2e10982"></a><table class="scrap">
+                     <a id="d2e10997"></a><table class="scrap">
                         <tbody>
                            <tr style="vertical-align:baseline;">
                               <td><a id="doc-xpath40-FunctionCall"></a>[76]&nbsp;&nbsp;&nbsp;
@@ -7580,7 +7587,7 @@ declare function flatten($tree as tree) as item()* {
                         </tbody>
                         <tbody>
                            <tr style="vertical-align:baseline;">
-                              <td><a id="noid_d3e10078.doc-xpath40-ArgumentList"></a>[58]&nbsp;&nbsp;&nbsp;
+                              <td><a id="noid_d3e10093.doc-xpath40-ArgumentList"></a>[58]&nbsp;&nbsp;&nbsp;
                               </td>
                               <td><code>ArgumentList</code></td>
                               <td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
@@ -7590,7 +7597,7 @@ declare function flatten($tree as tree) as item()* {
                         </tbody>
                         <tbody>
                            <tr style="vertical-align:baseline;">
-                              <td><a id="noid_d3e10079.doc-xpath40-PositionalArguments"></a>[60]&nbsp;&nbsp;&nbsp;
+                              <td><a id="noid_d3e10094.doc-xpath40-PositionalArguments"></a>[60]&nbsp;&nbsp;&nbsp;
                               </td>
                               <td><code>PositionalArguments</code></td>
                               <td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
@@ -7623,7 +7630,7 @@ declare function flatten($tree as tree) as item()* {
                         </tbody>
                         <tbody>
                            <tr style="vertical-align:baseline;">
-                              <td><a id="noid_d3e10082.doc-xpath40-KeywordArguments"></a>[61]&nbsp;&nbsp;&nbsp;
+                              <td><a id="noid_d3e10097.doc-xpath40-KeywordArguments"></a>[61]&nbsp;&nbsp;&nbsp;
                               </td>
                               <td><code>KeywordArguments</code></td>
                               <td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
@@ -7634,7 +7641,7 @@ declare function flatten($tree as tree) as item()* {
                         </tbody>
                         <tbody>
                            <tr style="vertical-align:baseline;">
-                              <td><a id="noid_d3e10083.doc-xpath40-KeywordArgument"></a>[62]&nbsp;&nbsp;&nbsp;
+                              <td><a id="noid_d3e10098.doc-xpath40-KeywordArgument"></a>[62]&nbsp;&nbsp;&nbsp;
                               </td>
                               <td><code>KeywordArgument</code></td>
                               <td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
@@ -7992,7 +7999,7 @@ declare function flatten($tree as tree) as item()* {
                            </ul>
                            <div class="exampleOuter">
                               
-                              <div class="exampleHeader"><a id="d2e11534"></a>Example: A Built-in Function
+                              <div class="exampleHeader"><a id="d2e11549"></a>Example: A Built-in Function
                               </div>
                               <p>The following function call uses the function 
                                  <a href="https://www.w3.org/TR/xpath-functions-31/#func-base-uri">Section 
@@ -8210,7 +8217,7 @@ declare function flatten($tree as tree) as item()* {
                            </ol>
                            <div class="exampleOuter">
                               
-                              <div class="exampleHeader"><a id="d2e11796"></a>Example: Derived Types and Nonlocal Variable Bindings
+                              <div class="exampleHeader"><a id="d2e11811"></a>Example: Derived Types and Nonlocal Variable Bindings
                               </div>
                               <p>
                                  <code>$incr</code> is a nonlocal variable that is available within the function because its variable
@@ -8225,7 +8232,7 @@ return $f(5)                      </pre></div>
                            </div>
                            <div class="exampleOuter">
                               
-                              <div class="exampleHeader"><a id="d2e11812"></a>Example: Using the Context Item in an Anonymous Function
+                              <div class="exampleHeader"><a id="d2e11827"></a>Example: Using the Context Item in an Anonymous Function
                               </div>
                               <p>The following example will raise a dynamic error [<a href="#ERRXPDY0002" title="err:XPDY0002">err:XPDY0002</a>]:
                               </p>
@@ -8366,7 +8373,7 @@ return $vat()
                            </ul>
                            <div class="exampleOuter">
                               
-                              <div class="exampleHeader"><a id="d2e11964"></a>Example: Partial Application of an Anonymous Function
+                              <div class="exampleHeader"><a id="d2e11979"></a>Example: Partial Application of an Anonymous Function
                               </div>
                               <p>In the following example, <code>$f</code> is an anonymous function, and <code>$paf</code> is a partially applied function created from <code>$f</code>.
                               </p>
@@ -8382,7 +8389,7 @@ return $paf(1 to 5)
                            </div>
                            <div class="exampleOuter">
                               
-                              <div class="exampleHeader"><a id="d2e12016"></a>Example: Partial Application of a Built-In Function
+                              <div class="exampleHeader"><a id="d2e12031"></a>Example: Partial Application of a Built-In Function
                               </div>
                               <p>The following partial function application creates a function that computes the sum
                                  of squares of a sequence.
@@ -8401,7 +8408,7 @@ return $sum-of-squares(1 to 3)</pre></div>
                            </p>
                            <div class="exampleOuter">
                               
-                              <div class="exampleHeader"><a id="d2e12048"></a>Example: Partial Application of a Map
+                              <div class="exampleHeader"><a id="d2e12063"></a>Example: Partial Application of a Map
                               </div>
                               <p>The following partial function application converts a map to an equivalent function
                                  that is not a map.
@@ -8416,7 +8423,7 @@ return $a("A")</pre></div>
                      
                      <h5><a id="id-named-function-ref"></a>4.4.2.3 Named Function References
                      </h5>
-                     <a id="d2e12059"></a><table class="scrap">
+                     <a id="d2e12074"></a><table class="scrap">
                         <tbody>
                            <tr style="vertical-align:baseline;">
                               <td><a id="doc-xpath40-NamedFunctionRef"></a>[82]&nbsp;&nbsp;&nbsp;
@@ -8431,7 +8438,7 @@ return $a("A")</pre></div>
                         </tbody>
                         <tbody>
                            <tr style="vertical-align:baseline;">
-                              <td><a id="noid_d3e11088.doc-xpath40-EQName"></a>[134]&nbsp;&nbsp;&nbsp;
+                              <td><a id="noid_d3e11103.doc-xpath40-EQName"></a>[134]&nbsp;&nbsp;&nbsp;
                               </td>
                               <td><code>EQName</code></td>
                               <td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
@@ -8532,7 +8539,7 @@ return $a("A")</pre></div>
                      
                      <h5><a id="id-inline-func"></a>4.4.2.4 Inline Function Expressions
                      </h5>
-                     <a id="d2e12208"></a><table class="scrap">
+                     <a id="d2e12223"></a><table class="scrap">
                         <tbody>
                            <tr style="vertical-align:baseline;">
                               <td><a id="doc-xpath40-InlineFunctionExpr"></a>[83]&nbsp;&nbsp;&nbsp;
@@ -8556,7 +8563,7 @@ return $a("A")</pre></div>
                         </tbody>
                         <tbody>
                            <tr style="vertical-align:baseline;">
-                              <td><a id="noid_d3e11218.doc-xpath40-ParamList"></a>[3]&nbsp;&nbsp;&nbsp;
+                              <td><a id="noid_d3e11233.doc-xpath40-ParamList"></a>[3]&nbsp;&nbsp;&nbsp;
                               </td>
                               <td><code>ParamList</code></td>
                               <td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
@@ -8567,7 +8574,7 @@ return $a("A")</pre></div>
                         </tbody>
                         <tbody>
                            <tr style="vertical-align:baseline;">
-                              <td><a id="noid_d3e11219.doc-xpath40-Param"></a>[4]&nbsp;&nbsp;&nbsp;
+                              <td><a id="noid_d3e11234.doc-xpath40-Param"></a>[4]&nbsp;&nbsp;&nbsp;
                               </td>
                               <td><code>Param</code></td>
                               <td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
@@ -8578,7 +8585,7 @@ return $a("A")</pre></div>
                         </tbody>
                         <tbody>
                            <tr style="vertical-align:baseline;">
-                              <td><a id="noid_d3e11220.doc-xpath40-TypeDeclaration"></a>[93]&nbsp;&nbsp;&nbsp;
+                              <td><a id="noid_d3e11235.doc-xpath40-TypeDeclaration"></a>[93]&nbsp;&nbsp;&nbsp;
                               </td>
                               <td><code>TypeDeclaration</code></td>
                               <td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
@@ -8589,7 +8596,7 @@ return $a("A")</pre></div>
                         </tbody>
                         <tbody>
                            <tr style="vertical-align:baseline;">
-                              <td><a id="noid_d3e11221.doc-xpath40-FunctionBody"></a>[5]&nbsp;&nbsp;&nbsp;
+                              <td><a id="noid_d3e11236.doc-xpath40-FunctionBody"></a>[5]&nbsp;&nbsp;&nbsp;
                               </td>
                               <td><code>FunctionBody</code></td>
                               <td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
@@ -9197,7 +9204,7 @@ return fn:filter($days,$m)
                
                <h3><a id="id-postfix-expression"></a>4.5 Postfix Expressions
                </h3>
-               <a id="d2e13103"></a><table class="scrap">
+               <a id="d2e13118"></a><table class="scrap">
                   <tbody>
                      <tr style="vertical-align:baseline;">
                         <td><a id="doc-xpath40-PostfixExpr"></a>[57]&nbsp;&nbsp;&nbsp;
@@ -9211,7 +9218,7 @@ return fn:filter($days,$m)
                   </tbody>
                   <tbody>
                      <tr style="vertical-align:baseline;">
-                        <td><a id="noid_d3e12055.doc-xpath40-Predicate"></a>[64]&nbsp;&nbsp;&nbsp;
+                        <td><a id="noid_d3e12070.doc-xpath40-Predicate"></a>[64]&nbsp;&nbsp;&nbsp;
                         </td>
                         <td><code>Predicate</code></td>
                         <td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
@@ -9221,7 +9228,7 @@ return fn:filter($days,$m)
                   </tbody>
                   <tbody>
                      <tr style="vertical-align:baseline;">
-                        <td><a id="noid_d3e12056.doc-xpath40-PositionalArgumentList"></a>[59]&nbsp;&nbsp;&nbsp;
+                        <td><a id="noid_d3e12071.doc-xpath40-PositionalArgumentList"></a>[59]&nbsp;&nbsp;&nbsp;
                         </td>
                         <td><code>PositionalArgumentList</code></td>
                         <td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
@@ -9231,7 +9238,7 @@ return fn:filter($days,$m)
                   </tbody>
                   <tbody>
                      <tr style="vertical-align:baseline;">
-                        <td><a id="noid_d3e12057.doc-xpath40-PositionalArguments"></a>[60]&nbsp;&nbsp;&nbsp;
+                        <td><a id="noid_d3e12072.doc-xpath40-PositionalArguments"></a>[60]&nbsp;&nbsp;&nbsp;
                         </td>
                         <td><code>PositionalArguments</code></td>
                         <td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
@@ -9242,7 +9249,7 @@ return fn:filter($days,$m)
                   </tbody>
                   <tbody>
                      <tr style="vertical-align:baseline;">
-                        <td><a id="noid_d3e12058.doc-xpath40-Argument"></a>[77]&nbsp;&nbsp;&nbsp;
+                        <td><a id="noid_d3e12073.doc-xpath40-Argument"></a>[77]&nbsp;&nbsp;&nbsp;
                         </td>
                         <td><code>Argument</code></td>
                         <td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
@@ -9274,10 +9281,10 @@ return fn:filter($days,$m)
                   
                   <h4><a id="id-filter-expression"></a>4.5.1 Filter Expressions
                   </h4>
-                  <a id="d2e13202"></a><table class="scrap">
+                  <a id="d2e13217"></a><table class="scrap">
                      <tbody>
                         <tr style="vertical-align:baseline;">
-                           <td><a id="noid_d3e12103.doc-xpath40-PostfixExpr"></a>[57]&nbsp;&nbsp;&nbsp;
+                           <td><a id="noid_d3e12118.doc-xpath40-PostfixExpr"></a>[57]&nbsp;&nbsp;&nbsp;
                            </td>
                            <td><code>PostfixExpr</code></td>
                            <td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
@@ -9384,10 +9391,10 @@ return fn:filter($days,$m)
                   
                   <h4><a id="id-dynamic-function-invocation"></a>4.5.2 Dynamic Function Calls
                   </h4>
-                  <a id="d2e13346"></a><table class="scrap">
+                  <a id="d2e13361"></a><table class="scrap">
                      <tbody>
                         <tr style="vertical-align:baseline;">
-                           <td><a id="noid_d3e12224.doc-xpath40-PostfixExpr"></a>[57]&nbsp;&nbsp;&nbsp;
+                           <td><a id="noid_d3e12239.doc-xpath40-PostfixExpr"></a>[57]&nbsp;&nbsp;&nbsp;
                            </td>
                            <td><code>PostfixExpr</code></td>
                            <td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
@@ -9408,7 +9415,7 @@ return fn:filter($days,$m)
                      </tbody>
                      <tbody>
                         <tr style="vertical-align:baseline;">
-                           <td><a id="noid_d3e12226.doc-xpath40-PositionalArguments"></a>[60]&nbsp;&nbsp;&nbsp;
+                           <td><a id="noid_d3e12241.doc-xpath40-PositionalArguments"></a>[60]&nbsp;&nbsp;&nbsp;
                            </td>
                            <td><code>PositionalArguments</code></td>
                            <td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
@@ -9419,7 +9426,7 @@ return fn:filter($days,$m)
                      </tbody>
                      <tbody>
                         <tr style="vertical-align:baseline;">
-                           <td><a id="noid_d3e12227.doc-xpath40-Argument"></a>[77]&nbsp;&nbsp;&nbsp;
+                           <td><a id="noid_d3e12242.doc-xpath40-Argument"></a>[77]&nbsp;&nbsp;&nbsp;
                            </td>
                            <td><code>Argument</code></td>
                            <td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
@@ -9431,7 +9438,7 @@ return fn:filter($days,$m)
                      </tbody>
                      <tbody>
                         <tr style="vertical-align:baseline;">
-                           <td><a id="noid_d3e12228.doc-xpath40-ArgumentPlaceholder"></a>[78]&nbsp;&nbsp;&nbsp;
+                           <td><a id="noid_d3e12243.doc-xpath40-ArgumentPlaceholder"></a>[78]&nbsp;&nbsp;&nbsp;
                            </td>
                            <td><code>ArgumentPlaceholder</code></td>
                            <td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
@@ -9510,7 +9517,7 @@ return fn:filter($days,$m)
                
                <h3><a id="id-path-expressions"></a>4.6 Path Expressions
                </h3>
-               <a id="d2e13476"></a><table class="scrap">
+               <a id="d2e13491"></a><table class="scrap">
                   <tbody>
                      <tr style="vertical-align:baseline;">
                         <td><a id="doc-xpath40-PathExpr"></a>[44]&nbsp;&nbsp;&nbsp;
@@ -9524,7 +9531,7 @@ return fn:filter($days,$m)
                   </tbody>
                   <tbody>
                      <tr style="vertical-align:baseline;">
-                        <td><a id="noid_d3e12282.doc-xpath40-RelativePathExpr"></a>[45]&nbsp;&nbsp;&nbsp;
+                        <td><a id="noid_d3e12297.doc-xpath40-RelativePathExpr"></a>[45]&nbsp;&nbsp;&nbsp;
                         </td>
                         <td><code>RelativePathExpr</code></td>
                         <td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
@@ -9593,7 +9600,7 @@ return fn:filter($days,$m)
                   
                   <h4><a id="id-relative-path-expressions"></a>4.6.1 Relative Path Expressions
                   </h4>
-                  <a id="d2e13607"></a><table class="scrap">
+                  <a id="d2e13622"></a><table class="scrap">
                      <tbody>
                         <tr style="vertical-align:baseline;">
                            <td><a id="doc-xpath40-RelativePathExpr"></a>[45]&nbsp;&nbsp;&nbsp;
@@ -9745,7 +9752,7 @@ return fn:filter($days,$m)
                   
                   <h4><a id="id-steps"></a>4.6.2 Steps
                   </h4>
-                  <a id="d2e13855"></a><table class="scrap">
+                  <a id="d2e13870"></a><table class="scrap">
                      <tbody>
                         <tr style="vertical-align:baseline;">
                            <td><a id="doc-xpath40-StepExpr"></a>[46]&nbsp;&nbsp;&nbsp;
@@ -9760,7 +9767,7 @@ return fn:filter($days,$m)
                      </tbody>
                      <tbody>
                         <tr style="vertical-align:baseline;">
-                           <td><a id="noid_d3e12624.doc-xpath40-AxisStep"></a>[47]&nbsp;&nbsp;&nbsp;
+                           <td><a id="noid_d3e12639.doc-xpath40-AxisStep"></a>[47]&nbsp;&nbsp;&nbsp;
                            </td>
                            <td><code>AxisStep</code></td>
                            <td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
@@ -9795,7 +9802,7 @@ return fn:filter($days,$m)
                      </tbody>
                      <tbody>
                         <tr style="vertical-align:baseline;">
-                           <td><a id="noid_d3e12627.doc-xpath40-PredicateList"></a>[63]&nbsp;&nbsp;&nbsp;
+                           <td><a id="noid_d3e12642.doc-xpath40-PredicateList"></a>[63]&nbsp;&nbsp;&nbsp;
                            </td>
                            <td><code>PredicateList</code></td>
                            <td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
@@ -9846,7 +9853,7 @@ return fn:filter($days,$m)
                      
                      <h5><a id="axes"></a>4.6.2.1 Axes
                      </h5>
-                     <a id="d2e14011"></a><table class="scrap">
+                     <a id="d2e14026"></a><table class="scrap">
                         <tbody>
                            <tr style="vertical-align:baseline;">
                               <td><a id="doc-xpath40-ForwardAxis"></a>[49]&nbsp;&nbsp;&nbsp;
@@ -10109,7 +10116,7 @@ return fn:filter($days,$m)
                         A node test determines which nodes contained by an axis are selected by a <a title="step" class="termref" href="#dt-step">step</a>.]
                         
                      </p>
-                     <a id="d2e14311"></a><table class="scrap">
+                     <a id="d2e14326"></a><table class="scrap">
                         <tbody>
                            <tr style="vertical-align:baseline;">
                               <td><a id="doc-xpath40-NodeTest"></a>[54]&nbsp;&nbsp;&nbsp;
@@ -10146,7 +10153,7 @@ return fn:filter($days,$m)
                         </tbody>
                         <tbody>
                            <tr style="vertical-align:baseline;">
-                              <td><a id="noid_d3e12995.doc-xpath40-EQName"></a>[134]&nbsp;&nbsp;&nbsp;
+                              <td><a id="noid_d3e13010.doc-xpath40-EQName"></a>[134]&nbsp;&nbsp;&nbsp;
                               </td>
                               <td><code>EQName</code></td>
                               <td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
@@ -10344,7 +10351,7 @@ return fn:filter($days,$m)
                   
                   <h4><a id="id-predicate"></a>4.6.3 Predicates within Steps
                   </h4>
-                  <a id="d2e14647"></a><table class="scrap">
+                  <a id="d2e14662"></a><table class="scrap">
                      <tbody>
                         <tr style="vertical-align:baseline;">
                            <td><a id="doc-xpath40-AxisStep"></a>[47]&nbsp;&nbsp;&nbsp;
@@ -10369,7 +10376,7 @@ return fn:filter($days,$m)
                      </tbody>
                      <tbody>
                         <tr style="vertical-align:baseline;">
-                           <td><a id="noid_d3e13280.doc-xpath40-Predicate"></a>[64]&nbsp;&nbsp;&nbsp;
+                           <td><a id="noid_d3e13295.doc-xpath40-Predicate"></a>[64]&nbsp;&nbsp;&nbsp;
                            </td>
                            <td><code>Predicate</code></td>
                            <td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
@@ -10627,7 +10634,7 @@ return fn:filter($days,$m)
                   
                   <h4><a id="abbrev"></a>4.6.5 Abbreviated Syntax
                   </h4>
-                  <a id="d2e15130"></a><table class="scrap">
+                  <a id="d2e15145"></a><table class="scrap">
                      <tbody>
                         <tr style="vertical-align:baseline;">
                            <td><a id="doc-xpath40-AbbrevForwardStep"></a>[50]&nbsp;&nbsp;&nbsp;
@@ -10870,10 +10877,10 @@ return fn:filter($days,$m)
                   
                   <h4><a id="construct_seq"></a>4.7.1 Sequence Concatenation
                   </h4>
-                  <a id="d2e15610"></a><table class="scrap">
+                  <a id="d2e15625"></a><table class="scrap">
                      <tbody>
                         <tr style="vertical-align:baseline;">
-                           <td><a id="noid_d3e14203.doc-xpath40-Expr"></a>[7]&nbsp;&nbsp;&nbsp;
+                           <td><a id="noid_d3e14218.doc-xpath40-Expr"></a>[7]&nbsp;&nbsp;&nbsp;
                            </td>
                            <td><code>Expr</code></td>
                            <td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
@@ -10933,18 +10940,7 @@ return fn:filter($days,$m)
                   
                   <h4><a id="id-range-expressions"></a>4.7.2 Range Expressions
                   </h4>
-                  <a id="d2e15686"></a><table class="scrap">
-                     <tbody>
-                        <tr style="vertical-align:baseline;">
-                           <td><a id="doc-xpath40-ByExpr"></a>[24]&nbsp;&nbsp;&nbsp;
-                           </td>
-                           <td><code><a href="#prod-xpath40-ByExpr">ByExpr</a></code></td>
-                           <td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
-                           <td><code>
-                                 <a href="#doc-xpath40-RangeExpr">RangeExpr</a> ( "by"  <a href="#doc-xpath40-RangeExpr">RangeExpr</a> )*</code></td>
-                           <td></td>
-                        </tr>
-                     </tbody>
+                  <a id="d2e15701"></a><table class="scrap">
                      <tbody>
                         <tr style="vertical-align:baseline;">
                            <td><a id="doc-xpath40-RangeExpr"></a>[25]&nbsp;&nbsp;&nbsp;
@@ -10994,35 +10990,6 @@ return fn:filter($days,$m)
                         </p>
                      </li>
                   </ul>
-                  <p>A <b>ByExpression</b> can be used in conjunction with a <b>RangeExpression</b>
-                     to select some of the integers in the range, in forwards or reverse sequence. For
-                     example:
-                  </p>
-                  <ul>
-                     <li>
-                        <p>
-                           <code>1 to 10 by 2</code> returns the sequence <code>1, 3, 5, 7, 9</code>
-                           
-                        </p>
-                     </li>
-                     <li>
-                        <p>
-                           <code>1 to 4 by -1</code> returns the sequence <code>4, 3, 2, 1</code>
-                           
-                        </p>
-                     </li>
-                     <li>
-                        <p>
-                           <code>0 to 10 by -2</code> returns the sequence <code>10, 8, 6, 4, 2, 0</code>
-                           
-                        </p>
-                     </li>
-                  </ul>
-                  <p>Although the <code>to</code> and <code>by</code> expressions are designed to work well when
-                     used together, both are binary operators defined quite independently of each other,
-                     and the
-                     <code>by</code> operator can be applied to any sequence, not just a sequence of integers.
-                  </p>
                   <p>More formally, a <b>RangeExpression</b> is evaluated as follows:
                   </p>
                   <ol class="enumar">
@@ -11050,39 +11017,8 @@ return fn:filter($days,$m)
                         </p>
                      </li>
                   </ol>
-                  <p>A <b>ByExpression</b> is evaluated as follows:
-                  </p>
-                  <ol class="enumar">
-                     <li>
-                        <p>The left-hand operand is evaluated; the result is an arbitrary sequence: call it <code>$seq</code>.
-                        </p>
-                     </li>
-                     <li>
-                        <p>The right operand of the <code>by</code> operator is converted as though it was an argument 
-                           of a function with the expected parameter type <code>xs:integer?</code>: 
-                           call the result <code>$step</code>.
-                        </p>
-                     </li>
-                     <li>
-                        <p>If <code>$step</code> is an empty sequence or zero, the result of the
-                           <code>ByExpression</code> is an empty sequence.
-                        </p>
-                     </li>
-                     <li>
-                        <p>If <code>$step</code> is an integer greater than zero, 
-                           the result consists of all items in <code>$seq</code> whose zero-based position is an integer
-                           multiple of <code>$seq</code>, in order. 
-                        </p>
-                     </li>
-                     <li>
-                        <p>If <code>$step</code> is an integer less than zero, 
-                           the result consists of all items in <code>fn:reverse($seq)</code> whose zero-based position is an integer
-                           multiple of <code>fn:abs($seq)</code>, in order. 
-                        </p>
-                     </li>
-                  </ol>
-                  <p>The following examples illustrate the use of <code>RangeExpressions</code> and
-                     <code>ByExpressions</code>, independently and in conjunction.
+                  <p>The following examples illustrate the use of <code>RangeExpressions</code>
+                     .
                   </p>
                   <div class="exampleOuter">
                      <p>This example uses a range expression as one operand in constructing a sequence. 
@@ -11091,44 +11027,24 @@ return fn:filter($days,$m)
                      <div class="exampleInner"><pre>(10, 1 to 4)</pre></div>
                      <p>This example selects the first four items from an input sequence:</p>
                      <div class="exampleInner"><pre>$input[position() = 1 to 4]</pre></div>
-                     <p>This example selects the first four items from an input sequence, in reverse order:</p>
-                     <div class="exampleInner"><pre>fn:slice($input, 1 to 4 by -1)</pre></div>
-                     <p>This example returns the array <code>["b", "c"]</code>:
-                     </p>
-                     <div class="exampleInner"><pre>array:slice(["a", "b", "c", "d"], 2 to 3)</pre></div>
-                     <p>This example returns the array <code>["d", "b"]</code>:
-                     </p>
-                     <div class="exampleInner"><pre>array:slice(["a", "b", "c", "d"], 1 to 4 by -2)</pre></div>
-                     <p>This example tests whether <code>$x</code> is an even number in the range 100 to 200:
-                     </p>
-                     <div class="exampleInner"><pre>$x = (100 to 200 by 2)</pre></div>
                      <p>This example returns the sequence (0, 0.1, 0.2, 0.3, 0.5):</p>
                      <div class="exampleInner"><pre>$x = (1 to 5)!.*0.1</pre></div>
-                     <p>This example returns the same result as <code>fn:reverse($input)</code>:
+                     <p>This example constructs a sequence of length one containing the single integer 10.</p>
+                     <div class="exampleInner"><pre>10 to 10</pre></div>
+                     <p>The result of this example is a sequence of length zero.</p>
+                     <div class="exampleInner"><pre>15 to 10</pre></div>
+                     <p>This example uses the fn:reverse function to construct a sequence of six integers
+                        in decreasing order. 
+                        It evaluates to the sequence 15, 14, 13, 12, 11, 10.
                      </p>
-                     <div class="exampleInner"><pre>$input by -1</pre></div>
-                     <p>This example returns <code>"ACE"</code>:
-                     </p>
-                     <div class="exampleInner"><pre>(fn:characters("ABCDE") by 2) =&gt; fn:string-join()</pre></div>
-                  </div>
-                  <div class="note">
-                     <p class="prefix"><b>Note:</b></p>
-                     <p>Since <code>10 to 1</code> returns an empty sequence, <code>10 to 1 by -1</code>
-                        also returns an empty sequence. The correct expression is <code>1 to 10 by -1</code>.
-                     </p>
-                     <p>The expression <code>1 by 2 to 10</code> means <code>1 by (2 to 10)</code> which
-                        fails with a type error because the second argument of <code>by</code> is not
-                        a singleton integer. However, <code>-200 by 2 to -100</code> returns an empty
-                        sequence, because <code>(2 to -100)</code> is an empty sequence. The correct expression
-                        is <code>-200 to -100 by 2</code>.
-                     </p>
+                     <div class="exampleInner"><pre>fn:reverse(10 to 15)</pre></div>
                   </div>
                </div>
                <div class="div3">
                   
                   <h4><a id="combining_seq"></a>4.7.3 Combining Node Sequences
                   </h4>
-                  <a id="d2e15983"></a><table class="scrap">
+                  <a id="d2e15827"></a><table class="scrap">
                      <tbody>
                         <tr style="vertical-align:baseline;">
                            <td><a id="doc-xpath40-UnionExpr"></a>[29]&nbsp;&nbsp;&nbsp;
@@ -11263,7 +11179,7 @@ return fn:filter($days,$m)
                   multiplication, division, and modulus, in their usual binary and unary
                   forms.
                </p>
-               <a id="d2e16136"></a><table class="scrap">
+               <a id="d2e15980"></a><table class="scrap">
                   <tbody>
                      <tr style="vertical-align:baseline;">
                         <td><a id="doc-xpath40-AdditiveExpr"></a>[26]&nbsp;&nbsp;&nbsp;
@@ -11457,15 +11373,15 @@ return fn:filter($days,$m)
                
                <h3><a id="id-string-concat-expr"></a>4.9 String Concatenation Expressions
                </h3>
-               <a id="d2e16409"></a><table class="scrap">
+               <a id="d2e16253"></a><table class="scrap">
                   <tbody>
                      <tr style="vertical-align:baseline;">
-                        <td><a id="doc-xpath40-StringConcatExpr"></a>[23]&nbsp;&nbsp;&nbsp;
+                        <td><a id="doc-xpath40-StringConcatExpr"></a>[24]&nbsp;&nbsp;&nbsp;
                         </td>
                         <td><code><a href="#prod-xpath40-StringConcatExpr">StringConcatExpr</a></code></td>
                         <td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
                         <td><code>
-                              <a href="#doc-xpath40-ByExpr">ByExpr</a> ( "||"  <a href="#doc-xpath40-ByExpr">ByExpr</a> )*</code></td>
+                              <a href="#doc-xpath40-RangeExpr">RangeExpr</a> ( "||"  <a href="#doc-xpath40-RangeExpr">RangeExpr</a> )*</code></td>
                         <td></td>
                      </tr>
                   </tbody>
@@ -11483,10 +11399,10 @@ return fn:filter($days,$m)
                   three kinds of comparison expressions, called value comparisons, general
                   comparisons, and node comparisons.
                </p>
-               <a id="d2e16440"></a><table class="scrap">
+               <a id="d2e16284"></a><table class="scrap">
                   <tbody>
                      <tr style="vertical-align:baseline;">
-                        <td><a id="doc-xpath40-ComparisonExpr"></a>[22]&nbsp;&nbsp;&nbsp;
+                        <td><a id="doc-xpath40-ComparisonExpr"></a>[23]&nbsp;&nbsp;&nbsp;
                         </td>
                         <td><code><a href="#prod-xpath40-ComparisonExpr">ComparisonExpr</a></code></td>
                         <td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
@@ -11922,10 +11838,10 @@ return fn:filter($days,$m)
                   an <b>or-expression</b>. If a logical expression does not raise an error, its value is always one
                   of the boolean values <code>true</code> or <code>false</code>.
                </p>
-               <a id="d2e17297"></a><table class="scrap">
+               <a id="d2e17141"></a><table class="scrap">
                   <tbody>
                      <tr style="vertical-align:baseline;">
-                        <td><a id="doc-xpath40-OrExpr"></a>[20]&nbsp;&nbsp;&nbsp;
+                        <td><a id="doc-xpath40-OrExpr"></a>[21]&nbsp;&nbsp;&nbsp;
                         </td>
                         <td><code><a href="#prod-xpath40-OrExpr">OrExpr</a></code></td>
                         <td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
@@ -11936,7 +11852,7 @@ return fn:filter($days,$m)
                   </tbody>
                   <tbody>
                      <tr style="vertical-align:baseline;">
-                        <td><a id="doc-xpath40-AndExpr"></a>[21]&nbsp;&nbsp;&nbsp;
+                        <td><a id="doc-xpath40-AndExpr"></a>[22]&nbsp;&nbsp;&nbsp;
                         </td>
                         <td><code><a href="#prod-xpath40-AndExpr">AndExpr</a></code></td>
                         <td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
@@ -12156,7 +12072,7 @@ return fn:filter($days,$m)
                      items of the sequence or the members of the array.</span>
                   
                </p>
-               <a id="d2e17685"></a><table class="scrap">
+               <a id="d2e17529"></a><table class="scrap">
                   <tbody>
                      <tr style="vertical-align:baseline;">
                         <td><a id="doc-xpath40-ForExpr"></a>[12]&nbsp;&nbsp;&nbsp;
@@ -12175,7 +12091,7 @@ return fn:filter($days,$m)
                         </td>
                         <td><code><a href="#prod-xpath40-SimpleForClause">SimpleForClause</a></code></td>
                         <td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
-                        <td><code>"for"  <a href="#doc-xpath40-SimpleForBinding">SimpleForBinding</a>  (","  <a href="#doc-xpath40-SimpleForBinding">SimpleForBinding</a>)*</code></td>
+                        <td><code>"for"  "member"?  <a href="#doc-xpath40-SimpleForBinding">SimpleForBinding</a>  (","  <a href="#doc-xpath40-SimpleForBinding">SimpleForBinding</a>)*</code></td>
                         <td></td>
                      </tr>
                   </tbody>
@@ -12185,7 +12101,7 @@ return fn:filter($days,$m)
                         </td>
                         <td><code><a href="#prod-xpath40-SimpleForBinding">SimpleForBinding</a></code></td>
                         <td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
-                        <td><code>"member"?  "$"  <a href="#doc-xpath40-VarName">VarName</a>  "in"  <a href="#doc-xpath40-ExprSingle">ExprSingle</a>
+                        <td><code>"$"  <a href="#doc-xpath40-VarName">VarName</a>  "in"  <a href="#doc-xpath40-ExprSingle">ExprSingle</a>
                               </code></td>
                         <td></td>
                      </tr>
@@ -12329,7 +12245,7 @@ return g($x, $y)</span>
                </h3>
                <p>XPath allows a variable to be declared and bound to a value using a <b>let expression</b>.
                </p>
-               <a id="d2e17911"></a><table class="scrap">
+               <a id="d2e17755"></a><table class="scrap">
                   <tbody>
                      <tr style="vertical-align:baseline;">
                         <td><a id="doc-xpath40-LetExpr"></a>[15]&nbsp;&nbsp;&nbsp;
@@ -12455,7 +12371,7 @@ return $y[@value gt $x/@min]
                      </h5>
                      <p>A Map is created using a <a href="#doc-xpath40-MapConstructor">MapConstructor</a>.
                      </p>
-                     <a id="d2e18013"></a><table class="scrap">
+                     <a id="d2e17857"></a><table class="scrap">
                         <tbody>
                            <tr style="vertical-align:baseline;">
                               <td><a id="doc-xpath40-MapConstructor"></a>[84]&nbsp;&nbsp;&nbsp;
@@ -12714,7 +12630,7 @@ map {
                      </p>
                      <p>An array is created using an <a href="#doc-xpath40-ArrayConstructor">ArrayConstructor</a>.
                      </p>
-                     <a id="d2e18295"></a><table class="scrap">
+                     <a id="d2e18139"></a><table class="scrap">
                         <tbody>
                            <tr style="vertical-align:baseline;">
                               <td><a id="doc-xpath40-ArrayConstructor"></a>[88]&nbsp;&nbsp;&nbsp;
@@ -12907,15 +12823,11 @@ map {
                      supports wildcards, and iterates over sequences of maps and
                      arrays.
                   </p>
-                  <p>The lookup operator can also be used to extract
-                     the components of atomic values that can be divided into parts: for details
-                     see <a href="#id-composite-atomic-values"><b>4.14.4 Composite Atomic Values</b></a>.
-                  </p>
                   <div class="div4">
                      
                      <h5><a id="id-unary-lookup"></a>4.14.3.1 Unary Lookup
                      </h5>
-                     <a id="d2e18555"></a><table class="scrap">
+                     <a id="d2e18395"></a><table class="scrap">
                         <tbody>
                            <tr style="vertical-align:baseline;">
                               <td><a id="doc-xpath40-UnaryLookup"></a>[91]&nbsp;&nbsp;&nbsp;
@@ -13092,7 +13004,7 @@ return .($k)
                      
                      <h5><a id="id-postfix-lookup"></a>4.14.3.2 Postfix Lookup
                      </h5>
-                     <a id="d2e18913"></a><table class="scrap">
+                     <a id="d2e18753"></a><table class="scrap">
                         <tbody>
                            <tr style="vertical-align:baseline;">
                               <td><a id="doc-xpath40-Lookup"></a>[65]&nbsp;&nbsp;&nbsp;
@@ -13167,823 +13079,6 @@ return .($k)
                      </ul>
                   </div>
                </div>
-               <div class="div3">
-                  
-                  <h4><a id="id-composite-atomic-values"></a>4.14.4 Composite Atomic Values
-                  </h4>
-                  <p>Some <a title="atomic value" class="termref" href="#dt-atomic-value">atomic values</a> (despite the name) can be divided into
-                     parts: for example, an <code>xs:date</code> comprises year, month, day, and timezone.
-                     The components of such values are accessible using the lookup operator, for example
-                     <code>current-date()?year</code> returns the current year, while <code>document-uri($doc)?scheme</code>
-                     returns the scheme part of a URI.
-                  </p>
-                  <p>Previous versions of this specification provided functions such as <code>fn:year-from-date</code>
-                     to access these components. These functions remain available, but XPath 4.0 additionally
-                     allows the lookup operator to be used to obtain the components of other data types
-                     including
-                     <code>xs:anyURI</code>, <code>xs:gYear</code>, <code>xs:gYearMonth</code>, <code>xs:gMonth</code>, 
-                     <code>xs:gMonthDay</code>, <code>xs:gDay</code>, <code>xs:hexBinary</code>, and 
-                     <code>xs:base64Binary</code>.
-                  </p>
-                  <p>When an atomic value belonging to one of these atomic types appears as the first operand
-                     of the postfix lookup operator, or when the unary lookup operator is evaluated with
-                     the
-                     atomic value as the context item, the atomic value is implicitly converted to a map,
-                     and
-                     the lookup operator is then applied to this map.
-                  </p>
-                  <p>The mappable atomic types are defined by the table below. For each mappable atomic
-                     type the table lists the components that are available, their types, and their values.
-                  </p>
-                  <table style="width:100%" class="medium">
-                     <thead>
-                        <tr>
-                           <th>Type</th>
-                           <th>Component</th>
-                           <th>Component Type</th>
-                           <th>Value</th>
-                        </tr>
-                     </thead>
-                     <tbody>
-                        <tr>
-                           <td>
-                              <code>xs:dateTime</code>
-                              
-                           </td>
-                           <td>
-                              <code>year</code>
-                              
-                           </td>
-                           <td>
-                              <code>xs:integer</code>
-                              
-                           </td>
-                           <td>
-                              <code>fn:year-from-dateTime(.)</code>
-                              
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <code></code>
-                              
-                           </td>
-                           <td>
-                              <code>month</code>
-                              
-                           </td>
-                           <td>
-                              <code>xs:integer</code>
-                              
-                           </td>
-                           <td>
-                              <code>fn:month-from-dateTime(.)</code>
-                              
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <code></code>
-                              
-                           </td>
-                           <td>
-                              <code>day</code>
-                              
-                           </td>
-                           <td>
-                              <code>xs:integer</code>
-                              
-                           </td>
-                           <td>
-                              <code>fn:day-from-dateTime(.)</code>
-                              
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <code></code>
-                              
-                           </td>
-                           <td>
-                              <code>hours</code>
-                              
-                           </td>
-                           <td>
-                              <code>xs:integer</code>
-                              
-                           </td>
-                           <td>
-                              <code>fn:hours-from-dateTime(.)</code>
-                              
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <code></code>
-                              
-                           </td>
-                           <td>
-                              <code>minutes</code>
-                              
-                           </td>
-                           <td>
-                              <code>xs:integer</code>
-                              
-                           </td>
-                           <td>
-                              <code>fn:minutes-from-dateTime(.)</code>
-                              
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <code></code>
-                              
-                           </td>
-                           <td>
-                              <code>seconds</code>
-                              
-                           </td>
-                           <td>
-                              <code>xs:decimal</code>
-                              
-                           </td>
-                           <td>
-                              <code>fn:seconds-from-dateTime(.)</code>
-                              
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <code></code>
-                              
-                           </td>
-                           <td>
-                              <code>timezone</code>
-                              
-                           </td>
-                           <td>
-                              <code>xs:dayTimeDuration?</code>
-                              
-                           </td>
-                           <td>
-                              <code>fn:timezone-from-dateTime(.)</code>
-                              
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <code>xs:date</code>
-                              
-                           </td>
-                           <td>
-                              <code>year</code>
-                              
-                           </td>
-                           <td>
-                              <code>xs:integer</code>
-                              
-                           </td>
-                           <td>
-                              <code>fn:year-from-date(.)</code>
-                              
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <code></code>
-                              
-                           </td>
-                           <td>
-                              <code>month</code>
-                              
-                           </td>
-                           <td>
-                              <code>xs:integer</code>
-                              
-                           </td>
-                           <td>
-                              <code>fn:month-from-date(.)</code>
-                              
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <code></code>
-                              
-                           </td>
-                           <td>
-                              <code>day</code>
-                              
-                           </td>
-                           <td>
-                              <code>xs:integer</code>
-                              
-                           </td>
-                           <td>
-                              <code>fn:day-from-date(.)</code>
-                              
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <code></code>
-                              
-                           </td>
-                           <td>
-                              <code>timezone</code>
-                              
-                           </td>
-                           <td>
-                              <code>xs:dayTimeDuration?</code>
-                              
-                           </td>
-                           <td>
-                              <code>fn:timezone-from-date(.)</code>
-                              
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <code>xs:time</code>
-                              
-                           </td>
-                           <td>
-                              <code>hours</code>
-                              
-                           </td>
-                           <td>
-                              <code>xs:integer</code>
-                              
-                           </td>
-                           <td>
-                              <code>fn:hours-from-time(.)</code>
-                              
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <code></code>
-                              
-                           </td>
-                           <td>
-                              <code>minutes</code>
-                              
-                           </td>
-                           <td>
-                              <code>xs:integer</code>
-                              
-                           </td>
-                           <td>
-                              <code>fn:minutes-from-time(.)</code>
-                              
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <code></code>
-                              
-                           </td>
-                           <td>
-                              <code>seconds</code>
-                              
-                           </td>
-                           <td>
-                              <code>xs:decimal</code>
-                              
-                           </td>
-                           <td>
-                              <code>fn:seconds-from-time(.)</code>
-                              
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <code></code>
-                              
-                           </td>
-                           <td>
-                              <code>timezone</code>
-                              
-                           </td>
-                           <td>
-                              <code>xs:dayTimeDuration?</code>
-                              
-                           </td>
-                           <td>
-                              <code>fn:timezone-from-time(.)</code>
-                              
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <code>xs:gYear</code>
-                              
-                           </td>
-                           <td>
-                              <code>year</code>
-                              
-                           </td>
-                           <td>
-                              <code>xs:integer</code>
-                              
-                           </td>
-                           <td>See below</td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <code></code>
-                              
-                           </td>
-                           <td>
-                              <code>timezone</code>
-                              
-                           </td>
-                           <td>
-                              <code>xs:dayTimeDuration?</code>
-                              
-                           </td>
-                           <td>See below</td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <code>xs:gYearMonth</code>
-                              
-                           </td>
-                           <td>
-                              <code>year</code>
-                              
-                           </td>
-                           <td>
-                              <code>xs:integer</code>
-                              
-                           </td>
-                           <td>See below</td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <code></code>
-                              
-                           </td>
-                           <td>
-                              <code>month</code>
-                              
-                           </td>
-                           <td>
-                              <code>xs:integer</code>
-                              
-                           </td>
-                           <td>See below</td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <code></code>
-                              
-                           </td>
-                           <td>
-                              <code>timezone</code>
-                              
-                           </td>
-                           <td>
-                              <code>xs:dayTimeDuration?</code>
-                              
-                           </td>
-                           <td>See below</td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <code>xs:gMonth</code>
-                              
-                           </td>
-                           <td>
-                              <code>month</code>
-                              
-                           </td>
-                           <td>
-                              <code>xs:integer</code>
-                              
-                           </td>
-                           <td>See below</td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <code></code>
-                              
-                           </td>
-                           <td>
-                              <code>timezone</code>
-                              
-                           </td>
-                           <td>
-                              <code>xs:dayTimeDuration?</code>
-                              
-                           </td>
-                           <td>See below</td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <code>xs:gMonthDay</code>
-                              
-                           </td>
-                           <td>
-                              <code>month</code>
-                              
-                           </td>
-                           <td>
-                              <code>xs:integer</code>
-                              
-                           </td>
-                           <td>See below</td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <code></code>
-                              
-                           </td>
-                           <td>
-                              <code>day</code>
-                              
-                           </td>
-                           <td>
-                              <code>xs:integer</code>
-                              
-                           </td>
-                           <td>See below</td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <code></code>
-                              
-                           </td>
-                           <td>
-                              <code>timezone</code>
-                              
-                           </td>
-                           <td>
-                              <code>xs:dayTimeDuration?</code>
-                              
-                           </td>
-                           <td>See below</td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <code>xs:gDay</code>
-                              
-                           </td>
-                           <td>
-                              <code>day</code>
-                              
-                           </td>
-                           <td>
-                              <code>xs:integer</code>
-                              
-                           </td>
-                           <td>See below</td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <code></code>
-                              
-                           </td>
-                           <td>
-                              <code>timezone</code>
-                              
-                           </td>
-                           <td>
-                              <code>xs:dayTimeDuration?</code>
-                              
-                           </td>
-                           <td>See below</td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <code>xs:duration</code>
-                              
-                           </td>
-                           <td>
-                              <code>years</code>
-                              
-                           </td>
-                           <td>
-                              <code>xs:integer</code>
-                              
-                           </td>
-                           <td>
-                              <code>fn:years-from-duration(.)</code>
-                              
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <code></code>
-                              
-                           </td>
-                           <td>
-                              <code>months</code>
-                              
-                           </td>
-                           <td>
-                              <code>xs:integer</code>
-                              
-                           </td>
-                           <td>
-                              <code>fn:months-from-duration(.)</code>
-                              
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <code></code>
-                              
-                           </td>
-                           <td>
-                              <code>days</code>
-                              
-                           </td>
-                           <td>
-                              <code>xs:integer</code>
-                              
-                           </td>
-                           <td>
-                              <code>fn:days-from-duration(.)</code>
-                              
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <code></code>
-                              
-                           </td>
-                           <td>
-                              <code>hours</code>
-                              
-                           </td>
-                           <td>
-                              <code>xs:integer</code>
-                              
-                           </td>
-                           <td>
-                              <code>fn:hours-from-duration(.)</code>
-                              
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <code></code>
-                              
-                           </td>
-                           <td>
-                              <code>minutes</code>
-                              
-                           </td>
-                           <td>
-                              <code>xs:integer</code>
-                              
-                           </td>
-                           <td>
-                              <code>fn:minutes-from-duration(.)</code>
-                              
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <code></code>
-                              
-                           </td>
-                           <td>
-                              <code>seconds</code>
-                              
-                           </td>
-                           <td>
-                              <code>xs:decimal</code>
-                              
-                           </td>
-                           <td>
-                              <code>fn:seconds-from-duration(.)</code>
-                              
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <code>xs:hexBinary</code>
-                              
-                           </td>
-                           <td>
-                              <code>octets</code>
-                              
-                           </td>
-                           <td>
-                              <code>xs:unsignedByte*</code>
-                              
-                           </td>
-                           <td>A sequence of integers in the range 0 to 255 representing the octets in the binary
-                              value
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <code>xs:base64Binary</code>
-                              
-                           </td>
-                           <td>
-                              <code>octets</code>
-                              
-                           </td>
-                           <td>
-                              <code>xs:unsignedByte*</code>
-                              
-                           </td>
-                           <td>A sequence of integers in the range 0 to 255 representing the octets in the binary
-                              value
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <code>xs:QName</code>
-                              
-                           </td>
-                           <td>
-                              <code>prefix</code>
-                              
-                           </td>
-                           <td>
-                              <code>xs:NCName?</code>
-                              
-                           </td>
-                           <td>
-                              <code>fn:prefix-from-QName(.)</code>
-                              
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <code></code>
-                              
-                           </td>
-                           <td>
-                              <code>local-name</code>
-                              
-                           </td>
-                           <td>
-                              <code>xs:NCName</code>
-                              
-                           </td>
-                           <td>
-                              <code>fn:local-name-from-QName(.)</code>
-                              
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <code></code>
-                              
-                           </td>
-                           <td>
-                              <code>namespace-uri</code>
-                              
-                           </td>
-                           <td>
-                              <code>xs:anyURI</code>
-                              
-                           </td>
-                           <td>
-                              <code>fn:namespace-uri-from-QName</code>
-                              
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <code>xs:anyURI</code>
-                              
-                           </td>
-                           <td>
-                              <code>scheme</code>
-                              
-                           </td>
-                           <td>
-                              <code>xs:string?</code>
-                              
-                           </td>
-                           <td>The scheme part of the URI (as defined in RFC2396), if present</td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <code></code>
-                              
-                           </td>
-                           <td>
-                              <code>authority</code>
-                              
-                           </td>
-                           <td>
-                              <code>xs:string?</code>
-                              
-                           </td>
-                           <td>The authority part of the URI (as defined in RFC2396), if present</td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <code></code>
-                              
-                           </td>
-                           <td>
-                              <code>path</code>
-                              
-                           </td>
-                           <td>
-                              <code>xs:string?</code>
-                              
-                           </td>
-                           <td>The path component of the URI (as defined in RFC2396), if present</td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <code></code>
-                              
-                           </td>
-                           <td>
-                              <code>query</code>
-                              
-                           </td>
-                           <td>
-                              <code>xs:string</code>
-                              
-                           </td>
-                           <td>The query component of the URI (as defined in RFC2396), if present</td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <code></code>
-                              
-                           </td>
-                           <td>
-                              <code>query-parameters</code>
-                              
-                           </td>
-                           <td>
-                              <code>map(xs:string, xs:string*)</code>
-                              
-                           </td>
-                           <td>The query component of the URI (as defined in RFC2396), if present and parseable.
-                              The query is parsed as follows:
-                              
-                              <ol class="enumar">
-                                 <li>
-                                    <p>The query is split into parts using "&amp;" or ";" as a separator.</p>
-                                 </li>
-                                 <li>
-                                    <p>If a query part contains an "=" character, the resulting map contains
-                                       an entry whose key is the string that precedes the first "=" character, and whose
-                                       value is
-                                       the string that follows the first "=" character.
-                                    </p>
-                                 </li>
-                                 <li>
-                                    <p>If a query part contains no "=" character, the resulting map contains
-                                       an entry whose key is equal to the complete query part and whose value is the
-                                       <code>xs:boolean</code> value <code>true()</code>.
-                                    </p>
-                                 </li>
-                                 <li>
-                                    <p>If two query parts have the same key, the resulting map contains a single
-                                       entry with this key, in which the corresponding values are
-                                       combined into a sequence, retaining order.
-                                    </p>
-                                 </li>
-                              </ol>
-                              
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <code></code>
-                              
-                           </td>
-                           <td>
-                              <code>fragment</code>
-                              
-                           </td>
-                           <td>
-                              <code>xs:string?</code>
-                              
-                           </td>
-                           <td>The fragment component of the URI reference (as defined in RFC2396), if present</td>
-                        </tr>
-                     </tbody>
-                  </table>
-                  <p>The components for types <code>xs:gYear</code>, <code>xs:gYearMonth</code>, <code>xs:gMonth</code>, 
-                     <code>xs:gMonthDay</code>, and <code>xs:gDay</code> are defined as follows. Given a value 
-                     <code>G</code> of one of these types, it can be expanded to an instance of <code>xs:date</code>
-                     (call it <code>D</code>) by supplying arbitrary values for the absent components in the 7-property model
-                     as defined
-                     in XSD 1.1 Part 2. The value of component <var>C</var> in <var>G</var> is then the same as the
-                     value of the same component in <code>D</code>.
-                  </p>
-                  <p>When extracting the components of an <code>xs:anyURI</code> value, percent-encoded characters
-                     are expanded: for example the fragment part of the <code>xs:anyURI</code> value 
-                     <code>book#part%201</code> is returned as <code>"part 1"</code>.
-                  </p>
-               </div>
             </div>
             <div class="div2">
                
@@ -13996,10 +13091,10 @@ return .($k)
                   and <code>!!</code>
                   
                </p>
-               <a id="d2e20029"></a><table class="scrap">
+               <a id="d2e18901"></a><table class="scrap">
                   <tbody>
                      <tr style="vertical-align:baseline;">
-                        <td><a id="doc-xpath40-IfExpr"></a>[19]&nbsp;&nbsp;&nbsp;
+                        <td><a id="doc-xpath40-IfExpr"></a>[20]&nbsp;&nbsp;&nbsp;
                         </td>
                         <td><code><a href="#prod-xpath40-IfExpr">IfExpr</a></code></td>
                         <td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
@@ -14073,7 +13168,7 @@ return .($k)
                
                <h3><a id="id-otherwise"></a>4.16 Otherwise Expression
                </h3>
-               <a id="d2e20140"></a><table class="scrap">
+               <a id="d2e19012"></a><table class="scrap">
                   <tbody>
                      <tr style="vertical-align:baseline;">
                         <td><a id="doc-xpath40-OtherwiseExpr"></a>[28]&nbsp;&nbsp;&nbsp;
@@ -14110,14 +13205,25 @@ return .($k)
                <p>Quantified expressions support existential and universal quantification. The
                   value of a quantified expression is always <code>true</code> or <code>false</code>.
                </p>
-               <a id="d2e20200"></a><table class="scrap">
+               <a id="d2e19072"></a><table class="scrap">
                   <tbody>
                      <tr style="vertical-align:baseline;">
                         <td><a id="doc-xpath40-QuantifiedExpr"></a>[18]&nbsp;&nbsp;&nbsp;
                         </td>
                         <td><code><a href="#prod-xpath40-QuantifiedExpr">QuantifiedExpr</a></code></td>
                         <td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
-                        <td><code>("some"  |  "every")  "$"  <a href="#doc-xpath40-VarName">VarName</a>  "in"  <a href="#doc-xpath40-ExprSingle">ExprSingle</a>  (","  "$"  <a href="#doc-xpath40-VarName">VarName</a>  "in"  <a href="#doc-xpath40-ExprSingle">ExprSingle</a>)*  "satisfies"  <a href="#doc-xpath40-ExprSingle">ExprSingle</a>
+                        <td><code>("some"  |  "every")  <a href="#doc-xpath40-QuantifierBinding">QuantifierBinding</a>  (","  <a href="#doc-xpath40-QuantifierBinding">QuantifierBinding</a>)*  "satisfies"  <a href="#doc-xpath40-ExprSingle">ExprSingle</a>
+                              </code></td>
+                        <td></td>
+                     </tr>
+                  </tbody>
+                  <tbody>
+                     <tr style="vertical-align:baseline;">
+                        <td><a id="doc-xpath40-QuantifierBinding"></a>[19]&nbsp;&nbsp;&nbsp;
+                        </td>
+                        <td><code><a href="#prod-xpath40-QuantifierBinding">QuantifierBinding</a></code></td>
+                        <td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
+                        <td><code>"$"  <a href="#doc-xpath40-VarName">VarName</a>  "in"  <a href="#doc-xpath40-ExprSingle">ExprSingle</a>
                               </code></td>
                         <td></td>
                      </tr>
@@ -14127,24 +13233,33 @@ return .($k)
                   a <b>quantifier</b>, which is the keyword <code>some</code> or <code>every</code>, followed by one or more in-clauses that are used to bind variables,
                   followed by the keyword <code>satisfies</code> and a test expression. Each in-clause associates a variable with an
                   expression that returns a sequence of items, called the binding sequence for that
-                  variable. The in-clauses generate tuples of variable bindings, including a tuple for
-                  each combination of items in the binding sequences of the respective variables. Conceptually,
-                  the test expression is evaluated for each
-                  tuple of variable bindings. Results depend on the <a title="effective boolean value" class="termref" href="#dt-ebv">effective boolean value</a> of the test expressions, as defined in <a href="#id-ebv"><b>2.4.3 Effective Boolean Value</b></a>. The value of the quantified expression is defined
-                  by the following rules:
+                  variable. 
+                  The value of the quantified expression is defined by the following rules:
                </p>
                <ol class="enumar">
                   <li>
-                     <p>If the quantifier is <code>some</code>, the quantified expression is <code>true</code> if at least one evaluation of the test expression has the <a title="effective boolean value" class="termref" href="#dt-ebv">effective boolean value</a>
-                        <code>true</code>; otherwise the quantified expression is <code>false</code>. This rule implies that, if the in-clauses generate zero binding
-                        tuples, the value of the quantified expression is <code>false</code>.
+                     <p>If the <a href="#doc-xpath40-QuantifiedExpr">QuantifiedExpr</a> contains
+                        more than one <a href="#doc-xpath40-QuantifierBinding">QuantifierBinding</a>, then it is equivalent
+                        to the expression obtained by replacing each comma with <code>satisfies some</code> or <code>satisfies every</code>
+                        respectively. For example, the expression <code>some $x in X, $y in Y satisfies $x = $y</code>
+                        is equivalent to <code>some $x in X satisfies some $y in Y satisfies $x = $y</code>,
+                        while the expression <code>every $x in X, $y in Y satisfies $x lt $y</code> is equivalent to
+                        <code>every $x in X satisfies every $y in Y satisfies $x lt $y</code>
+                        
                      </p>
                   </li>
                   <li>
-                     <p>If the quantifier is <code>every</code>, the quantified expression is <code>true</code> if every evaluation of the test expression has the <a title="effective boolean value" class="termref" href="#dt-ebv">effective boolean value</a>
-                        <code>true</code>; otherwise the quantified expression is <code>false</code>. This rule implies that, if the in-clauses generate zero binding
-                        tuples, the value of the quantified
-                        expression is <code>true</code>.
+                     <p>If the quantifier is <code>some</code>, the <a href="#doc-xpath40-QuantifiedExpr">QuantifiedExpr</a> returns <code>true</code> 
+                        if at least one evaluation of the test expression has the <a title="effective boolean value" class="termref" href="#dt-ebv">effective boolean value</a>
+                        <code>true</code>; otherwise it returns <code>false</code>. In consequence, if the binding sequence is empty, 
+                        the result of the <a href="#doc-xpath40-QuantifiedExpr">QuantifiedExpr</a> is <code>false</code>.
+                     </p>
+                  </li>
+                  <li>
+                     <p>If the quantifier is <code>every</code>, the <a href="#doc-xpath40-QuantifiedExpr">QuantifiedExpr</a> returns <code>true</code> 
+                        if every evaluation of the test expression has the <a title="effective boolean value" class="termref" href="#dt-ebv">effective boolean value</a>
+                        <code>true</code>; otherwise it returns <code>false</code>. In consequence, if the binding sequence is empty, 
+                        the result of the <a href="#doc-xpath40-QuantifiedExpr">QuantifiedExpr</a> is <code>true</code>.
                      </p>
                   </li>
                </ol>
@@ -14179,9 +13294,29 @@ return .($k)
      ($emp/bonus &amp;gt; 0.25 * $emp/salary)</pre></div>
                   </li>
                   <li>
+                     <p>This expression is <code>true</code> if at every
+                        <code>employee</code> element has at least one <code>salary</code> child with the attribute <code>current="true"</code>:
+                     </p>
+                     <div class="exampleInner"><pre>every $emp in /emps/employee satisfies
+     some $sal in $emp/salary satisfies $sal/@current='true'</pre></div>
+                     <div class="note">
+                        <p class="prefix"><b>Note:</b></p>
+                        <p>Like many quantified expressions, this can be simplified. This example can be written
+                           <code>every $emp in /emps/employee satisfies $emp/salary[@current='true']</code>, or even
+                           more concisely as <code>empty(/emps/employee[not(salary/@current='true')]</code>.
+                        </p>
+                        <p>Another alternative in XPath 4.0 4.0 is to use the higher-order functions <code>fn:some</code> and <code>fn:all</code>.
+                           This example can be written <code>fn:all(/emps/employee, -&gt;(){salary/@current='true'})</code>
+                           
+                        </p>
+                     </div>
+                  </li>
+                  <li>
                      <p>In the following examples, each quantified expression evaluates its test
-                        expression over nine tuples of variable bindings, formed from the Cartesian
-                        product of the sequences <code>(1, 2, 3)</code> and <code>(2, 3, 4)</code>. The expression beginning with <code>some</code> evaluates to <code>true</code>, and the expression beginning with <code>every</code> evaluates to <code>false</code>.
+                        expression over nine pairs of variable bindings, formed from the Cartesian
+                        product of the sequences <code>(1, 2, 3)</code> and <code>(2, 3, 4)</code>. 
+                        The expression beginning with <code>some</code> evaluates to <code>true</code>, 
+                        and the expression beginning with <code>every</code> evaluates to <code>false</code>.
                      </p>
                      <div class="exampleInner"><pre>some $x in (1, 2, 3), $y in (2, 3, 4)
 satisfies $x + $y = 4</pre></div>
@@ -14217,7 +13352,7 @@ satisfies $x + $y = 4</pre></div>
                   
                   <h4><a id="id-instance-of"></a>4.18.1 Instance Of
                   </h4>
-                  <a id="d2e20436"></a><table class="scrap">
+                  <a id="d2e19384"></a><table class="scrap">
                      <tbody>
                         <tr style="vertical-align:baseline;">
                            <td><a id="doc-xpath40-InstanceofExpr"></a>[31]&nbsp;&nbsp;&nbsp;
@@ -14278,7 +13413,7 @@ satisfies $x + $y = 4</pre></div>
                   
                   <h4><a id="id-cast"></a>4.18.2 Cast
                   </h4>
-                  <a id="d2e20530"></a><table class="scrap">
+                  <a id="d2e19478"></a><table class="scrap">
                      <tbody>
                         <tr style="vertical-align:baseline;">
                            <td><a id="doc-xpath40-CastExpr"></a>[34]&nbsp;&nbsp;&nbsp;
@@ -14302,7 +13437,7 @@ satisfies $x + $y = 4</pre></div>
                      </tbody>
                      <tbody>
                         <tr style="vertical-align:baseline;">
-                           <td><a id="noid_d3e18756.doc-xpath40-LocalUnionType"></a>[127]&nbsp;&nbsp;&nbsp;
+                           <td><a id="noid_d3e17710.doc-xpath40-LocalUnionType"></a>[127]&nbsp;&nbsp;&nbsp;
                            </td>
                            <td><code>LocalUnionType</code></td>
                            <td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
@@ -14430,7 +13565,7 @@ satisfies $x + $y = 4</pre></div>
                   
                   <h4><a id="id-castable"></a>4.18.3 Castable
                   </h4>
-                  <a id="d2e20709"></a><table class="scrap">
+                  <a id="d2e19657"></a><table class="scrap">
                      <tbody>
                         <tr style="vertical-align:baseline;">
                            <td><a id="doc-xpath40-CastableExpr"></a>[33]&nbsp;&nbsp;&nbsp;
@@ -14444,7 +13579,7 @@ satisfies $x + $y = 4</pre></div>
                      </tbody>
                      <tbody>
                         <tr style="vertical-align:baseline;">
-                           <td><a id="noid_d3e18904.doc-xpath40-SingleType"></a>[92]&nbsp;&nbsp;&nbsp;
+                           <td><a id="noid_d3e17858.doc-xpath40-SingleType"></a>[92]&nbsp;&nbsp;&nbsp;
                            </td>
                            <td><code>SingleType</code></td>
                            <td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
@@ -14454,7 +13589,7 @@ satisfies $x + $y = 4</pre></div>
                      </tbody>
                      <tbody>
                         <tr style="vertical-align:baseline;">
-                           <td><a id="noid_d3e18905.doc-xpath40-LocalUnionType"></a>[127]&nbsp;&nbsp;&nbsp;
+                           <td><a id="noid_d3e17859.doc-xpath40-LocalUnionType"></a>[127]&nbsp;&nbsp;&nbsp;
                            </td>
                            <td><code>LocalUnionType</code></td>
                            <td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
@@ -14578,7 +13713,7 @@ if ($x castable as hatsize)
                   
                   <h4><a id="id-treat"></a>4.18.5 Treat
                   </h4>
-                  <a id="d2e20915"></a><table class="scrap">
+                  <a id="d2e19863"></a><table class="scrap">
                      <tbody>
                         <tr style="vertical-align:baseline;">
                            <td><a id="doc-xpath40-TreatExpr"></a>[32]&nbsp;&nbsp;&nbsp;
@@ -14671,7 +13806,7 @@ if ($x castable as hatsize)
                
                <h3><a id="id-map-operator"></a>4.19 Simple map operator (<code>!</code>)
                </h3>
-               <a id="d2e21085"></a><table class="scrap">
+               <a id="d2e20033"></a><table class="scrap">
                   <tbody>
                      <tr style="vertical-align:baseline;">
                         <td><a id="doc-xpath40-SimpleMapExpr"></a>[43]&nbsp;&nbsp;&nbsp;
@@ -14804,7 +13939,7 @@ if ($x castable as hatsize)
                
                <h3><a id="id-arrow-operator"></a>4.20 Arrow Expressions
                </h3>
-               <a id="d2e21310"></a><table class="scrap">
+               <a id="d2e20258"></a><table class="scrap">
                   <tbody>
                      <tr style="vertical-align:baseline;">
                         <td><a id="doc-xpath40-ArrowExpr"></a>[35]&nbsp;&nbsp;&nbsp;
@@ -14866,7 +14001,7 @@ if ($x castable as hatsize)
                   </tbody>
                   <tbody>
                      <tr style="vertical-align:baseline;">
-                        <td><a id="noid_d3e19459.doc-xpath40-ArgumentList"></a>[58]&nbsp;&nbsp;&nbsp;
+                        <td><a id="noid_d3e18413.doc-xpath40-ArgumentList"></a>[58]&nbsp;&nbsp;&nbsp;
                         </td>
                         <td><code>ArgumentList</code></td>
                         <td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
@@ -15273,7 +14408,7 @@ if ($x castable as hatsize)
                         </td>
                         <td><code><a href="#doc-xpath40-SimpleForClause">SimpleForClause</a></code></td>
                         <td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
-                        <td><code>"for"  <a href="#prod-xpath40-SimpleForBinding">SimpleForBinding</a>  (","  <a href="#prod-xpath40-SimpleForBinding">SimpleForBinding</a>)*</code></td>
+                        <td><code>"for"  "member"?  <a href="#prod-xpath40-SimpleForBinding">SimpleForBinding</a>  (","  <a href="#prod-xpath40-SimpleForBinding">SimpleForBinding</a>)*</code></td>
                         <td></td>
                      </tr>
                   </tbody>
@@ -15283,7 +14418,7 @@ if ($x castable as hatsize)
                         </td>
                         <td><code><a href="#doc-xpath40-SimpleForBinding">SimpleForBinding</a></code></td>
                         <td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
-                        <td><code>"member"?  "$"  <a href="#prod-xpath40-VarName">VarName</a>  "in"  <a href="#prod-xpath40-ExprSingle">ExprSingle</a>
+                        <td><code>"$"  <a href="#prod-xpath40-VarName">VarName</a>  "in"  <a href="#prod-xpath40-ExprSingle">ExprSingle</a>
                               </code></td>
                         <td></td>
                      </tr>
@@ -15327,14 +14462,25 @@ if ($x castable as hatsize)
                         </td>
                         <td><code><a href="#doc-xpath40-QuantifiedExpr">QuantifiedExpr</a></code></td>
                         <td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
-                        <td><code>("some"  |  "every")  "$"  <a href="#prod-xpath40-VarName">VarName</a>  "in"  <a href="#prod-xpath40-ExprSingle">ExprSingle</a>  (","  "$"  <a href="#prod-xpath40-VarName">VarName</a>  "in"  <a href="#prod-xpath40-ExprSingle">ExprSingle</a>)*  "satisfies"  <a href="#prod-xpath40-ExprSingle">ExprSingle</a>
+                        <td><code>("some"  |  "every")  <a href="#prod-xpath40-QuantifierBinding">QuantifierBinding</a>  (","  <a href="#prod-xpath40-QuantifierBinding">QuantifierBinding</a>)*  "satisfies"  <a href="#prod-xpath40-ExprSingle">ExprSingle</a>
                               </code></td>
                         <td></td>
                      </tr>
                   </tbody>
                   <tbody>
                      <tr style="vertical-align:baseline;">
-                        <td><a id="prod-xpath40-IfExpr"></a>[19]&nbsp;&nbsp;&nbsp;
+                        <td><a id="prod-xpath40-QuantifierBinding"></a>[19]&nbsp;&nbsp;&nbsp;
+                        </td>
+                        <td><code><a href="#doc-xpath40-QuantifierBinding">QuantifierBinding</a></code></td>
+                        <td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
+                        <td><code>"$"  <a href="#prod-xpath40-VarName">VarName</a>  "in"  <a href="#prod-xpath40-ExprSingle">ExprSingle</a>
+                              </code></td>
+                        <td></td>
+                     </tr>
+                  </tbody>
+                  <tbody>
+                     <tr style="vertical-align:baseline;">
+                        <td><a id="prod-xpath40-IfExpr"></a>[20]&nbsp;&nbsp;&nbsp;
                         </td>
                         <td><code><a href="#doc-xpath40-IfExpr">IfExpr</a></code></td>
                         <td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
@@ -15345,7 +14491,7 @@ if ($x castable as hatsize)
                   </tbody>
                   <tbody>
                      <tr style="vertical-align:baseline;">
-                        <td><a id="prod-xpath40-OrExpr"></a>[20]&nbsp;&nbsp;&nbsp;
+                        <td><a id="prod-xpath40-OrExpr"></a>[21]&nbsp;&nbsp;&nbsp;
                         </td>
                         <td><code><a href="#doc-xpath40-OrExpr">OrExpr</a></code></td>
                         <td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
@@ -15356,7 +14502,7 @@ if ($x castable as hatsize)
                   </tbody>
                   <tbody>
                      <tr style="vertical-align:baseline;">
-                        <td><a id="prod-xpath40-AndExpr"></a>[21]&nbsp;&nbsp;&nbsp;
+                        <td><a id="prod-xpath40-AndExpr"></a>[22]&nbsp;&nbsp;&nbsp;
                         </td>
                         <td><code><a href="#doc-xpath40-AndExpr">AndExpr</a></code></td>
                         <td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
@@ -15367,7 +14513,7 @@ if ($x castable as hatsize)
                   </tbody>
                   <tbody>
                      <tr style="vertical-align:baseline;">
-                        <td><a id="prod-xpath40-ComparisonExpr"></a>[22]&nbsp;&nbsp;&nbsp;
+                        <td><a id="prod-xpath40-ComparisonExpr"></a>[23]&nbsp;&nbsp;&nbsp;
                         </td>
                         <td><code><a href="#doc-xpath40-ComparisonExpr">ComparisonExpr</a></code></td>
                         <td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
@@ -15380,23 +14526,12 @@ if ($x castable as hatsize)
                   </tbody>
                   <tbody>
                      <tr style="vertical-align:baseline;">
-                        <td><a id="prod-xpath40-StringConcatExpr"></a>[23]&nbsp;&nbsp;&nbsp;
+                        <td><a id="prod-xpath40-StringConcatExpr"></a>[24]&nbsp;&nbsp;&nbsp;
                         </td>
                         <td><code><a href="#doc-xpath40-StringConcatExpr">StringConcatExpr</a></code></td>
                         <td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
                         <td><code>
-                              <a href="#prod-xpath40-ByExpr">ByExpr</a> ( "||"  <a href="#prod-xpath40-ByExpr">ByExpr</a> )*</code></td>
-                        <td></td>
-                     </tr>
-                  </tbody>
-                  <tbody>
-                     <tr style="vertical-align:baseline;">
-                        <td><a id="prod-xpath40-ByExpr"></a>[24]&nbsp;&nbsp;&nbsp;
-                        </td>
-                        <td><code><a href="#doc-xpath40-ByExpr">ByExpr</a></code></td>
-                        <td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
-                        <td><code>
-                              <a href="#prod-xpath40-RangeExpr">RangeExpr</a> ( "by"  <a href="#prod-xpath40-RangeExpr">RangeExpr</a> )*</code></td>
+                              <a href="#prod-xpath40-RangeExpr">RangeExpr</a> ( "||"  <a href="#prod-xpath40-RangeExpr">RangeExpr</a> )*</code></td>
                         <td></td>
                      </tr>
                   </tbody>
@@ -16546,8 +15681,7 @@ if ($x castable as hatsize)
                         </td>
                         <td><code><a href="#doc-xpath40-SelfReference">SelfReference</a></code></td>
                         <td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
-                        <td><code>".."  <a href="#prod-xpath40-OccurrenceIndicator">OccurrenceIndicator</a>
-                              </code></td>
+                        <td><code>".."  <a href="#prod-xpath40-OccurrenceIndicator">OccurrenceIndicator</a>?</code></td>
                         <td></td>
                      </tr>
                   </tbody>
@@ -16955,7 +16089,7 @@ if ($x castable as hatsize)
                   
                   <h4><a id="terminal-symbols"></a>A.2.1 Terminal Symbols
                   </h4>
-                  <a id="d2e23861"></a><table class="scrap">
+                  <a id="d2e22803"></a><table class="scrap">
                      <tbody>
                         <tr style="vertical-align:baseline;">
                            <td><a id="prod-xpath40-IntegerLiteral"></a>[135]&nbsp;&nbsp;&nbsp;
@@ -17120,7 +16254,7 @@ if ($x castable as hatsize)
                      not
                      terminal symbols in the grammar of <a href="#id-grammar"><b>A.1 EBNF</b></a>.
                   </p>
-                  <a id="d2e24023"></a><table class="scrap">
+                  <a id="d2e22965"></a><table class="scrap">
                      <tbody>
                         <tr style="vertical-align:baseline;">
                            <td><a id="prod-xpath40-Digits"></a>[147]&nbsp;&nbsp;&nbsp;
@@ -17163,12 +16297,12 @@ if ($x castable as hatsize)
                   </p>
                   <p>
                      [<a id="non-delimiting-token" title="non-delimiting terminal symbol">Definition</a>: The
-                     <b>non-delimiting terminal symbols</b> are: <a href="#prod-xpath40-IntegerLiteral">IntegerLiteral</a>, <a href="#prod-xpath40-URIQualifiedName">URIQualifiedName</a>, <a href="#prod-xpath40-NCName">NCName</a>, <a href="#prod-xpath40-DecimalLiteral">DecimalLiteral</a>, <a href="#prod-xpath40-DoubleLiteral">DoubleLiteral</a>, <a href="#prod-xpath40-QName">QName</a>, "ancestor", "ancestor-or-self", "and", "array", "as", "attribute", "by", "cast",
-                     "castable", "child", "comment", "descendant", "descendant-or-self", "div", "document-node",
-                     "element", "else", "empty-sequence", "enum", "eq", "every", "except", "following",
-                     "following-sibling", "for", "function", "ge", "gt", "idiv", "if", "in", "instance",
-                     "intersect", "is", "item", "le", "let", "lt", "map", "member", "mod", "namespace",
-                     "namespace-node", "ne", "node", "of", "or", "otherwise", "parent", "preceding", "preceding-sibling",
+                     <b>non-delimiting terminal symbols</b> are: <a href="#prod-xpath40-IntegerLiteral">IntegerLiteral</a>, <a href="#prod-xpath40-URIQualifiedName">URIQualifiedName</a>, <a href="#prod-xpath40-NCName">NCName</a>, <a href="#prod-xpath40-DecimalLiteral">DecimalLiteral</a>, <a href="#prod-xpath40-DoubleLiteral">DoubleLiteral</a>, <a href="#prod-xpath40-QName">QName</a>, "ancestor", "ancestor-or-self", "and", "array", "as", "attribute", "cast", "castable",
+                     "child", "comment", "descendant", "descendant-or-self", "div", "document-node", "element",
+                     "else", "empty-sequence", "enum", "eq", "every", "except", "following", "following-sibling",
+                     "for", "function", "ge", "gt", "idiv", "if", "in", "instance", "intersect", "is",
+                     "item", "le", "let", "lt", "map", "member", "mod", "namespace", "namespace-node",
+                     "ne", "node", "of", "or", "otherwise", "parent", "preceding", "preceding-sibling",
                      "processing-instruction", "record", "return", "satisfies", "schema-attribute", "schema-element",
                      "self", "some", "text", "then", "to", "treat", "union", "with"
                      ]
@@ -20195,12 +19329,12 @@ if ($x castable as hatsize)
                </dt>
                <dd>
                   <p>The
-                     <b>non-delimiting terminal symbols</b> are: <a href="#prod-xpath40-IntegerLiteral">IntegerLiteral</a>, <a href="#prod-xpath40-URIQualifiedName">URIQualifiedName</a>, <a href="#prod-xpath40-NCName">NCName</a>, <a href="#prod-xpath40-DecimalLiteral">DecimalLiteral</a>, <a href="#prod-xpath40-DoubleLiteral">DoubleLiteral</a>, <a href="#prod-xpath40-QName">QName</a>, "ancestor", "ancestor-or-self", "and", "array", "as", "attribute", "by", "cast",
-                     "castable", "child", "comment", "descendant", "descendant-or-self", "div", "document-node",
-                     "element", "else", "empty-sequence", "enum", "eq", "every", "except", "following",
-                     "following-sibling", "for", "function", "ge", "gt", "idiv", "if", "in", "instance",
-                     "intersect", "is", "item", "le", "let", "lt", "map", "member", "mod", "namespace",
-                     "namespace-node", "ne", "node", "of", "or", "otherwise", "parent", "preceding", "preceding-sibling",
+                     <b>non-delimiting terminal symbols</b> are: <a href="#prod-xpath40-IntegerLiteral">IntegerLiteral</a>, <a href="#prod-xpath40-URIQualifiedName">URIQualifiedName</a>, <a href="#prod-xpath40-NCName">NCName</a>, <a href="#prod-xpath40-DecimalLiteral">DecimalLiteral</a>, <a href="#prod-xpath40-DoubleLiteral">DoubleLiteral</a>, <a href="#prod-xpath40-QName">QName</a>, "ancestor", "ancestor-or-self", "and", "array", "as", "attribute", "cast", "castable",
+                     "child", "comment", "descendant", "descendant-or-self", "div", "document-node", "element",
+                     "else", "empty-sequence", "enum", "eq", "every", "except", "following", "following-sibling",
+                     "for", "function", "ge", "gt", "idiv", "if", "in", "instance", "intersect", "is",
+                     "item", "le", "let", "lt", "map", "member", "mod", "namespace", "namespace-node",
+                     "ne", "node", "of", "or", "otherwise", "parent", "preceding", "preceding-sibling",
                      "processing-instruction", "record", "return", "satisfies", "schema-attribute", "schema-element",
                      "self", "some", "text", "then", "to", "treat", "union", "with"
                      
@@ -20763,7 +19897,7 @@ if ($x castable as hatsize)
             </h2>
             <div class="div2">
                
-               <h3><a id="d2e26937"></a>H.1 Incompatibilities relative to XPath 3.0
+               <h3><a id="d2e25879"></a>H.1 Incompatibilities relative to XPath 3.0
                </h3>
                <p>The following names are now reserved, and cannot appear as function names (see <a href="#id-reserved-fn-names"><b>A.3 Reserved Function Names</b></a>):
                </p>
@@ -20784,7 +19918,7 @@ if ($x castable as hatsize)
             </div>
             <div class="div2">
                
-               <h3><a id="d2e26957"></a>H.2 Incompatibilities relative to XPath <span class="xpath">2.0</span>
+               <h3><a id="d2e25899"></a>H.2 Incompatibilities relative to XPath <span class="xpath">2.0</span>
                   
                </h3>
                <p>The following names are now reserved, and cannot appear as function names (see <a href="#id-reserved-fn-names"><b>A.3 Reserved Function Names</b></a>):
