@@ -16915,7 +16915,6 @@ return fn:sort($in, $SWEDISH)
          <fos:version version="4.0">Proposed for 4.0; not yet reviewed.</fos:version>
       </fos:history>
    </fos:function>
-
    <fos:function name="same-key" prefix="op">
       <fos:signatures>
          <fos:proto name="same-key" return-type="xs:boolean">
