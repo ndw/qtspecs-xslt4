@@ -521,7 +521,7 @@ These are the most important new features in XQuery 4.0:
                   <p>The built-in function library and the operators supported by XQuery 4.0 are defined
 				in <a href="#xpath-functions-40">[XQuery and XPath Functions and Operators 4.0]</a>.</p>
                </li>
-               <li>
+               <li class="xquery">
                   <p>XQuery also has an XML-based syntax, which is described in <a href="#xqueryx-31">[XQueryX 3.1]</a>. </p>
                </li>
             </ul>
@@ -866,7 +866,7 @@ in-scope-prefixes($e) ! namespace {.}{ namespace-uri-for-prefix(., $e)}
                   </ul>
                   <p>This document uses the following namespace prefixes to represent the namespace URIs with which they are listed. Although these prefixes are used within this specification to refer to the corresponding namespaces, not all of these bindings will necessarily be present in the static context of every expression, and authors are free to use different prefixes for these namespaces, or to bind these prefixes to different namespaces.</p>
                   <ul>
-                     <li>
+                     <li class="xquery">
                         <p>
                         <code>xml = http://www.w3.org/XML/1998/namespace</code>
                      </p>
@@ -876,7 +876,7 @@ in-scope-prefixes($e) ! namespace {.}{ namespace-uri-for-prefix(., $e)}
                         <code>xs = http://www.w3.org/2001/XMLSchema</code>
                      </p>
                      </li>
-                     <li>
+                     <li class="xquery">
                         <p>
                         <code>xsi = http://www.w3.org/2001/XMLSchema-instance</code>
                      </p>
@@ -901,7 +901,7 @@ in-scope-prefixes($e) ! namespace {.}{ namespace-uri-for-prefix(., $e)}
                         <code>math = http://www.w3.org/2005/xpath-functions/math</code>
                      </p>
                      </li>
-                     <li>
+                     <li class="xquery">
                         <p>
                         <code>local = http://www.w3.org/2005/xquery-local-functions</code> (see <a href="#FunctionDeclns"><b>5.18 Function Declaration</b></a>.)</p>
                      </li>
@@ -1302,32 +1302,32 @@ inferred by static type inference as discussed in  <a href="#id-static-analysis"
 				specified.]
                      </p>
                      </li>
-                     <li>
+                     <li class="xquery">
                         <p>
                         [<a id="dt-construction-mode" title="construction mode">Definition</a>: 
                            <b>Construction mode.</b> The
 			 construction mode governs the behavior of element and document node constructors. If construction mode is <code>preserve</code>, the type of a constructed element node is <code>xs:anyType</code>, and all attribute and element nodes copied during node construction    retain their original types. If construction mode is <code>strip</code>, the type of a constructed element node is <code>xs:untyped</code>; all element nodes copied during node construction receive the type <code>xs:untyped</code>, and all attribute nodes copied during node construction receive the type <code>xs:untypedAtomic</code>.]
                      </p>
                      </li>
-                     <li>
+                     <li class="xquery">
                         <p>
                         [<a id="dt-ordering-mode" title="ordering mode">Definition</a>: 
                            <b>Ordering mode.</b> Ordering mode, which has the value <code>ordered</code> or <code>unordered</code>, affects the ordering of the result sequence returned by certain expressions, as discussed in <a href="#id-unordered-expressions"><b>4.15 Ordered and Unordered Expressions</b></a>.]
                      </p>
                      </li>
-                     <li>
+                     <li class="xquery">
                         <p>
                         [<a id="dt-default-empty-order" title="default order for empty sequences">Definition</a>: 
                            <b>Default order for empty sequences.</b> This component controls the processing of empty sequences and <code>NaN</code> values as ordering keys in an <code>order by</code> clause in a FLWOR expression, as described in <a href="#id-order-by-clause"><b>4.14.8 Order By Clause</b></a>.]  Its value may be <code>greatest</code> or <code>least</code>.</p>
                      </li>
-                     <li>
+                     <li class="xquery">
                         <p>
                         [<a id="dt-boundary-space-policy" title="boundary-space policy">Definition</a>: 
                            <b>Boundary-space
 			 policy.</b> This component controls the processing of <a title="boundary whitespace" class="termref" href="#dt-boundary-whitespace">boundary whitespace</a>
 			 by <a title="direct element constructor" class="termref" href="#dt-direct-elem-const">direct element constructors</a>, as described in <a href="#id-whitespace"><b>4.12.1.4 Boundary Whitespace</b></a>.] Its value may be <code>preserve</code> or <code>strip</code>.</p>
                      </li>
-                     <li>
+                     <li class="xquery">
                         <p>
                         [<a id="dt-copy-namespaces-mode" title="copy-namespaces mode">Definition</a>: 
                            <b>Copy-namespaces mode.</b> This component controls the namespace bindings that
@@ -2294,7 +2294,7 @@ matching rules in <a href="#id-sequencetype-matching"><b>3.5 Sequence Type Match
                      <li>
                         <p>For each (variable, type) pair in <a title="in-scope variables" class="termref" href="#dt-in-scope-variables">in-scope variables</a> and the corresponding (variable, value) pair in <a title="variable values" class="termref" href="#dt-variable-values">variable values</a> such that the variable names are equal, the value must match the type, using the matching rules in  <a href="#id-sequencetype-matching"><b>3.5 Sequence Type Matching</b></a>.</p>
                      </li>
-                     <li>
+                     <li class="xquery">
                         <p>For each variable declared as external, if the variable declaration does
 not include a <a href="#doc-xquery40-VarDefaultValue">VarDefaultValue</a>, the external environment must provide a value
 for the variable.</p>
@@ -2304,12 +2304,12 @@ the value provided by the external environment must match the
 declared type, using the matching rules in  <a href="#id-sequencetype-matching"><b>3.5 Sequence Type Matching</b></a>. If the variable declaration does not include a declared type, the
 external environment must provide a type to accompany the value provided, using the same matching rules.</p>
                      </li>
-                     <li>
+                     <li class="xquery">
                         <p>For each function declared as external: the function's <a title="function item" class="termref" href="#dt-function-item">implementation</a> must either return a value that matches the declared result type,
 using the matching rules in <a href="#id-sequencetype-matching"><b>3.5 Sequence Type Matching</b></a>, or raise an
 <a title="implementation defined" class="termref" href="#dt-implementation-defined">implementation-defined</a> error.</p>
                      </li>
-                     <li>
+                     <li class="xquery">
                         <p>For a given query, define a <b>participating ISSD</b> as the <a title="in-scope schema definitions" class="termref" href="#dt-issd">in-scope schema definitions</a> of a module that is used in evaluating the query. 
   If two participating ISSDs contain a definition for the same schema type, element name, or attribute name, the definitions must be equivalent in both ISSDs. 
   In this context, equivalence means that validating an instance against type
@@ -2429,10 +2429,10 @@ numbers or sizes of various objects.
                         <p>
                         <code>err</code> denotes the namespace for XPath and XQuery errors, <code>http://www.w3.org/2005/xqt-errors</code>. This binding of the namespace prefix <code>err</code> is used for convenience in this document, and is not normative.</p>
                      </li>
-                     <li>
+                     <li class="xquery">
                         <p>
                         <code>XX</code> denotes the language in which the error is defined, using the following encoding:</p>
-                        <ul>
+                        <ul class="xquery">
                            <li>
                               <p>
                               <code>XP</code> denotes an error defined by XPath. Such an error may also occur XQuery since XQuery  includes XPath as a subset.</p>
@@ -2676,12 +2676,12 @@ would raise an error because it has an <code>id</code> child whose value is not 
                   is guarded by the condition being true, and the <code>else</code> branch
                   is guarded by the condition being false.</p>
                      </li>
-                     <li>
+                     <li class="xquery">
                         <p>In a <code>switch</code> expression (<a href="#doc-xquery40-SwitchExpr">SwitchExpr</a>), 
                the <code>return</code> expression of a particular <code>case</code> is guarded by the condition for that case
                matching, and no earlier case matching.</p>
                      </li>
-                     <li>
+                     <li class="xquery">
                         <p>In a <code>typeswitch</code> expression (<a href="#doc-xquery40-TypeswitchExpr">TypeswitchExpr</a>), 
                   the <code>return</code> expression of a particular <code>case</code> is guarded by the condition for that case
                   matching, and no earlier case matching.</p>
@@ -2875,18 +2875,18 @@ processing the following types of expressions: </p>
                      <li>
                         <p>Cast expressions</p>
                      </li>
-                     <li>
+                     <li class="xquery">
                         <p>Constructor expressions for various kinds of nodes</p>
                      </li>
-                     <li>
+                     <li class="xquery">
                         <p>
                         <code>order by</code> clauses in FLWOR expressions</p>
                      </li>
-                     <li>
+                     <li class="xquery">
                         <p>
                         <code>group by</code> clauses in FLWOR expressions</p>
                      </li>
-                     <li>
+                     <li class="xquery">
                         <p>Switch expressions</p>
                      </li>
                   </ul>
@@ -2941,7 +2941,7 @@ defined in <a href="https://www.w3.org/TR/xpath-functions-31/#func-boolean">Sect
                      <li>
                         <p>The <code>fn:not</code> function</p>
                      </li>
-                     <li>
+                     <li class="xquery">
                         <p>The <code>where</code> clause of a FLWOR expression</p>
                      </li>
                      <li>
@@ -2954,7 +2954,7 @@ defined in <a href="https://www.w3.org/TR/xpath-functions-31/#func-boolean">Sect
                      <li>
                         <p>Quantified expressions (<code>some</code>, <code>every</code>)</p>
                      </li>
-                     <li>
+                     <li class="xquery">
                         <p>
                         <a href="#doc-xquery40-WindowStartCondition">WindowStartCondition</a> and <a href="#doc-xquery40-WindowEndCondition">WindowEndCondition</a> in <code>window</code> clauses.</p>
                      </li>
@@ -3221,7 +3221,7 @@ function to the node.]
             </p>
                <p>An implementation may store both the <a title="typed value" class="termref" href="#dt-typed-value">typed value</a> and the <a title="string value" class="termref" href="#dt-string-value">string value</a> of a node, or it may store only one of these and derive the other as needed. The string value of a node must be a valid lexical representation of the typed value of the node, but the node is not required to preserve the string representation from the original source document. For example, if the typed value of a node is the <code>xs:integer</code> value <code>30</code>, its string value might be "<code>30</code>" or "<code>0030</code>".</p>
                <p class="xquery">The <a title="typed value" class="termref" href="#dt-typed-value">typed value</a>, <a title="string value" class="termref" href="#dt-string-value">string value</a>, and <a title="type annotation" class="termref" href="#dt-type-annotation">type annotation</a> of a node are closely related, and are defined by rules found in the following locations:</p>
-               <ul>
+               <ul class="xquery">
                   <li>
                      <p>If the node was created by mapping from an Infoset or PSVI, see rules in <a href="https://www.w3.org/TR/xpath-datamodel-31/#types">Section 
             
@@ -4676,7 +4676,7 @@ name.</p>
                            <p>
                            <code>function(*)</code> matches any function, including maps and arrays.</p>
                         </li>
-                        <li>
+                        <li class="xquery">
                            <p>
                            <code>%assertion function(*)</code> matches any <a title="function item" class="termref" href="#dt-function-item">function</a> if the implementation-defined function assertion <code>%assertion</code> is satisfied.
     </p>
@@ -4686,7 +4686,7 @@ name.</p>
                            <code>function(int, int) as int</code> matches any <a title="function item" class="termref" href="#dt-function-item">function item</a> with the function signature <code>function(int, int) as int</code>.
     </p>
                         </li>
-                        <li>
+                        <li class="xquery">
                            <p>
                            <code>%assertion function(int, int) as int</code> matches any <a title="function item" class="termref" href="#dt-function-item">function item</a> with the function signature <code>function(int, int) as int</code>  if the implementation-defined function assertion <code>%assertion</code> is satisfied.
     </p>
@@ -5219,12 +5219,12 @@ declare function flatten($tree as tree) as item()* {
                            <code>$x treat as xs:error</code>  raises a <a title="dynamic error" class="termref" href="#dt-dynamic-error">dynamic error</a>
                            [<a href="#ERRXPDY0050" title="err:XPDY0050">err:XPDY0050</a>] if evaluated, regardless of the value of <code>$x</code>. It never fails statically.</p>
                         </li>
-                        <li>
+                        <li class="xquery">
                            <p>
                            <code>let $x as xs:error := 1 return 2</code>  raises a <a title="type error" class="termref" href="#dt-type-error">type error</a>
                            [<a href="#ERRXPTY0004" title="err:XPTY0004">err:XPTY0004</a>], which can be raised statically or dynamically, and need not be raised if the variable <code>$x</code> is never evaluated by the query processor.</p>
                         </li>
-                        <li>
+                        <li class="xquery">
                            <p>
                            <code>declare function ns:f($arg as xs:error) {...};</code> is a valid function declaration, but it always  raises a <a title="type error" class="termref" href="#dt-type-error">type error</a>
                            [<a href="#ERRXPTY0004" title="err:XPTY0004">err:XPTY0004</a>] if the function is called.</p>
@@ -6077,7 +6077,7 @@ declare function flatten($tree as tree) as item()* {
                                     <span class="xquery">[AnnotationsB]</span> function(*)</code>
                               </p>
                               </li>
-                              <li>
+                              <li class="xquery">
                                  <p>
                                  <code>subtype-assertions(AnnotationsA, AnnotationsB)</code>, 
                               where <code>[AnnotationsB]</code> and <code>[AnnotationsA]</code> 
@@ -6109,7 +6109,7 @@ declare function flatten($tree as tree) as item()* {
                                  </code>
                               </p>
                               </li>
-                              <li>
+                              <li class="xquery">
                                  <p>
                                  <code>[AnnotationsB]</code> and <code>[AnnotationsA]</code> are optional lists of one or more annotations;</p>
                               </li>
@@ -7165,11 +7165,11 @@ to a numeric type as specified in <a href="https://www.w3.org/TR/xpath-functions
                         <p>
                         <code>"He said, ""I don't like it."""</code> denotes a string containing two quotation marks and one apostrophe.</p>
                      </li>
-                     <li>
+                     <li class="xquery">
                         <p>
                         <code>"Ben &amp;amp; Jerry&amp;apos;s"</code> denotes the <code>xs:string</code> value  "<code>Ben &amp; Jerry's</code>".</p>
                      </li>
-                     <li>
+                     <li class="xquery">
                         <p>
                         <code>"&amp;#8364;99.50"</code> denotes the <code>xs:string</code>  value "<code>€99.50</code>".</p>
                      </li>
@@ -7728,7 +7728,7 @@ At evaluation time, the value of a variable reference is the value to which the 
                                       <a href="#xpath-functions-40">[XQuery and XPath Functions and Operators 4.0]</a>.
                                     </p>
                               </li>
-                              <li>
+                              <li class="xquery">
                                  <p>
                                       Errors raised by external functions are
                                       <a title="implementation defined" class="termref" href="#dt-implementation-defined">implementation-defined</a>
@@ -11361,7 +11361,7 @@ is raised [<a href="#ERRXPTY0004" title="err:XPTY0004">err:XPTY0004</a>].</p>
                            <pre>//product[weight gt 100]</pre>
                         </div>
                      </li>
-                     <li>
+                     <li class="xquery">
                         <p>The following comparisons are true because, in each case, the two constructed nodes have the same value after atomization, even though they have different identities and/or names:</p>
                         <div class="exampleInner">
                            <pre>&amp;lt;a&amp;gt;5&amp;lt;/a&amp;gt; eq &amp;lt;a&amp;gt;5&amp;lt;/a&amp;gt;</pre>
@@ -11534,7 +11534,7 @@ evaluate to exactly the same single node:</p>
                            <pre>/books/book[isbn="1558604820"] is /books/book[call="QA76.9 C3845"]</pre>
                         </div>
                      </li>
-                     <li>
+                     <li class="xquery">
                         <p>The following comparison is false because each constructed node has its own identity:</p>
                         <div class="exampleInner">
                            <pre>&amp;lt;a&amp;gt;5&amp;lt;/a&amp;gt; is &amp;lt;a&amp;gt;5&amp;lt;/a&amp;gt;</pre>
@@ -14391,7 +14391,7 @@ return .($k)
                            <code>?"first name"</code> is equivalent to <code>.("first name")</code>
                         </p>
                         </li>
-                        <li>
+                        <li class="xquery">
                            <p>
                            <code>?("$funky / &lt;looking @string")</code> is equivalent to
     <code>.("$funky / &lt;looking @string")</code>, an appropriate lookup for a map with rather odd conventions for keys.</p>
@@ -14410,7 +14410,7 @@ return .($k)
                            <p>
                            <code>?(3.5)</code> raises a type error if the context item is an array because the parameter must be an integer.</p>
                         </li>
-                        <li>
+                        <li class="xquery">
                            <p>If the context item is an array, <code>let $x:= &lt;node i="3"/&gt; return ?($x/@i)</code> does not raise a type error because the attribute is untyped.</p>
                            <p>But <code>let $x:= &lt;node i="3"/&gt; return ?($x/@i+1)</code> does raise a type error
     because the <code>+</code> operator with an untyped operand returns a double.</p>
@@ -17191,7 +17191,7 @@ and raises a <a title="type error" class="termref" href="#dt-type-error">type er
                         <pre>every $x in (1, 2, "cat") satisfies $x * 2 = 4</pre>
                      </div>
                   </li>
-                  <li>
+                  <li class="xquery">
                      <p>This quantified expression  contains a <a href="#doc-xquery40-TypeDeclaration">type declaration</a> that is not satisfied by every item in the  test expression. If the <a title="static     typing feature" class="termref" href="#dt-static-typing-feature">Static Typing Feature</a> is implemented, this expression raises a <a title="type error" class="termref" href="#dt-type-error">type error</a> during the <a title="static analysis phase" class="termref" href="#dt-static-analysis">static analysis
 phase</a>. Otherwise, the expression may either return <code>true</code> or raise a <a title="type error" class="termref" href="#dt-type-error">type error</a> during the <a title="dynamic evaluation phase" class="termref" href="#dt-dynamic-evaluation">dynamic evaluation
 phase</a>.</p>
@@ -17509,7 +17509,7 @@ matching</a>; otherwise it returns <code>false</code>. For example:</p>
                      </p>
                         <p>This example returns <code>true</code> because the given value is an integer literal, and <code>xs:integer</code> is derived by restriction from <code>xs:decimal</code>.</p>
                      </li>
-                     <li>
+                     <li class="xquery">
                         <p>
                         <code>&lt;a&gt;{5}&lt;/a&gt; instance of xs:integer</code>
                      </p>
@@ -23891,13 +23891,13 @@ local:depth(fn:doc("partlist.xml"))
                                     <code>5 instance (: strange place for a comment :) of
                       xs:integer</code> is also syntactically valid.</p>
                               </li>
-                              <li>
+                              <li class="xquery">
                                  <p>
                                     <code>
                       &lt;eg (: an example:)&gt;{$i//title}&lt;/eg&gt;
                     </code> is not syntactically valid.</p>
                               </li>
-                              <li>
+                              <li class="xquery">
                                  <p>
                                     <code>
                       &lt;eg&gt; (: an example:) &lt;/eg&gt;
@@ -26156,40 +26156,40 @@ the value of the component for their subexpressions.</p>
                <li>
                   <p>How XDM instances are created from sources other than an Infoset or PSVI.</p>
                </li>
-               <li>
+               <li class="xquery">
                   <p>Any components of the <a title="static context" class="termref" href="#dt-static-context">static context</a> or <a title="dynamic context" class="termref" href="#dt-dynamic-context">dynamic context</a> that are overwritten or augmented by the implementation.</p>
                </li>
-               <li>
+               <li class="xquery">
                   <p>The default handling of empty sequences returned by an ordering key (orderspec) in an <code>order by</code> clause (<code>empty least</code> or <code>empty greatest</code>).</p>
                </li>
-               <li>
+               <li class="xquery">
                   <p>The names and semantics of any <a title="extension expression" class="termref" href="#dt-extension-expression">extension expressions</a> (<a title="pragma" class="termref" href="#dt-pragma">pragmas</a>) recognized by the implementation.</p>
                </li>
-               <li>
+               <li class="xquery">
                   <p>The names and semantics of any <a title="option declaration" class="termref" href="#dt-option-declaration">option declarations</a>  recognized by the implementation.</p>
                </li>
-               <li>
+               <li class="xquery">
                   <p>Protocols (if any) by which parameters can be passed to an external function, and the result of the function can returned to the invoking query.</p>
                </li>
-               <li>
+               <li class="xquery">
                   <p>The process by which the specific modules to be imported by a
 <a title="module import" class="termref" href="#dt-module-import">module import</a> are identified, if the <a title="module feature" class="termref" href="#dt-module-feature">Module Feature</a> is supported (includes processing of location hints, if any.)</p>
                </li>
-               <li>
+               <li class="xquery">
                   <p>The means by which serialization is invoked, if the <a title="serialization feature" class="termref" href="#dt-serialization-feature">Serialization Feature</a> is supported.</p>
                </li>
-               <li>
+               <li class="xquery">
                   <p>The default values for the <code>byte-order-mark</code>, <code>encoding</code>, <code>html-version</code>, <code>item-separator</code>, <code>media-type</code>, <code>normalization-form</code>, <code>omit-xml-declaration</code>, <code>standalone</code>, and <code>version</code> parameters, if the <a title="serialization feature" class="termref" href="#dt-serialization-feature">Serialization Feature</a> is supported.</p>
                </li>
-               <li>
+               <li class="xquery">
                   <p>The result of an unsuccessful call to an external function (for example,
 if the function implementation cannot be found or does not return a value
 of the declared type).</p>
                </li>
-               <li>
+               <li class="xquery">
                   <p>Limits on ranges of values for various data types, as enumerated in <a href="#id-data-model-conformance"><b>6.3 Data Model Conformance</b></a>.</p>
                </li>
-               <li>
+               <li class="xquery">
                   <p>Syntactic extensions to XQuery, including both their syntax and semantics, as discussed in <a href="#id-syntax-extensions"><b>6.4 Syntax Extensions</b></a>.</p>
                </li>
                <li>
@@ -26208,38 +26208,38 @@ of the declared type).</p>
                   <p>Any serialization parameters provided by the implementation<span class="xquery"> (see  <a href="#id-serialization"><b>2.3.4 Serialization</b></a>).</span>
                </p>
                </li>
-               <li>
+               <li class="xquery">
                   <p>The means by which the location hint for a serialization parameter document identifies the corresponding XDM instance (see  <a href="#id-serialization"><b>2.3.4 Serialization</b></a>).</p>
                </li>
                <li>
                   <p>What error, if any, is returned if an external function's implementation does not return the declared result type (see <a href="#id-consistency-constraints"><b>2.3.5 Consistency Constraints</b></a>).</p>
                </li>
-               <li>
+               <li class="xquery">
                   <p>Any annotations defined by the implementation, and their associated behavior (see <a href="#id-annotations"><b>5.15 Annotations</b></a>).</p>
                </li>
-               <li>
+               <li class="xquery">
                   <p>Any <a title="function assertion" class="termref" href="#dt-function-assertion">function assertions</a> defined by the implementation.</p>
                </li>
-               <li>
+               <li class="xquery">
                   <p>The effect of function assertions understood by the implementation on <a href="#id-assertions-subtype"><b>3.7.3 The judgement subtype-assertions(AnnotationsA, AnnotationsB)
                </b></a>.</p>
                </li>
-               <li>
+               <li class="xquery">
                   <p>Any implementation-defined variables defined by the implementation. (see <a href="#id-variables"><b>4.3.2 Variable References</b></a>).</p>
                </li>
-               <li>
+               <li class="xquery">
                   <p>The ordering associated with <code>fn:unordered</code> in the implementation (see <a href="#id-unordered-expressions"><b>4.15 Ordered and Unordered Expressions</b></a>).</p>
                </li>
-               <li>
+               <li class="xquery">
                   <p>Any additional information provided for try/catch via the <code>err:additional</code> variable (see <a href="#id-try-catch"><b>4.20 Try/Catch Expressions</b></a>).</p>
                </li>
-               <li>
+               <li class="xquery">
                   <p>The default boundary-space policy (see <a href="#id-boundary-space-decls"><b>5.3 Boundary-space Declaration</b></a>).</p>
                </li>
-               <li>
+               <li class="xquery">
                   <p>The default collation (see <a href="#id-default-collation-declaration"><b>5.4 Default Collation Declaration</b></a>).</p>
                </li>
-               <li>
+               <li class="xquery">
                   <p>The default base URI (see <a href="#id-base-uri-decl"><b>5.5 Base URI Declaration</b></a>).</p>
                </li>
             </ol>

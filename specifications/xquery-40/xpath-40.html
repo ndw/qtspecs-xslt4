@@ -753,7 +753,7 @@ As of XPath 2.0, the namespace axis is deprecated and need not be supported by a
                         <code>math = http://www.w3.org/2005/xpath-functions/math</code>
                      </p>
                      </li>
-                     <li>
+                     <li class="xpath">
                         <p>
                         <code>err = http://www.w3.org/2005/xqt-errors</code> (see <a href="#id-identifying-errors"><b>2.4.2 Identifying and Reporting Errors</b></a>).</p>
                      </li>
@@ -2032,7 +2032,7 @@ numbers or sizes of various objects.
                         <p>
                         <code>err</code> denotes the namespace for XPath and XQuery errors, <code>http://www.w3.org/2005/xqt-errors</code>. This binding of the namespace prefix <code>err</code> is used for convenience in this document, and is not normative.</p>
                      </li>
-                     <li>
+                     <li class="xpath">
                         <p>
                         <code>XP</code> identifies the error as an XPath error (some errors, originally defined by XQuery and later added to XPath, use the code <code>XQ</code> instead).</p>
                      </li>
@@ -2378,7 +2378,7 @@ Document order is a total ordering, although the relative order of some nodes is
                      <li>
                         <p>Every node occurs before all of its children and descendants.</p>
                      </li>
-                     <li>
+                     <li class="xpath">
                         <p>Namespace nodes immediately follow the element node with
 which they are associated. The relative order of namespace nodes is
 stable but <a title="implementation   dependent" class="termref" href="#dt-implementation-dependent">implementation-dependent</a>.</p>
@@ -2517,7 +2517,7 @@ defined in <a href="https://www.w3.org/TR/xpath-functions-31/#func-boolean">Sect
                      <li>
                         <p>Quantified expressions (<code>some</code>, <code>every</code>)</p>
                      </li>
-                     <li>
+                     <li class="xpath">
                         <p>General comparisons, in <a title="XPath 1.0 compatibility     mode" class="termref" href="#dt-xpath-compat-mode">XPath 1.0
 		compatibility mode</a>.</p>
                      </li>
@@ -7075,7 +7075,7 @@ At evaluation time, the value of a variable reference is the value to which the 
                                       <a href="#xpath-functions-40">[XQuery and XPath Functions and Operators 4.0]</a>.
                                     </p>
                               </li>
-                              <li>
+                              <li class="xpath">
                                  <p>
                                       Errors raised by host-language-dependent functions are
                                       <a title="implementation defined" class="termref" href="#dt-implementation-defined">implementation-defined</a>.
@@ -7855,7 +7855,7 @@ return $a("A")</pre>
 		               and a required <a title="sequence type" class="termref" href="#dt-sequence-type">sequence type</a>
                   <var>T</var> as follows:</p>
                   <ul>
-                     <li>
+                     <li class="xpath">
                         <p>If  <a title="XPath 1.0 compatibility     mode" class="termref" href="#dt-xpath-compat-mode">XPath
                           1.0 compatibility mode</a> is <code>true</code> and <var>V</var>
                           is not of the required type <var>T</var>, then the following conversions are applied
@@ -8982,7 +8982,7 @@ return fn:filter($days,$m)
                            <p>the <code>ancestor-or-self</code> axis contains the context node and the ancestors of the context node;
 				thus, the ancestor-or-self axis will always include the root node</p>
                         </li>
-                        <li>
+                        <li class="xpath">
                            <p>the <code>namespace</code> axis
 				contains the namespace nodes of the
 				context node, which are the nodes
@@ -9037,7 +9037,7 @@ return fn:filter($days,$m)
                            <p>For the attribute axis, the principal node kind is
 				attribute.</p>
                         </li>
-                        <li>
+                        <li class="xpath">
                            <p>For the namespace axis, the principal node kind is
 				namespace.</p>
                         </li>
@@ -16397,7 +16397,7 @@ defined.</p>
                <li>
                   <p>How XDM instances are created from sources other than an Infoset or PSVI.</p>
                </li>
-               <li>
+               <li class="xpath">
                   <p>Whether the implementation supports the namespace axis.</p>
                </li>
                <li>
