@@ -9612,11 +9612,11 @@ local:depth(fn:doc("partlist.xml"))
                         <a href="#ws-explicit">ws: explicit</a>
                       */</i></td></tr><tr style="vertical-align:baseline;"><td/><td/><td/><td/><td><i>/* 
                         <a href="#parse-note-comments">gn: comments</a>
-                      */</i></td></tr></tbody><tbody><tr style="vertical-align:baseline;"><td><a name="prod-xpath40-PITarget" id="prod-xpath40-PITarget"/>[274]   </td><td><code>PITarget</code></td><td>   ::=   </td><td><code>
+                      */</i></td></tr></tbody><tbody><tr style="vertical-align:baseline;"><td><a name="prod-xpath40-PITarget" id="prod-xpath40-PITarget"/>[274]   </td><td><code><a href="#doc-xpath40-PITarget">PITarget</a></code></td><td>   ::=   </td><td><code>
                         <a href="https://www.w3.org/TR/REC-xml/#NT-PITarget">[http://www.w3.org/TR/REC-xml#NT-PITarget]</a><sup><small>XML</small></sup>
                      </code></td><td><i>/* 
                         <a href="#parse-note-xml-version">xgc: xml-version</a>
-                      */</i></td></tr></tbody><tbody><tr style="vertical-align:baseline;"><td><a name="prod-xpath40-CharRef" id="prod-xpath40-CharRef"/>[275]   </td><td><code>CharRef</code></td><td>   ::=   </td><td><code>
+                      */</i></td></tr></tbody><tbody><tr style="vertical-align:baseline;"><td><a name="prod-xpath40-CharRef" id="prod-xpath40-CharRef"/>[275]   </td><td><code><a href="#doc-xpath40-CharRef">CharRef</a></code></td><td>   ::=   </td><td><code>
                         <a href="https://www.w3.org/TR/REC-xml/#NT-CharRef">[http://www.w3.org/TR/REC-xml#NT-CharRef]</a><sup><small>XML</small></sup>
                      </code></td><td><i>/* 
                         <a href="#parse-note-xml-version">xgc: xml-version</a>
@@ -9624,15 +9624,15 @@ local:depth(fn:doc("partlist.xml"))
                         <a href="https://www.w3.org/TR/REC-xml-names/#NT-QName">[http://www.w3.org/TR/REC-xml-names/#NT-QName]</a><sup><small>Names</small></sup>
                      </code></td><td><i>/* 
                         <a href="#parse-note-xml-version">xgc: xml-version</a>
-                      */</i></td></tr></tbody><tbody><tr style="vertical-align:baseline;"><td><a name="prod-xpath40-NCName" id="prod-xpath40-NCName"/>[277]   </td><td><code>NCName</code></td><td>   ::=   </td><td><code>
+                      */</i></td></tr></tbody><tbody><tr style="vertical-align:baseline;"><td><a name="prod-xpath40-NCName" id="prod-xpath40-NCName"/>[277]   </td><td><code><a href="#doc-xpath40-NCName">NCName</a></code></td><td>   ::=   </td><td><code>
                         <a href="https://www.w3.org/TR/REC-xml-names/#NT-NCName">[http://www.w3.org/TR/REC-xml-names/#NT-NCName]</a><sup><small>Names</small></sup>
                      </code></td><td><i>/* 
                         <a href="#parse-note-xml-version">xgc: xml-version</a>
-                      */</i></td></tr></tbody><tbody><tr style="vertical-align:baseline;"><td><a name="prod-xpath40-S" id="prod-xpath40-S"/>[278]   </td><td><code>S</code></td><td>   ::=   </td><td><code>
+                      */</i></td></tr></tbody><tbody><tr style="vertical-align:baseline;"><td><a name="prod-xpath40-S" id="prod-xpath40-S"/>[278]   </td><td><code><a href="#doc-xpath40-S">S</a></code></td><td>   ::=   </td><td><code>
                         <a href="https://www.w3.org/TR/REC-xml/#NT-S">[http://www.w3.org/TR/REC-xml#NT-S]</a><sup><small>XML</small></sup>
                      </code></td><td><i>/* 
                         <a href="#parse-note-xml-version">xgc: xml-version</a>
-                      */</i></td></tr></tbody><tbody><tr style="vertical-align:baseline;"><td><a name="prod-xpath40-Char" id="prod-xpath40-Char"/>[279]   </td><td><code>Char</code></td><td>   ::=   </td><td><code>
+                      */</i></td></tr></tbody><tbody><tr style="vertical-align:baseline;"><td><a name="prod-xpath40-Char" id="prod-xpath40-Char"/>[279]   </td><td><code><a href="#doc-xpath40-Char">Char</a></code></td><td>   ::=   </td><td><code>
                         <a href="https://www.w3.org/TR/REC-xml/#NT-Char">[http://www.w3.org/TR/REC-xml#NT-Char]</a><sup><small>XML</small></sup>
                      </code></td><td><i>/* 
                         <a href="#parse-note-xml-version">xgc: xml-version</a>
