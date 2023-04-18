@@ -18195,7 +18195,7 @@ return fn:fold-left($MAPS, map{},
          </fos:example>
       </fos:examples>
    </fos:function>
-   
+
    <fos:function name="of" prefix="map">
       <fos:signatures>
          <fos:proto name="of" return-type="map(*)">
@@ -18333,7 +18333,7 @@ return fn:fold-left($MAPS, map{},
          </fos:example>
       </fos:examples>
    </fos:function>
-   
+
    <fos:function name="key-value-pairs" prefix="map">
       <fos:signatures>
          <fos:proto name="key-value-pairs" return-type="record(key as xs:anyAtomicType, value as item()*)*">
