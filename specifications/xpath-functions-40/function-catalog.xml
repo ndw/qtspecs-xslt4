@@ -5620,8 +5620,14 @@ Tak, tak, tak! - da kommen sie.
             not a valid IRI according to the rules of RFC3987, extended with an
             implementation-defined subset of the extensions permitted in LEIRI, or if it is not a
             suitable IRI to use as input to the chosen resolution algorithm (for example, if it is a
-            relative IRI reference, if it is a non-hierarchic URI, or if it contains a fragment
-            identifier). </p>
+            relative IRI reference<phrase diff="add" at="2023-04-04"> or</phrase><phrase
+            diff="del" at="2023-04-04">,</phrase> if it is a non-hierarchic URI<phrase
+            diff="del" at="2023-04—04">, or if it contains a fragment
+            identifier</phrase>).<phrase diff="add" at="2023-04-04"> In XPath 4.0, attempting
+         to resolve against an absolute URI that includes a fragment identifier is no longer
+         an error, the fragment identifier is simply ignored. A narrow reading of RFC 3986
+         might seem to forbid this, but in practice the interpretation is non-controversial
+         and the practice is widely supported.</phrase></p>
          <p>A dynamic error is raised <errorref class="RG" code="0009"
             /> if the chosen resolution
             algorithm fails for any other reason. </p>
@@ -20689,8 +20695,10 @@ else map:put($MAP, $KEY, $ACTION(())</eg>
          <p diff="chg" at="2022-12-16">The default <code>$fallback</code> function raises a dynamic error. The call on <code>fn:error</code>
          shown as the default is for illustrative purposes only; apart from the error code (<code>err:FOAY0001</code>)
             the details of the error (such as the error message) are <termref def="implementation-dependent">implementation-dependent</termref>.</p>
-         <p diff="chg" at="2022-12-16">More formally, the function returns the value of <code role="example">if ($position = 1 to array:size($array))
-            then op:A2S($array)[$position]() else $fallback($position)</code>.</p>
+         <p diff="chg" at="2022-12-16">More formally, the function returns the value of:</p> 
+            <eg>if ($position = (1 to array:size($array)))
+then array:members($array)[$position]?value 
+else $fallback($position)</eg>
       </fos:rules>
       <fos:errors>
          <p><phrase diff="add" at="2022-12-16">In the absence of a <code>$fallback</code> function</phrase>,
@@ -22501,7 +22509,7 @@ return array:sort($in, $SWEDISH)
                            <code>stylesheet-base-uri</code>
                         </sitem>
                         <sitem><code>stylesheet-params</code> (defaults to an empty map)</sitem>
-                        <sitem><code>initial-mode</code> (defaults to the unnamed mode)</sitem>
+                        <sitem><code>initial-mode</code> (defaults to the stylesheet’s default mode)</sitem>
                         <sitem><code>delivery-format</code> (defaults to <code>document</code>)</sitem>
                         <sitem><code>serialization-params</code> (defaults to an empty map)</sitem>
                         <sitem><code>enable-messages</code> (default is implementation-defined)</sitem>
@@ -22540,7 +22548,7 @@ return array:sort($in, $SWEDISH)
                            <p>
                               <code>source-node</code>
                            </p>
-                           <p>Optionally, <code>initial-mode</code> (defaults to the unnamed mode)</p>
+                           <p>Optionally, <code>initial-mode</code> (defaults to the stylesheet’s default mode)</p>
                         </item>
                         <item>
                            <p>For call-template invocation, all of the following:</p>
@@ -24596,6 +24604,14 @@ declare function fn:some(
                <fos:type>xs:boolean</fos:type>
                <fos:default>false()</fos:default>
             </fos:option>
+            <fos:option key="unc-path">
+               <fos:meaning>Indicates that an input URI that begins
+               with two or more leading slashes should be interprted
+               as a Windows Universal Naming Convention
+               Path. (Specifically: that it has the <code>file:</code> scheme.)</fos:meaning>
+               <fos:type>xs:boolean</fos:type>
+               <fos:default>false()</fos:default>
+            </fos:option>
          </fos:options>
 
          <p>Processing begins with a <emph>string</emph> that is equal
@@ -24615,15 +24631,38 @@ declare function fn:some(
          the string is unchanged and the <emph>query</emph> is the empty
          sequence.</p>
 
-         <p>If the <emph>string</emph> matches <code>^[a-zA-Z]:</code>,
-         the <emph>scheme</emph> is <code>file</code> and a leading slash (“/”)
-         is added to the <emph>string</emph>. Otherwise, if the
-         <emph>string</emph> matches
-         <code>^([a-zA-Z][A-Za-z0-9\+\-\.]*):(.*)$</code>, the
-         <emph>scheme</emph> is the first match group and the
-         <emph>string</emph> is the second match group. If the
-         <emph>string</emph> does not match either expression, the <emph>scheme</emph>
-         is the empty sequence and the <emph>string</emph> is unchanged.</p>
+         <ulist>
+            <item>
+               <p>If the <emph>string</emph> matches <code>^[a-zA-Z][:|].*$</code>:</p>
+         <ulist>
+            <item><p>the <emph>scheme</emph> is <code>file</code>;</p></item>
+            <item><p>if the second character in the <emph>string</emph> is “|”, it is changed to “:”;</p></item>
+            <item><p>the <emph>filepath</emph> is the <emph>string</emph>; and</p></item>
+            <item><p>a leading slash (“/”) is added to the <emph>string</emph>.</p></item>
+         </ulist></item>
+         <item>
+            <p>Otherwise, if the <emph>string</emph> matches
+         <code>^([a-zA-Z][A-Za-z0-9\+\-\.]*):(.*)$</code>:</p>
+         <ulist>
+            <item><p>the <emph>scheme</emph> is the first match group,</p></item>
+            <item><p>the <emph>string</emph> is the second match group, and</p></item>
+            <item><p>the <emph>filepath</emph> is the empty sequence.</p></item>
+         </ulist>
+         </item>
+         <item><p>Finally, if the <emph>string</emph> does not match either expression:</p>
+         <ulist>
+            <item><p>the <emph>scheme</emph> is the empty sequence,</p></item>
+            <item><p>the <emph>string</emph> is unchanged, and</p></item>
+            <item><p>the <emph>filepath</emph> is the empty sequence.</p></item>
+         </ulist>
+         </item>
+         </ulist>
+
+         <p>If the <emph>scheme</emph> is the empty sequence, the
+         <code>unc-path</code> option is true, and the <emph>string</emph>
+         matches <code>^//[^/].*$</code>, then the scheme is <code>file</code>
+         and the <emph>filepath</emph> is the <emph>string</emph>.
+         </p>
 
          <p>If the <emph>scheme</emph> is known to be hierarchical, or known
          not to be hierarchical, then <emph>hierarchical</emph> is set accordingly.
@@ -24721,8 +24760,8 @@ declare function fn:some(
          </p>
 
          <p>If the <emph>string</emph> is the empty string, then
-         <emph>path</emph> is the empty sequence, otherwise the <emph>path</emph>
-         is the whole <emph>string</emph>.</p>
+         <emph>path</emph> is the empty sequence, otherwise <emph>path</emph>
+         and <emph>filepath</emph> are the whole <emph>string</emph>.</p>
 
          <p>The <emph>path separator</emph> is the value of the
          “<code>path-separator</code>” option. A
@@ -24738,9 +24777,11 @@ declare function fn:some(
          follows the “<code>%</code>”. In other words, “<code>A%42C</code>” becomes
          “<code>ABC</code>”. If there are any occurrences of <code>%</code> followed
          by up to two characters that are not hexadecimal digits, they are
-         replaced by the single character with the
-         codepoint 0xfffd. In other words “<code>A%XYC%Z</code>” becomes
-         “<code>A&#xfffd;C&#xfffd;</code>”.</p>
+         replaced by the character sequence <code>0xef</code>, <code>0xbf</code>, <code>0xbd</code>
+         (that is, <code>0xfffd</code>, the Unicode replacement character, in UTF-8).
+         After replacing all of the percent-escaped characters, the character sequence is
+         interpreted as UTF-8 to get the string. In other words “<code>A%XYC%Z%FO%9F%92%A9</code>” becomes
+         “<code>A&#xfffd;C&#xfffd;💩</code>”.</p>
 
          <p>The <emph>query separator</emph> is the value of the
          “<code>query-separator</code>” option.
@@ -24748,12 +24789,17 @@ declare function fn:some(
          the <emph>query</emph> on the <emph>query separator</emph>. For each
          token, construct a map. If the token contains an equal sign (“=”),
          the map contains a key named <code>key</code> with a value equal to the
-         string preceding the first equal sign and a key named <code>value</code>
-         with a value equal to the string following the first equal sign. If the
+         string preceding the first equal sign, uri decoded, and a key named <code>value</code>
+         with a value equal to the string following the first equal sign, uri decoded. If the
          token does not contain an equal sign, the map contains a single key named
-         <code>value</code> with a value equal to the token. In every case,
+         <code>value</code> with a value equal to the token, uri decoded. In every case,
          <emph>uri decoding</emph> is applied to each value add to the map.
          The resulting sequence of maps is converted into an array.</p>
+
+         <p>If the <emph>filepath</emph> is not the empty sequence,
+         it is uri decoded. On a Windows system, any
+         forward slashes in the path <rfc2119>may</rfc2119> be
+         replaced with backslashes.</p>
 
          <p>The following map is returned:</p>
 
@@ -24769,7 +24815,8 @@ declare function fn:some(
   "query": <emph>query</emph>,
   "fragment": <emph>fragment</emph>,
   "path-segments": <emph>path-segments</emph>,
-  "query-segments": <emph>query-segments</emph>
+  "query-segments": <emph>query-segments</emph>,
+  "filepath": <emph>filepath</emph>
 }</eg>
 
          <p>The map should only be populated with keys that have a non-empty value (keys
@@ -25201,7 +25248,11 @@ fn:parse-uri("https://example.com:8080/path?s=%22hello world%22;sort=relevance",
          <fos:version version="4.0">Proposed on 17 Oct 2022 to resolve
          <loc href="https://github.com/qt4cg/qtspecs/issues/72">issue #72</loc>.
          Accepted in principle on 15 Nov 2022, with some details still
-         to be resolved.</fos:version>
+         to be resolved. Updated in response to 
+         <loc href="https://github.com/qt4cg/qtspecs/issues/389">issue #389</loc> and
+         <loc href="https://github.com/qt4cg/qtspecs/issues/390">issue #390</loc>.
+         FIXME: the examples need to be updated.
+         </fos:version>
       </fos:history>
    </fos:function>
 
@@ -25250,6 +25301,13 @@ fn:parse-uri("https://example.com:8080/path?s=%22hello world%22;sort=relevance",
               <fos:type>xs:boolean</fos:type>
               <fos:default>false()</fos:default>
            </fos:option>
+            <fos:option key="unc-path">
+               <fos:meaning>Indicates that the URI represents
+               a Windows Universal Naming Convention
+               Path.</fos:meaning>
+               <fos:type>xs:boolean</fos:type>
+               <fos:default>false()</fos:default>
+            </fos:option>
         </fos:options>
 
         <p>The components are derived from the contents of the <code>$parts</code>
@@ -25260,9 +25318,12 @@ fn:parse-uri("https://example.com:8080/path?s=%22hello world%22;sort=relevance",
         if either the <code>hierarchical</code> key is present in the 
         <code>$parts</code> map with the value
         <code>false()</code> or if the scheme is known to be non-hierarchical.
-        (In other words, schemes are hierarchical by default.)
-        If the URI is non-hierarchical, the scheme is delimited by
-        a trailing <code>:</code>, for all other schemes, it is delimited by
+        (In other words, schemes are hierarchical by default.)</p>
+
+        <p>If the <code>scheme</code> is <code>file</code> and the <code>unc-path</code>
+        option is true, the scheme is delimited by a trailing <code>:////</code>,
+        otherwise, if the URI is non-hierarchical, the scheme is delimited by
+        a trailing <code>:</code>. For all other schemes, it is delimited by
         a trailing <code>://</code>. Exactly which schemes are known to be
         non-hierarchical is
         <termref def="implementation-defined">implementation-defined</termref>.</p>
@@ -25303,8 +25364,8 @@ fn:parse-uri("https://example.com:8080/path?s=%22hello world%22;sort=relevance",
         the <code>authority</code> value is simply added to the string.)</p>
 
         <p>If the <code>path-segments</code> key exists in the map, then the
-        path is constructed
-        with <code>string-join($parts?path-segments ! encode-for-uri(.), $options?path-separator)</code>,
+        path is constructed from the parts, with non-URI characters encoded:
+        <code>string-join($parts?path-segments ! encode-for-uri(.), $options?path-separator)</code>,
         otherwise the value of the <code>path</code> key is used.
         If the <code>path</code> value is the empty sequence,
         the empty string is used for the path. The path is added to the URI.</p>
@@ -25315,7 +25376,9 @@ fn:parse-uri("https://example.com:8080/path?s=%22hello world%22;sort=relevance",
         the string is the concatenation of the value of the <code>key</code>,
         an equal sign (“<code>=</code>”), and the value of the <code>value</code>. If it contains
         only one of those keys, then it is the value of that key. If it contains
-        neither, it is ignored. The query is constructed by joining the resulting
+        neither, it is ignored. In any case, the keys and values, if present, are subject
+        to encoding with <code>encode-for-uri</code>.
+        The query is constructed by joining the resulting
         strings into a single string, separated by <code>$options?query-separator</code>).
         If the <code>query-segments</code> key does not exist in the map, but
         the <code>query</code> key does, then the query is the value of the
@@ -25346,7 +25409,10 @@ fn:parse-uri("https://example.com:8080/path?s=%22hello world%22;sort=relevance",
          <fos:version version="4.0">Proposed on 17 Oct 2022 to resolve
          <loc href="https://github.com/qt4cg/qtspecs/issues/72">issue #72</loc>.
          Accepted in principle on 15 Nov 2022, with some details still
-         to be resolved.</fos:version>
+         to be resolved. Updated in response to 
+         <loc href="https://github.com/qt4cg/qtspecs/issues/389">issue #389</loc> and
+         <loc href="https://github.com/qt4cg/qtspecs/issues/390">issue #390</loc>.
+         FIXME: the examples need to be updated.</fos:version>
       </fos:history>
    </fos:function>
 </fos:functions>
