@@ -22,7 +22,7 @@
          
          <h1><a id="title"></a>XPath and XQuery Functions and Operators 4.0 </h1>
          
-         <h2><a id="w3c-doctype"></a>W3C Editor's Draft 27&nbsp;April&nbsp;2023</h2>
+         <h2><a id="w3c-doctype"></a>W3C Editor's Draft 5&nbsp;May&nbsp;2023</h2>
          <dl>
             <dt>This version:</dt>
             <dd><a href="https://qt4cg.org/branch/code-formatting/xpath-functions-40//">https://qt4cg.org/branch/code-formatting/xpath-functions-40/</a></dd>
@@ -296,20 +296,22 @@
                   <option value="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;— Select a function —</option>
                   <option value="func-map-build">build</option>
                   <option value="func-map-contains">contains</option>
+                  <option value="func-map-entries">entries</option>
                   <option value="func-map-entry">entry</option>
                   <option value="func-map-filter">filter</option>
                   <option value="func-map-find">find</option>
                   <option value="func-map-for-each">for-each</option>
                   <option value="func-map-get">get</option>
                   <option value="func-map-keys">keys</option>
-                  <option value="func-map-key-value-pairs">key-value-pairs</option>
                   <option value="func-map-merge">merge</option>
                   <option value="func-map-of">of</option>
+                  <option value="func-map-pairs">pairs</option>
                   <option value="func-map-put">put</option>
                   <option value="func-map-remove">remove</option>
                   <option value="func-map-replace">replace</option>
                   <option value="func-map-size">size</option>
-                  <option value="func-map-substitute">substitute</option></select><select id="select-math" style="display: none" onchange="location.hash = this.value">
+                  <option value="func-map-substitute">substitute</option>
+                  <option value="func-map-values">values</option></select><select id="select-math" style="display: none" onchange="location.hash = this.value">
                   <option value="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;— Select a function —</option>
                   <option value="func-math-acos">acos</option>
                   <option value="func-math-asin">asin</option>
@@ -933,27 +935,30 @@
             <li><a href="#maps"><span class="secno">18 </span><span class="content"><span class="diff-chg">Maps</span></span></a>
                
                <ol class="toc">
-                  <li><a href="#map-functions"><span class="secno">18.1 </span><span class="content">Functions that Operate on Maps</span></a><ol class="toc">
-                        <li><a href="#func-atomic-equal"><span class="secno">18.1.1 </span><span class="content">fn:atomic-equal</span></a></li>
-                        <li><a href="#func-map-build"><span class="secno">18.1.2 </span><span class="content"><span class="diff-chg">map:build</span></span></a></li>
-                        <li><a href="#func-map-contains"><span class="secno">18.1.3 </span><span class="content">map:contains</span></a></li>
-                        <li><a href="#func-map-entry"><span class="secno">18.1.4 </span><span class="content">map:entry</span></a></li>
-                        <li><a href="#func-map-filter"><span class="secno">18.1.5 </span><span class="content"><span class="diff-chg">map:filter</span></span></a></li>
-                        <li><a href="#func-map-find"><span class="secno">18.1.6 </span><span class="content">map:find</span></a></li>
-                        <li><a href="#func-map-for-each"><span class="secno">18.1.7 </span><span class="content">map:for-each</span></a></li>
-                        <li><a href="#func-map-get"><span class="secno">18.1.8 </span><span class="content"><span class="diff-chg">map:get</span></span></a></li>
-                        <li><a href="#func-map-key-value-pairs"><span class="secno">18.1.9 </span><span class="content"><span class="diff-chg">map:key-value-pairs</span></span></a></li>
-                        <li><a href="#func-map-keys"><span class="secno">18.1.10 </span><span class="content">map:keys</span></a></li>
-                        <li><a href="#func-map-merge"><span class="secno">18.1.11 </span><span class="content">map:merge</span></a></li>
-                        <li><a href="#func-map-of"><span class="secno">18.1.12 </span><span class="content"><span class="diff-chg">map:of</span></span></a></li>
-                        <li><a href="#func-map-put"><span class="secno">18.1.13 </span><span class="content">map:put</span></a></li>
-                        <li><a href="#func-map-remove"><span class="secno">18.1.14 </span><span class="content"><span class="diff-chg">map:remove</span></span></a></li>
-                        <li><a href="#func-map-replace"><span class="secno">18.1.15 </span><span class="content"><span class="diff-chg">map:replace</span></span></a></li>
-                        <li><a href="#func-map-size"><span class="secno">18.1.16 </span><span class="content">map:size</span></a></li>
-                        <li><a href="#func-map-substitute"><span class="secno">18.1.17 </span><span class="content"><span class="diff-chg">map:substitute</span></span></a></li>
+                  <li><a href="#map-composition-decomposition"><span class="secno">18.1 </span><span class="content"><span class="diff-chg">Composing and Decomposing Maps</span></span></a></li>
+                  <li><a href="#map-functions"><span class="secno">18.2 </span><span class="content">Functions that Operate on Maps</span></a><ol class="toc">
+                        <li><a href="#func-atomic-equal"><span class="secno">18.2.1 </span><span class="content">fn:atomic-equal</span></a></li>
+                        <li><a href="#func-map-build"><span class="secno">18.2.2 </span><span class="content"><span class="diff-chg">map:build</span></span></a></li>
+                        <li><a href="#func-map-contains"><span class="secno">18.2.3 </span><span class="content">map:contains</span></a></li>
+                        <li><a href="#func-map-entries"><span class="secno">18.2.4 </span><span class="content"><span class="diff-chg">map:entries</span></span></a></li>
+                        <li><a href="#func-map-entry"><span class="secno">18.2.5 </span><span class="content">map:entry</span></a></li>
+                        <li><a href="#func-map-filter"><span class="secno">18.2.6 </span><span class="content"><span class="diff-chg">map:filter</span></span></a></li>
+                        <li><a href="#func-map-find"><span class="secno">18.2.7 </span><span class="content">map:find</span></a></li>
+                        <li><a href="#func-map-for-each"><span class="secno">18.2.8 </span><span class="content">map:for-each</span></a></li>
+                        <li><a href="#func-map-get"><span class="secno">18.2.9 </span><span class="content"><span class="diff-chg">map:get</span></span></a></li>
+                        <li><a href="#func-map-pairs"><span class="secno">18.2.10 </span><span class="content"><span class="diff-chg">map:pairs</span></span></a></li>
+                        <li><a href="#func-map-keys"><span class="secno">18.2.11 </span><span class="content">map:keys</span></a></li>
+                        <li><a href="#func-map-merge"><span class="secno">18.2.12 </span><span class="content">map:merge</span></a></li>
+                        <li><a href="#func-map-of"><span class="secno">18.2.13 </span><span class="content"><span class="diff-chg">map:of</span></span></a></li>
+                        <li><a href="#func-map-put"><span class="secno">18.2.14 </span><span class="content">map:put</span></a></li>
+                        <li><a href="#func-map-remove"><span class="secno">18.2.15 </span><span class="content"><span class="diff-chg">map:remove</span></span></a></li>
+                        <li><a href="#func-map-replace"><span class="secno">18.2.16 </span><span class="content"><span class="diff-chg">map:replace</span></span></a></li>
+                        <li><a href="#func-map-size"><span class="secno">18.2.17 </span><span class="content">map:size</span></a></li>
+                        <li><a href="#func-map-substitute"><span class="secno">18.2.18 </span><span class="content"><span class="diff-chg">map:substitute</span></span></a></li>
+                        <li><a href="#func-map-values"><span class="secno">18.2.19 </span><span class="content"><span class="diff-chg">map:values</span></span></a></li>
                      </ol>
                   </li>
-                  <li><a href="#map-operations"><span class="secno">18.2 </span><span class="content">Other Operations on Maps </span></a></li>
+                  <li><a href="#map-operations"><span class="secno">18.3 </span><span class="content">Other Operations on Maps </span></a></li>
                </ol>
             </li>
             <li><a href="#arrays"><span class="secno">19 </span><span class="content">Arrays</span></a>
@@ -1295,7 +1300,7 @@
                      <p><code>http://www.w3.org/2005/xpath-functions/map</code>
                      for functions — associated with <code>map</code>. </p>
                      <p>This namespace is used for some functions that manipulate maps (see
-                     <a href="#map-functions"><b>18.1 Functions that Operate on Maps</b></a>). The namespace
+                     <a href="#map-functions"><b>18.2 Functions that Operate on Maps</b></a>). The namespace
                      prefix used in this document for these functions is <code>map</code>.
                      These functions are available to users in exactly the same way as those in the
                      <code>fn</code> namespace.</p>
@@ -3027,8 +3032,7 @@ This includes all the built-in datatypes defined in <a href="#xmlschema-2">[XML 
                         <p>The expression <code>string(abs#1)</code> raises error <code>FOTY0014</code>.</p>
                         <div class="exampleInner">
                            <pre class="small">let $para := 
-&lt;para&gt;In a hole in the ground there lived a &lt;term author="Tolkien"&gt;hobbit&lt;/term&gt;.&lt;/para&gt;
-         </pre>
+&lt;para&gt;In a hole in the ground there lived a &lt;term author="Tolkien"&gt;hobbit&lt;/term&gt;.&lt;/para&gt;</pre>
                         </div>
                         <p>The expression <code>string($para)</code> returns <code>"In a hole in the ground there lived a hobbit."</code>.</p>
                      </div>
@@ -3118,8 +3122,7 @@ This includes all the built-in datatypes defined in <a href="#xmlschema-2">[XML 
                         <p>The expression <code>data([[1,2],[3,4]])</code> returns <code>1, 2, 3, 4</code>.</p>
                         <div class="exampleInner">
                            <pre class="small">let $para := 
-&lt;para&gt;In a hole in the ground there lived a &lt;term author="Tolkien"&gt;hobbit&lt;/term&gt;.&lt;/para&gt;
-         </pre>
+&lt;para&gt;In a hole in the ground there lived a &lt;term author="Tolkien"&gt;hobbit&lt;/term&gt;.&lt;/para&gt;</pre>
                         </div>
                         <p>The expression <code>data($para)</code> returns <code>xs:untypedAtomic("In a hole in the ground there lived a hobbit.")</code>.</p>
                         <p>The expression <code>data($para/term/@author)</code> returns <code>xs:untypedAtomic("Tolkien")</code>.</p>
@@ -5220,28 +5223,57 @@ except when the argument is exactly midway between two values with the required 
                         </dd>
                         <dt class="label">Rules</dt>
                         <dd>
-                           <p>When <code>$radix</code> takes its default value of 10, the function delivers the
-         same result as casting <code>$value</code> to <code>xs:integer</code>.</p>
                            <p>The supplied <code>$radix</code> must be in the range 2 to 36 inclusive.</p>
-                           <p>After stripping leading and trailing whitespace, the supplied
-         <code>$value</code> must consist of an optional sign (<code>+</code> or <code>-</code>)
-         followed by a sequence of generalized digits drawn from the first <code>$radix</code> characters
+                           <p>The string <code>$value</code> is preprocessed by stripping all whitespace characters (including internal whitespace)
+         and underscore characters.</p>
+                           <p>After this process, the supplied value
+          must consist of an optional sign (<code>+</code> or <code>-</code>)
+         followed by a sequence of one or more generalized digits drawn from the first <code>$radix</code> characters
          in the alphabet <code>0123456789abcdefghijklmnopqrstuvwxyz</code>; upper case alphabetics
-         may be used in place of their lower-case equivalents. The value of a generalized digit
-         corresponds to its position in this alphabet.</p>
+         <code>A-Z</code> may be used in place of their lower-case equivalents.</p>
+                           <p>The value of a generalized digit corresponds to its position in this alphabet.
+         More formally, in non-error cases the result of the function is given by the XQuery expression:</p>
+                           <div class="exampleInner">
+                              <pre class="small">let $alphabet := fn:characters("0123456789abcdefghijklmnopqrstuvwxyz")
+let $preprocessed-value := fn:translate($value, "_ &amp;#x9;&amp;#xa;&amp;#xd;", "")
+let $digits := fn:translate($preprocessed-value, "+-", "")
+let $abs := fn:sum(
+  for $char at $p in fn:reverse(fn:characters($digits))
+  return (fn:index-of($alphabet, $char) - 1) * xs:integer(math:pow($radix, $p - 1)))
+return if (fn:starts-with($preprocessed-value, "-")) then -$abs else +$abs</pre>
+                           </div>
                         </dd>
                         <dt class="label">Error Conditions</dt>
                         <dd>
                            <p>A dynamic error is raised [<a href="#ERRFORG0011" title="err:FORG0011">err:FORG0011</a>]
-            if <code>$radix</code> is not in the range 2 to 32.</p>
+            if <code>$radix</code> is not in the range 2 to 36.</p>
                            <p>A dynamic error is raised [<a href="#ERRFORG0012" title="err:FORG0012">err:FORG0012</a>]
-            if <code>$value</code> (after the optional sign) contains a character
+            if after stripping whitespace and underscores and the optional leading sign 
+            <code>$value</code> is a zero-length string,
+            or if it contains a character
          that is not among the first <code>$radix</code> characters in the
             alphabet <code>0123456789abcdefghijklmnopqrstuvwxyz</code>, or the
          upper-case equivalent of such a character.</p>
                            <p>A dynamic error is raised [<a href="#ERRFOCA0003" title="err:FOCA0003">err:FOCA0003</a>]
             if the value of the resulting integer exceeds the implementation-dependent
             limit on the size of an <code>xs:integer</code>.</p>
+                        </dd>
+                        <dt class="label">Notes</dt>
+                        <dd>
+                           <p class="note">When <code>$radix</code> takes its default value of 10, the function delivers the
+            same result as casting <code>$value</code> 
+            (after removal of whitespace and underscores) to <code>xs:integer</code>.</p>
+                           <p class="note">If underscores or whitespace in the input need to be rejected, then
+         the string should first be validated, perhaps using <a href="#func-matches"><code>fn:matches</code></a>.</p>
+                           <p class="note">If other characters may legitimately appear in the input, for example
+         a leading <code>0x</code>, then this must first be removed by pre-processing the input.</p>
+                           <p class="note">If the input uses a different family of digits, then the value should first
+         be converted to the required digits using <a href="#func-translate"><code>fn:translate</code></a>.</p>
+                           <p class="note">A string in the lexical space of <code>xs:hexBinary</code> will always
+         be an acceptable input, provided it is not too long. So, for example, the expression
+         <code>"1DE=" =&gt; xs:base64Binary() =&gt; xs:hexBinary() =&gt; xs:string() =&gt; fn:parse-integer(16)</code>
+         can be used to convert the Base 64 value <code>1DE=</code> to the integer 54321, via the 
+         hexadecimal string <code>D431</code>.</p>
                         </dd>
                         <dt class="label">Examples</dt>
                         <dd>
@@ -5250,8 +5282,8 @@ except when the argument is exactly midway between two values with the required 
                               <p>The expression <code>fn:parse-integer("-20")</code> returns <code>-20</code>.</p>
                               <p>The expression <code>fn:parse-integer(" +100")</code> returns <code>100</code>.</p>
                               <p>The expression <code>fn:parse-integer("ff", 16)</code> returns <code>255</code>.</p>
-                              <p>The expression <code>fn:parse-integer("FFFFFFFF", 16)</code> returns <code>4294967295</code>.</p>
-                              <p>The expression <code>fn:parse-integer("-FFFFFFFF", 16)</code> returns <code>-4294967295</code>.</p>
+                              <p>The expression <code>fn:parse-integer("FFFF FFFF", 16)</code> returns <code>4294967295</code>.</p>
+                              <p>The expression <code>fn:parse-integer("-FFFF_FFFF", 16)</code> returns <code>-4294967295</code>.</p>
                               <p>The expression <code>fn:parse-integer("377", 8)</code> returns <code>255</code>.</p>
                               <p>The expression <code>fn:parse-integer("101", 2)</code> returns <code>5</code>.</p>
                               <p>The expression <code>fn:parse-integer("vv", 32)</code> returns <code>1023</code>.</p>
@@ -5333,19 +5365,43 @@ except when the argument is exactly midway between two values with the required 
                         <p>The rules that follow describe how non-negative numbers are output. If the value of
                <code>$value</code> is negative, the rules below are applied to the absolute value of
                <code>$value</code>, and a minus sign is prepended to the result.</p>
-                        <p>The value of <code>$picture</code> consists of <span class="diff-add"><span>an optional radix, followed by</span></span>
-            a primary format token, optionally
-            followed by a format modifier. <span class="diff-add"><span>The radix, if present, is an integer
-               in the range 2 to 36 (written without any leading zero) followed by a circumflex.</span></span>
-            The primary format token is always present and
-               <span class="verb">must not</span> be zero-length. If the string contains one or more
-            semicolons then everything <span class="diff-chg"><span>after the radix and before</span></span> 
-            the last semicolon is taken as the primary
-            format token, and everything that follows is taken as the format modifier; if the string
-            contains no semicolon then <span class="diff-chg"><span>everything after the radix</span></span> 
-            is taken as the primary format token, and
-            the format modifier is taken to be absent (which is equivalent to supplying a
-            zero-length string).</p>
+                        <p>The value of <code>$picture</code> consists of the following, in order:</p>
+                        <ol class="enumar">
+                           <li>
+                              <div class="diff-add">
+                                 <p>An optional radix, which is an integer in the range 2 to 36, written using ASCII
+            digits (<code>0-9</code>) without any leading zero;</p>
+                              </div>
+                           </li>
+                           <li>
+                              <div class="diff-add">
+                                 <p>A circumflex (<code>^</code>), which is present if the radix is present, and absent otherwise.</p>
+                              </div>
+                              <div class="diff-add">
+                                 <p>A circumflex is recognized as marking the presence of a radix only
+                  if (a) it is immediately preceded by an integer
+                  in the range 2 to 36, and (b) it is
+                  followed (somewhere within the primary format token) by an <code>"X"</code>
+                  or <code>"x"</code>. In other cases, the circumflex is treated as a grouping separator.
+                  For example, the <code>$picture</code> <code>9^000</code> outputs the number
+                  2345 as <code>"2^345</code>, whereas <code>9^XXX</code> outputs <code>"4451"</code>.
+                  This rule is to ensure backwards compatibility.</p>
+                              </div>
+                           </li>
+                           <li>
+                              <p>A primary format token. This is always present and
+               <span class="verb">must not</span> be zero-length.</p>
+                           </li>
+                           <li>
+                              <p>An optional format modifier.</p>
+                              <p>If the string contains one or more
+                  semicolons then the last semicolon is taken as terminating the primary
+                  format token, and everything that follows is taken as the format modifier; if the string
+                  contains no semicolon then 
+                  the format modifier is taken to be absent (which is equivalent to supplying a
+                  zero-length string).</p>
+                           </li>
+                        </ol>
                         <div class="diff-add">
                            <p>If a radix is present, then the primary format token must follow the
             rules for a <var>digit-pattern</var>.</p>
@@ -5360,7 +5416,7 @@ except when the argument is exactly midway between two values with the required 
                                     <p>The <var>optional-digit-sign</var> is the character "#".</p>
                                  </li>
                                  <li>
-                                    <p><span class="diff-add"><span>If the radix is absent or equal to 10, then</span></span>
+                                    <p><span class="diff-add"><span>If the radix is absent, then</span></span>
                         a <var>mandatory-digit-sign</var> is a <a title="character" class="termref" href="#character"><span class="arrow">·</span>character<span class="arrow">·</span></a> in Unicode category <var>Nd</var>. All
                            <var>mandatory-digit-signs</var> within the format token
                            <span class="verb">must</span> be from the same digit family, where a digit
@@ -5368,22 +5424,26 @@ except when the argument is exactly midway between two values with the required 
                         having digit values 0 through 9. Within the format token, these digits are
                         interchangeable: a three-digit number may thus be indicated equivalently by
                            <code>000</code>, <code>001</code>, or <code>999</code>.</p>
-                                    <p>If the primary format token contains at least one Unicode digit then it is taken
+                                    <p>If the primary format token contains at least one Unicode digit,
+                        then the primary format token is taken
                         as a decimal digit pattern, and in this case it <span class="verb">must</span> match the
                         regular expression <code>^((\p{Nd}|#|[^\p{N}\p{L}])+?)$</code>. If it contains a
                         digit but does not match this pattern, a dynamic error is raised [<a href="#ERRFODF1310" title="err:FODF1310">err:FODF1310</a>].</p>
                                  </li>
                                  <li>
                                     <p><span class="diff-add"><span>If the radix (call it <var>R</var>) is 
-                        present and not equal to 10, then</span></span>
-                        a <var>mandatory-digit-sign</var> is a <a title="character" class="termref" href="#character"><span class="arrow">·</span>character<span class="arrow">·</span></a> taken from the first <var>R</var> characters
-                        of the alphabet <code>0123456789abcdefghijklmnopqrstuvwxyz</code>, or its
-                        upper-case equivalent. If any alphabetic character is upper-case, then all
-                        alphabetic characters must be upper-case. Within the format token, these digits are
-                        interchangeable: a three-digit number may thus be indicated equivalently by
-                        <code>fff</code>, <code>001</code>, or <code>FFF</code>. The digit family
-                        used in the output will use upper-case letters if any <var>mandatory-digit-sign</var> is
-                        an upper-case letter; otherwise it will use lower-case letters.</p>
+                        present (including the case where an explicit radix of 10 is used), then</span></span>
+                        the character used as the <var>mandatory-digit-sign</var> is either <code>"x"</code>
+                        or <code>"X"</code>. If any <var>mandatory-digit-sign</var> is upper-case <code>"X"</code>, then all
+                        <var>mandatory-digit-signs</var> must be upper-case <code>"X"</code>. The digit family
+                        used in the output comprises the first <var>R</var> characters of the
+                        alphabet <code>0123456789abcdefghijklmnopqrstuvwxyz</code>, but using upper-case 
+                        letters in place of lower-case if an upper-case <code>"X"</code> is used
+                        as the <var>mandatory-digit-sign</var>.</p>
+                                    <div class="diff-add">
+                                       <p>In this case the primary format token <span class="verb">must</span> match the
+                        regular expression <code>^(([Xx#]|[^\p{N}\p{L}])+?)$</code></p>
+                                    </div>
                                  </li>
                                  <li>
                                     <p>a <var>grouping-separator-sign</var> is a non-alphanumeric character, that
@@ -5398,11 +5458,6 @@ except when the argument is exactly midway between two values with the required 
                      token as a whole must be followed by another semicolon, to ensure that the
                      grouping separator is not mistaken as a separator between the primary format
                      token and the format modifier.</p>
-                                 <div class="diff-add">
-                                    <p>If a circumflex is to be used as a grouping separator, then the characters that
-                    precede the first circumflex in the picture must not constitute an integer in the range
-                    2 to 36.</p>
-                                 </div>
                               </div>
                               <p>There <span class="verb">must</span> be at least one <var>mandatory-digit-sign</var>.
                   There may be zero or more <var>optional-digit-signs</var>, and (if present) these
@@ -5412,7 +5467,7 @@ except when the argument is exactly midway between two values with the required 
                   <span class="verb">must not</span> appear at the start or end of the
                      <var>digit-pattern</var>, nor adjacent to another
                      <var>grouping-separator-sign</var>.</p>
-                              <p>The corresponding output format is a number in the specified radix, using this digit family, with
+                              <p>The corresponding output is a number in the specified radix, using this digit family, with
                   at least as many digits as there are <var>mandatory-digit-signs</var> in the
                   format token. Thus:</p>
                               <ul>
@@ -5431,11 +5486,11 @@ except when the argument is exactly midway between two values with the required 
                         then <code>٣</code> ...</p>
                                  </li>
                                  <li>
-                                    <p>A format token of <code>16^ff</code> generates the sequence <code>00 01 02 03
+                                    <p>A format token of <code>16^xx</code> generates the sequence <code>00 01 02 03
                      ... 08 09 0a 0b 0c 0d 0e 0f 10 11 ...</code></p>
                                  </li>
                                  <li>
-                                    <p>A format token of <code>16^F</code> generates the sequence <code>0 1 2 3
+                                    <p>A format token of <code>16^X</code> generates the sequence <code>0 1 2 3
                         ... 8 9 A B C D E F 10 11 ...</code></p>
                                  </li>
                               </ul>
@@ -5513,7 +5568,8 @@ except when the argument is exactly midway between two values with the required 
                                  </li>
                                  <li>
                                     <p>Let <var>S<sub>3</sub></var> be the result of replacing all decimal digits (0-9) in <var>S<sub>2</sub></var> with the corresponding
-                     digits from the selected digit family.</p>
+                     digits from the selected digit family. <span class="diff-add"><span>(This has no effect when the selected digit family uses ASCII digits (0-9),
+                     which will always be the case if a radix is specified.)</span></span></p>
                                  </li>
                                  <li>
                                     <p>Let <var>S<sub>4</sub></var> be the result of inserting grouping separators into <var>S<sub>3</sub></var>: for every (position 
@@ -5751,12 +5807,14 @@ except when the argument is exactly midway between two values with the required 
                            <p>The expression <code>format-integer(7, 'a')</code> returns <code>"g"</code>.</p>
                            <p>The expression <code>format-integer(57, 'I')</code> returns <code>"LVII"</code>.</p>
                            <p>The expression <code>format-integer(1234, '#;##0;')</code> returns <code>"1;234"</code>.</p>
-                           <p>The expression <code>format-integer(1234, '16^ffff')</code> returns <code>"04d2"</code>.</p>
-                           <p>The expression <code>format-integer(1234, '16^F')</code> returns <code>"4D2"</code>.</p>
-                           <p>The expression <code>format-integer(12345678, '16^ffff_ffff')</code> returns <code>"00bc_614e"</code>.</p>
-                           <p>The expression <code>format-integer(12345678, '16^#_ffff')</code> returns <code>"bc_614e"</code>.</p>
-                           <p>The expression <code>format-integer(255, '2^1111 1111')</code> returns <code>"1111 1111"</code>.</p>
-                           <p>The expression <code>format-integer(1023, '32^AAAA')</code> returns <code>"00VV"</code>.</p>
+                           <p>The expression <code>format-integer(1234, '16^xxxx')</code> returns <code>"04d2"</code>.</p>
+                           <p>The expression <code>format-integer(1234, '16^X')</code> returns <code>"4D2"</code>.</p>
+                           <p>The expression <code>format-integer(12345678, '16^xxxx_xxxx')</code> returns <code>"00bc_614e"</code>.</p>
+                           <p>The expression <code>format-integer(12345678, '16^#_xxxx')</code> returns <code>"bc_614e"</code>.</p>
+                           <p>The expression <code>format-integer(255, '2^xxxx xxxx')</code> returns <code>"1111 1111"</code>.</p>
+                           <p>The expression <code>format-integer(1023, '32^XXXX')</code> returns <code>"00VV"</code>.</p>
+                           <p>The expression <code>format-integer(1023, '10^XXXX')</code> returns <code>"1023"</code>.</p>
+                           <p>The expression <code>format-integer(1023, '10^00')</code> returns <code>"10^23"</code>.</p>
                         </div>
                      </dd>
                   </dl>
@@ -7694,8 +7752,7 @@ declare %private function r:random-sequence($length as xs:integer,
   else ($G?number, r:random-sequence($length - 1, $G?next()))
 };
 
-r:random-sequence(200);
-            </pre>
+r:random-sequence(200);</pre>
                            </div>
                         </div>
                      </dd>
@@ -12457,8 +12514,7 @@ description of <a href="#func-resolve-uri"><code>fn:resolve-uri</code></a>.</p>
 }</pre></div>
 .</p>
                            <p>This example demonstrates a non-standard query separator.</p>
-                           <p>The expression <code>
-fn:parse-uri("https://example.com:8080/path?s=%22hello world%22;sort=relevance",
+                           <p>The expression <code>fn:parse-uri("https://example.com:8080/path?s=%22hello world%22;sort=relevance",
              map { "query-separator": ";" })</code> returns 
 <div class="exampleInner"><pre class="small">map {
   "uri": "https://example.com:8080/path?s=%22hello world%22;sort=relevance",
@@ -13313,8 +13369,7 @@ xs:yearMonthDuration($arg1) div xs:yearMonthDuration('P1M')  eq
 xs:yearMonthDuration($arg2) div xs:yearMonthDuration('P1M')
     and
 xs:dayTimeDuration($arg1) div xs:dayTimeDuration('PT1S')  eq
-xs:dayTimeDuration($arg2) div xs:dayTimeDuration('PT1S')
-</pre>
+xs:dayTimeDuration($arg2) div xs:dayTimeDuration('PT1S')</pre>
                         </div>
                         <p>that is, the function returns <code>true</code> if the months and seconds values of the
             two durations are equal.</p>
@@ -21163,8 +21218,7 @@ document {
 Freude, schöner Götterfunken,&lt;br/&gt;
 Tochter aus Elysium,&lt;br/&gt;
 Wir betreten feuertrunken,&lt;br/&gt;
-Himmlische, dein Heiligtum.&lt;/p&gt;}
-         </pre>
+Himmlische, dein Heiligtum.&lt;/p&gt;}</pre>
                         </div>
                         <p>The expression <code>fn:path($e)</code> returns <code>'/'</code>.</p>
                         <p>The expression <code>fn:path($e/*:p)</code> returns <code>'/Q{http://example.com/one}p[1]'</code>.</p>
@@ -21179,8 +21233,7 @@ Himmlische, dein Heiligtum.&lt;/p&gt;}
                &lt;empnr&gt;E21256&lt;/empnr&gt;
                &lt;first&gt;John&lt;/first&gt;
                &lt;last&gt;Brown&lt;/last&gt;
-            &lt;/employee&gt;
-         </pre>
+            &lt;/employee&gt;</pre>
                         </div>
                         <p>The expression <code>fn:path($emp)</code> returns <code>'Q{http://www.w3.org/2005/xpath-functions}root()'</code>.</p>
                         <p>The expression <code>fn:path($emp/@xml:id)</code> returns <code>'Q{http://www.w3.org/2005/xpath-functions}root()/@Q{http://www.w3.org/XML/1998/namespace}id'</code>.</p>
@@ -21257,8 +21310,7 @@ Himmlische, dein Heiligtum.&lt;/p&gt;}
        &lt;item&gt;&lt;xsl:value-of select="."/&gt;&lt;/item&gt;
     &lt;/xsl:for-each&gt;
   &lt;/ulist&gt;
-&lt;/xsl:if&gt;  
-</pre>
+&lt;/xsl:if&gt;</pre>
                      </div>
                      <p class="note">This is because it makes two downward selections to read the child <code>row</code>
             elements. The use of <code>fn:has-children</code> in the <code>xsl:if</code> conditional
@@ -21531,8 +21583,7 @@ Himmlische, dein Heiligtum.&lt;/p&gt;}
                            <div class="exampleInner">
                               <pre>
                let $break := &lt;br/&gt;
-               return fn:empty($break)
-            </pre>
+               return fn:empty($break)</pre>
                            </div>
                            <p>The result is <code>false()</code>.</p>
                         </div>
@@ -21586,8 +21637,7 @@ Himmlische, dein Heiligtum.&lt;/p&gt;}
                            <div class="exampleInner">
                               <pre>
                let $break := &lt;br/&gt;
-               return fn:exists($break)
-            </pre>
+               return fn:exists($break)</pre>
                            </div>
                            <p>The result is <code>true()</code>.</p>
                         </div>
@@ -25577,8 +25627,7 @@ else
                &lt;last&gt;Brown&lt;/last&gt;
             &lt;/employee&gt;
           }
-        }
-         </pre>
+        }</pre>
                            </div>
                            <p>The expression <code>$emp/id('ID21256')/name()</code> returns <code>"employee"</code>. <em>(The <code>xml:id</code> attribute has the <code>is-id</code> property,
                   so the employee element is selected.)</em></p>
@@ -25756,8 +25805,7 @@ else
                &lt;last&gt;Brown&lt;/last&gt;
             &lt;/employee&gt;
           }
-        }
-         </pre>
+        }</pre>
                            </div>
                            <p>The expression <code>$emp/fn:element-with-id('ID21256')/name()</code> returns <code>"employee"</code>. <em>(The <code>xml:id</code> attribute has the <code>is-id</code> property,
                   so the employee element is selected.)</em></p>
@@ -25927,8 +25975,7 @@ else
             &lt;/employee&gt;
           &lt;/employees&gt;
         }
-      }
-         </pre>
+      }</pre>
                            </div>
                            <p>The expression <code>$emp/(element-with-id('ID21256')/@xml:id =&gt; fn:idref())/ancestor::employee/last =&gt; string()</code> returns <code>"Brown"</code>. <em>(Assuming that <code>manager</code> has the is-idref property, the call on <code>fn:idref</code> selects
                   the <code>manager</code> element. If, instead, the <code>manager</code> had a <code>ref</code>
@@ -26684,8 +26731,7 @@ else
   &lt;xsl:apply-templates/&gt;
   &lt;xsl:value-of select="unparsed-text('footer.html', 'iso-8859-1')"
                 disable-output-escaping="yes"/&gt;
-&lt;/xsl:template&gt;
-</pre>
+&lt;/xsl:template&gt;</pre>
                            </div>
                         </div>
                      </dd>
@@ -27607,13 +27653,11 @@ else
 &lt;output:serialization-parameters 
         xmlns:output="http://www.w3.org/2010/xslt-xquery-serialization"&gt;
   &lt;output:omit-xml-declaration value="yes"/&gt;
-&lt;/output:serialization-parameters&gt;
-         </pre>
+&lt;/output:serialization-parameters&gt;</pre>
                            </div>
                            <div class="exampleInner">
                               <pre>let $data := 
-&lt;a b="3"/&gt;
-         </pre>
+&lt;a b="3"/&gt;</pre>
                            </div>
                            <p>The following call might produce the output shown:</p>
                            <p>The expression <code>fn:serialize($data, $params)</code> returns <code>'&lt;a b="3"/&gt;'</code>.</p>
@@ -29427,7 +29471,7 @@ else
                               
                               <div class="example">
                                  
-                                 <div class="exampleHeader"><a id="d7e38779"></a>Example:</div>
+                                 <div class="exampleHeader"><a id="d7e38854"></a>Example:</div>
                                  <p>An implementation may provide keys for options to the <em>tidy</em>
                                  HTML parser, allowing a user to configure the behaviour of that parser.</p>
                               </div>
@@ -29690,7 +29734,7 @@ else
                   representation. </p>
                   <div class="example">
                      
-                     <div class="exampleHeader"><a id="d7e39099"></a>Example: A JSON Text and its XML Representation</div>
+                     <div class="exampleHeader"><a id="d7e39174"></a>Example: A JSON Text and its XML Representation</div>
                      <p>Consider the following JSON text:</p>
                      <div class="exampleInner">
                         <pre class="small">
@@ -31376,8 +31420,10 @@ Components
                derived type <code>xs:dateTimeStamp</code>. The query is written to ensure that no
                failure occurs when the implementation does not recognize the type
                   <code>xs:dateTimeStamp</code>.</p>
-                           <p>The expression <code>let $f := fn:function-lookup(xs:QName('zip:binary-entry'), 2)
-                  return if (exists($f)) then $f($href, $entry) else ()</code> returns the result of
+                           <p>The expression
+         <div class="exampleInner"><pre class="small">let $f := fn:function-lookup(xs:QName('zip:binary-entry'), 2)
+return if (exists($f)) then $f($href, $entry) else ()</pre></div>
+returns the result of
                calling <code>zip:binary-entry($href, $entry)</code> if the function is available, or
                an empty sequence otherwise.</p>
                         </div>
@@ -31636,8 +31682,7 @@ declare function fn:for-each($input, $action) {
   &lt;xsl:if test="fn:exists($input)"&gt;
     &lt;xsl:sequence select="$action(fn:head($input)), fn:for-each(fn:tail($input), $action)"/&gt;
   &lt;/xsl:if&gt;
-&lt;/xsl:function&gt;
-         </pre>
+&lt;/xsl:function&gt;</pre>
                         </div>
                      </dd>
                      <dt class="label">Notes</dt>
@@ -31726,8 +31771,7 @@ declare function fn:filter(
   &lt;xsl:if test="fn:exists($input)"&gt;
     &lt;xsl:sequence select="fn:head($input)[$f(.) eq fn:true()], fn:filter(fn:tail($input), $f)"/&gt;
   &lt;/xsl:if&gt;
-&lt;/xsl:function&gt;
-         </pre>
+&lt;/xsl:function&gt;</pre>
                         </div>
                      </dd>
                      <dt class="label">Error Conditions</dt>
@@ -31812,8 +31856,7 @@ declare function fn:all(
   &lt;xsl:param name="input" as="item()*"/&gt;
   &lt;xsl:param name="predicate" as="function(item()) as xs:boolean"/&gt;
   &lt;xsl:sequence select="every $i in $input satisfies $predicate($i)"/&gt;
-&lt;/xsl:function&gt;
-         </pre>
+&lt;/xsl:function&gt;</pre>
                            </div>
                         </dd>
                         <dt class="label">Notes</dt>
@@ -31901,8 +31944,7 @@ declare function fn:some(
   &lt;xsl:param name="input" as="item()*"/&gt;
   &lt;xsl:param name="predicate" as="function(item()) as xs:boolean"/&gt;
   &lt;xsl:sequence select="some $i in $input satisfies $predicate($i)"/&gt;
-&lt;/xsl:function&gt;
-         </pre>
+&lt;/xsl:function&gt;</pre>
                            </div>
                         </dd>
                         <dt class="label">Notes</dt>
@@ -32006,8 +32048,7 @@ declare function fn:fold-left(
       &lt;xsl:sequence select="fn:fold-left(fn:tail($input), $action($zero, fn:head($input)), $action)"/&gt;
     &lt;/xsl:otherwise&gt;
   &lt;/xsl:choose&gt;
-&lt;/xsl:function&gt;
-         </pre>
+&lt;/xsl:function&gt;</pre>
                         </div>
                      </dd>
                      <dt class="label">Error Conditions</dt>
@@ -32122,8 +32163,7 @@ declare function fn:fold-right(
       &lt;xsl:sequence select="$action(fn:head($input), fn:fold-right(fn:tail($input), $zero, $action))"/&gt;
     &lt;/xsl:otherwise&gt;
   &lt;/xsl:choose&gt;
-&lt;/xsl:function&gt;
-         </pre>
+&lt;/xsl:function&gt;</pre>
                         </div>
                      </dd>
                      <dt class="label">Error Conditions</dt>
@@ -32251,17 +32291,17 @@ declare function fn:iterate-while(
                            <p>The expression <code>fn:iterate-while(2, -&gt; { . &lt; 100 }, -&gt; { . * . })</code> returns <code>256</code>.</p>
                            <p>The expression <code>let $input := (0 to 4, 6 to 10)
 return fn:iterate-while(0, function($n) { $n = $input }, function($n) { $n + 1 })</code> returns <code>5</code>. <em>(This returns the first positive number missing in a sequence.)</em></p>
-                           <p>The expression <code>fn:iterate-while(
+                           <p>The expression <div class="exampleInner"><pre>fn:iterate-while(
   1 to 9,
   function($seq) { head($seq) &lt; 5 },
   function($seq) { tail($seq) }
-)</code> returns <code>(5, 6, 7, 8, 9)</code>.</p>
-                           <p>The expression <code>let $input := 3936256
+)</pre></div> returns <code>(5, 6, 7, 8, 9)</code>.</p>
+                           <p>The expression <div class="exampleInner"><pre class="small">let $input := 3936256
 return fn:iterate-while(
   $input,
   function($result) { abs($result * $result - $input) &gt;= 0.0000000001 },
   function($guess) { ($guess + $input div $guess) div 2 }
-)</code> returns <code>1984</code>. <em>(This computes the square root of a number.)</em></p>
+)</pre></div> returns <code>1984</code>. <em>(This computes the square root of a number.)</em></p>
                            <p>The following example generates random doubles. It is interrupted once a number
                exceeds a given limit:</p>
                            <div class="exampleInner">
@@ -32276,8 +32316,7 @@ let $map := fn:iterate-while(
     map:put($r?next(), 'numbers', ($r?numbers, $r?number))
   }
 )
-return $map?numbers
-            </pre>
+return $map?numbers</pre>
                            </div>
                         </div>
                      </dd>
@@ -32357,8 +32396,7 @@ declare function fn:for-each-pair($input1, $input2, $action)
     &lt;xsl:sequence select="$action(fn:head($input1), fn:head($input2))"/&gt;
     &lt;xsl:sequence select="fn:for-each-pair(fn:tail($input1), fn:tail($input2), $action)"/&gt;
   &lt;/xsl:if&gt;
-&lt;/xsl:function&gt;
-         </pre>
+&lt;/xsl:function&gt;</pre>
                         </div>
                      </dd>
                      <dt class="label">Notes</dt>
@@ -32836,8 +32874,7 @@ else let $rel = op:simple-compare(head($a), head($b), $C)
                            <div class="exampleInner">
                               <pre class="small">
 let $SWEDISH := "http://www.w3.org/2013/collation/UCA?lang=se"
-return fn:sort($in, $SWEDISH)
-            </pre>
+return fn:sort($in, $SWEDISH)</pre>
                            </div>
                            <p>To sort a sequence of employees by last name as the major sort key and first name as the minor sort key,
                using the default collation:
@@ -34375,8 +34412,7 @@ let $result := fn:transform(
     "stylesheet-location" : "render.xsl",
     "source-node"    : fn:doc('test.xml')
   })
-return $result?output//body  
-               </pre>
+return $result?output//body</pre>
                            </div>
                         </div>
                      </dd>
@@ -34466,7 +34502,8 @@ return $result?output//body
             <p>Maps were introduced as a new datatype in XDM 3.1. This section describes functions that
          operate on maps.</p>
             <p>A map is an additional kind of item.</p>
-            <p><span class="termdef"><a id="dt-map"></a>[Definition]  A map consists of a set of entries. Each entry comprises a key 
+            <p><span class="termdef"><a id="dt-map"></a>[Definition]  A <b>map</b> consists of a set of entries, also known
+            as key-value pairs. Each entry comprises a key 
             which is an arbitrary atomic value, and an arbitrary sequence called the associated value.</span></p>
             <p><span class="termdef"><a id="dt-same-key"></a>[Definition]  Within a map, no two entries have the <b>same key</b>. 
             Two atomic values <code>K1</code> and <code>K2</code> are the <b>same key</b>
@@ -34474,117 +34511,132 @@ return $result?output//body
             returns true.</span></p>
             <p>It is not necessary that all the keys in a map should be
             of the same type (for example, they can include a mixture of integers and strings).</p>
+            <p>Maps are immutable, and have no identity separate from their content. 
+            For example, the <a href="#func-map-remove"><code>map:remove</code></a> function returns a map that differs
+            from the supplied map by the omission (typically) of one entry, but the supplied map is not changed by the operation.
+            Two calls on <a href="#func-map-remove"><code>map:remove</code></a> with the same arguments return maps that are
+            indistinguishable from each other; there is no way of asking whether these are "the same map".</p>
+            <p>A map can also be viewed as a function from keys to associated values. To achieve this, a map is also a 
+            function item. The function corresponding to the map has the signature 
+            <code>function($key as xs:anyAtomicValue) as item()*</code>. Calling the function has the same effect as calling
+            the <code>get</code> function: the expression
+            <code>$map($key)</code> returns the same result as <code>get($map, $key)</code>. For example, if <code>$books-by-isbn</code>
+            is a map whose keys are ISBNs and whose assocated values are <code>book</code> elements, then the expression
+            <code>$books-by-isbn("0470192747")</code> returns the <code>book</code> element with the given ISBN.
+            The fact that a map is a function item allows it to be passed as an argument to higher-order functions 
+            that expect a function item as one of their arguments.</p>
             <div class="diff-add">
-               <p>It is often useful to decompose a map into a sequence of key-value pairs (in which the key is an atomic value
-         and the value is an arbitrary sequence). There are two conventional representations of key-value pairs,
-         each with its own advantages and disadvantages:</p>
-            </div>
-            <div class="diff-add">
-               <ol class="enumar">
-                  <li>
-                     <p>The <b>singleton map</b> representation: here a key-value pair is represented as
-            a map containing a single entry, containing the key and the value: for example the map
+               <div class="div2">
+                  
+                  <h3><a id="map-composition-decomposition"></a>18.1 Composing and Decomposing Maps</h3>
+                  <p>It is often useful to decompose a map into a sequence of entries, or key-value pairs 
+            (in which the key is an atomic value and the value is an arbitrary sequence). Subsequently it may be necessary
+            to reconstruct a map from these components, typically after modification.</p>
+                  <p>There are two conventional ways of representing key-value pairs,
+            each with its own advantages and disadvantages. Both approaches are supported by functions in this library.
+            These are described below:</p>
+                  <div class="diff-add">
+                     <ol class="enumar">
+                        <li>
+                           <p><span class="termdef"><a id="dt-singleton-map"></a>[Definition]  A <b>singleton map</b> is a map containing a single
+               entry.</span></p>
+                           <p>It is possible to decompose any map into a sequence of <a title="singleton map" class="termref" href="#dt-singleton-map"><span class="arrow">·</span>singleton maps<span class="arrow">·</span></a>,
+                  and to construct a map from a sequence of singleton maps.</p>
+                           <p>For example the map
                <code>map{"x":1, "y":2}</code> can be decomposed to the sequence <code>(map{"x":1}, map{"y":2})</code>.</p>
-                  </li>
-                  <li>
-                     <p>The <b>key-value record</b> representation: here a key value pair is represented
-            as an instance of the type <code>record(key as xs:anyAtomicType, value as item()*)</code>. For example
-               the map <code>map{"x":1, "y":2}</code> can be decomposed as 
-               <code>(map{"key":"x", "value":1}, map{"key":"y", "value":2})</code></p>
-                  </li>
-               </ol>
-            </div>
-            <div class="diff-add">
-               <p>The following table summarizes the way in which these two representations can be used to compose and decompose maps:</p>
-            </div>
-            <div class="diff-add">
-               <table class="data">
-                  <thead>
-                     <tr>
-                        <th>Operation</th>
-                        <th>Singleton Maps</th>
-                        <th>Key-Value Records</th>
-                     </tr>
-                  </thead>
-                  <tbody>
-                     <tr>
-                        <td>
-                           <p>Decompose a map</p>
-                        </td>
-                        <td>
-                           <p><code>map:for-each($map, map:entry#2)</code></p>
-                        </td>
-                        <td>
-                           <p><code>map:key-value-pairs($map)</code></p>
-                        </td>
-                     </tr>
-                     <tr>
-                        <td>
-                           <p>Compose a map</p>
-                        </td>
-                        <td>
-                           <p><code>map:merge($entries)</code></p>
-                        </td>
-                        <td>
-                           <p><code>map:of($key-value-pairs)</code></p>
-                        </td>
-                     </tr>
-                     <tr>
-                        <td>
-                           <p>Create a single entry</p>
-                        </td>
-                        <td>
-                           <p><code>map:entry($key, $value)</code></p>
-                        </td>
-                        <td>
-                           <p><code>map{"key":$key, "value":$value}</code></p>
-                        </td>
-                     </tr>
-                     <tr>
-                        <td>
-                           <p>Extract the key part of a single entry</p>
-                        </td>
-                        <td>
-                           <p><code>map:keys($entry)</code></p>
-                        </td>
-                        <td>
-                           <p><code>$key-value-pair?key</code></p>
-                        </td>
-                     </tr>
-                     <tr>
-                        <td>
-                           <p>Extract the value part of a single entry</p>
-                        </td>
-                        <td>
-                           <p><code>$entry?*</code></p>
-                        </td>
-                        <td>
-                           <p><code>$key-value-pair?value</code></p>
-                        </td>
-                     </tr>
-                  </tbody>
-               </table>
+                        </li>
+                        <li>
+                           <p><span class="termdef"><a id="dt-key-value-pair-map"></a>[Definition]  A <b>key-value pair map</b> is a map containing two
+            entries, one (with the key <code>"key"</code>) containing the key part of a key value pair, the other (with the key <code>"value"</code>)
+            containing the value part of a key value pair.</span></p>
+                           <p>For example
+                  the map <code>map{"x":1, "y":2}</code> can be decomposed as 
+                  <code>(map{"key":"x", "value":1}, map{"key":"y", "value":2})</code></p>
+                           <p>A <a title="key-value pair map" class="termref" href="#dt-key-value-pair-map"><span class="arrow">·</span>key-value pair map<span class="arrow">·</span></a> is an instance of the type 
+                  <code>record(key as xs:anyAtomicType, value as item()*)</code>.</p>
+                        </li>
+                     </ol>
+                  </div>
+                  <div class="diff-add">
+                     <p>The following table summarizes the way in which these two representations 
+            can be used to compose and decompose maps:</p>
+                  </div>
+                  <div class="diff-add">
+                     <table class="data">
+                        <thead>
+                           <tr>
+                              <th>Operation</th>
+                              <th>Singleton Maps</th>
+                              <th>Key-Value Pair Maps</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                              <td>
+                                 <p>Decompose a map</p>
+                              </td>
+                              <td>
+                                 <p><code>map:entries($map)</code></p>
+                              </td>
+                              <td>
+                                 <p><code>map:pairs($map)</code></p>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td>
+                                 <p>Compose a map</p>
+                              </td>
+                              <td>
+                                 <p><code>map:merge($entries)</code></p>
+                              </td>
+                              <td>
+                                 <p><code>map:of($key-value-pairs)</code></p>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td>
+                                 <p>Create a single entry</p>
+                              </td>
+                              <td>
+                                 <p><code>map:entry($key, $value)</code></p>
+                              </td>
+                              <td>
+                                 <p><code>map{"key":$key, "value":$value}</code></p>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td>
+                                 <p>Extract the key part of a single entry</p>
+                              </td>
+                              <td>
+                                 <p><code>map:keys($entry)</code></p>
+                              </td>
+                              <td>
+                                 <p><code>$key-value-pair?key</code></p>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td>
+                                 <p>Extract the value part of a single entry</p>
+                              </td>
+                              <td>
+                                 <p><code>map:values($entry)</code></p>
+                              </td>
+                              <td>
+                                 <p><code>$key-value-pair?value</code></p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
             </div>
             <div class="div2">
                
-               <h3><a id="map-functions"></a>18.1 Functions that Operate on Maps</h3>
+               <h3><a id="map-functions"></a>18.2 Functions that Operate on Maps</h3>
                <p>The functions defined in this section use a conventional namespace prefix <code>map</code>, which
                is assumed to be bound to the namespace URI <code>http://www.w3.org/2005/xpath-functions/map</code>.</p>
-               <p>As with all other values, the functions in this specification treat maps as immutable. 
-               For example, the <a href="#func-map-remove"><code>map:remove</code></a> function returns a map that differs
-                  from the supplied map by the omission (typically) of one entry, but the supplied map is not changed by the operation.
-               Two calls on <a href="#func-map-remove"><code>map:remove</code></a> with the same arguments return maps that are
-               indistinguishable from each other; there is no way of asking whether these are "the same map".</p>
                <p>The function call <code>map:get($map, $key)</code> can be used to retrieve the value associated with a given key.</p>
-               <p>A map can also be viewed as a function from keys to associated values. To achieve this, a map is also a 
-               function item. The function corresponding to the map has the signature 
-               <code>function($key as xs:anyAtomicValue) as item()*</code>. Calling the function has the same effect as calling
-               the <code>get</code> function: the expression
-               <code>$map($key)</code> returns the same result as <code>get($map, $key)</code>. For example, if <code>$books-by-isbn</code>
-               is a map whose keys are ISBNs and whose assocated values are <code>book</code> elements, then the expression
-               <code>$books-by-isbn("0470192747")</code> returns the <code>book</code> element with the given ISBN.
-               The fact that a map is a function item allows it to be passed as an argument to higher-order functions 
-               that expect a function item as one of their arguments.</p>
                <p>There is no operation to atomize a map or convert it to a string. The function <a href="#func-serialize"><code>fn:serialize</code></a> can in some cases
             be used to produce a JSON representation of a map.</p>
                <table class="index">
@@ -34610,8 +34662,14 @@ return $result?output//body
                         <td>Tests whether a supplied map contains an entry for a given key</td>
                      </tr>
                      <tr>
+                        <td style="white-space:nowrap; vertical-align:top"><a href="#func-map-entries"><code>map:entries</code></a></td>
+                        <td>Returns a sequence containing all the key-value pairs present in a map, each represented
+                           as a <a title="singleton map" class="termref" href="#dt-singleton-map"><span class="arrow">·</span>singleton map<span class="arrow">·</span></a>.</td>
+                     </tr>
+                     <tr>
                         <td style="white-space:nowrap; vertical-align:top"><a href="#func-map-entry"><code>map:entry</code></a></td>
-                        <td><span>Returns</span> a map that contains a single entry (a key-value pair).</td>
+                        <td><span>Returns</span> a <a title="singleton map" class="termref" href="#dt-singleton-map"><span class="arrow">·</span>singleton map<span class="arrow">·</span></a> that 
+                           represents a single key-value pair.</td>
                      </tr>
                      <tr>
                         <td style="white-space:nowrap; vertical-align:top"><a href="#func-map-filter"><code>map:filter</code></a></td>
@@ -34634,8 +34692,9 @@ return $result?output//body
                         <td>Returns the value associated with a supplied key in a given map.</td>
                      </tr>
                      <tr>
-                        <td style="white-space:nowrap; vertical-align:top"><a href="#func-map-key-value-pairs"><code>map:key-value-pairs</code></a></td>
-                        <td>Returns a sequence containing all the key-value pairs present in a map</td>
+                        <td style="white-space:nowrap; vertical-align:top"><a href="#func-map-pairs"><code>map:pairs</code></a></td>
+                        <td>Returns a sequence containing all the key-value pairs present in a map, each represented
+                           as a <a title="key-value pair map" class="termref" href="#dt-key-value-pair-map"><span class="arrow">·</span>key-value pair map<span class="arrow">·</span></a>.</td>
                      </tr>
                      <tr>
                         <td style="white-space:nowrap; vertical-align:top"><a href="#func-map-keys"><code>map:keys</code></a></td>
@@ -34647,7 +34706,8 @@ return $result?output//body
                      </tr>
                      <tr>
                         <td style="white-space:nowrap; vertical-align:top"><a href="#func-map-of"><code>map:of</code></a></td>
-                        <td>Returns a map that combines data from a sequence of key-value pairs.</td>
+                        <td>Returns a map that combines data from a sequence of 
+                           <a title="key-value pair map" class="termref" href="#dt-key-value-pair-map"><span class="arrow">·</span>key-value pair maps<span class="arrow">·</span></a>.</td>
                      </tr>
                      <tr>
                         <td style="white-space:nowrap; vertical-align:top"><a href="#func-map-put"><code>map:put</code></a></td>
@@ -34674,11 +34734,15 @@ return $result?output//body
                         <td>Applies a supplied function to every entry in a map, returning a map whose entries
                            have the same keys as the input, but (potentially) different associated values.</td>
                      </tr>
+                     <tr>
+                        <td style="white-space:nowrap; vertical-align:top"><a href="#func-map-values"><code>map:values</code></a></td>
+                        <td>Returns a sequence containing all the values present in a map, in unpredictable order.</td>
+                     </tr>
                   </tbody>
                </table>
                <div class="div3">
                   
-                  <h4><a id="func-atomic-equal"></a>18.1.1 fn:atomic-equal</h4>
+                  <h4><a id="func-atomic-equal"></a>18.2.1 fn:atomic-equal</h4>
                   <dl>
                      <dt class="label">Summary</dt>
                      <dd>
@@ -34928,7 +34992,7 @@ return $result?output//body
                <div class="diff-add">
                   <div class="div3">
                      
-                     <h4><a id="func-map-build"></a>18.1.2 map:build</h4>
+                     <h4><a id="func-map-build"></a>18.2.2 map:build</h4>
                      <dl>
                         <dt class="label">Summary</dt>
                         <dd>
@@ -35000,8 +35064,7 @@ return $result?output//body
                      else map:put($map, $nextKey, $nextValue)
                   else
                      $map
-            })
-         </pre>
+            })</pre>
                            </div>
                         </dd>
                         <dt class="label">Notes</dt>
@@ -35081,7 +35144,7 @@ return $result?output//body
                </div>
                <div class="div3">
                   
-                  <h4><a id="func-map-contains"></a>18.1.3 map:contains</h4>
+                  <h4><a id="func-map-contains"></a>18.2.3 map:contains</h4>
                   <dl>
                      <dt class="label">Summary</dt>
                      <dd>
@@ -35134,13 +35197,68 @@ return $result?output//body
                      </dd>
                   </dl>
                </div>
+               <div class="diff-add">
+                  <div class="div3">
+                     
+                     <h4><a id="func-map-entries"></a>18.2.4 map:entries</h4>
+                     <dl>
+                        <dt class="label">Summary</dt>
+                        <dd>
+                           <p>Returns a sequence containing all the key-value pairs present in a map, each represented
+            as a <a title="singleton map" class="termref" href="#dt-singleton-map"><span class="arrow">·</span>singleton map<span class="arrow">·</span></a>.</p>
+                        </dd>
+                        <dt class="label">Signature</dt>
+                        <dd>
+                           <div class="proto">
+                              <table class="proto" border="0">
+                                 <tr class="name">
+                                    <td colspan="3"><code class="function">map:entries</code>(</td>
+                                 </tr>
+                                 <tr class="arg">
+                                    <td><code>$map</code></td>
+                                    <td><code class="as">as&nbsp;</code><code class="type"><code>map(*)</code></code></td>
+                                    <td></td>
+                                 </tr>
+                                 <tr class="return-type">
+                                    <td colspan="3">)<code class="as">&nbsp;as&nbsp;</code><code><code>map(*)*</code></code></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </dd>
+                        <dt class="label">Properties</dt>
+                        <dd>
+                           <p>This function is <a title="nondeterministic with respect to ordering" class="termref" href="#dt-nondeterministic-wrt-ordering"><span class="arrow">·</span>nondeterministic-wrt-ordering<span class="arrow">·</span></a>, <a title="context-independent" class="termref" href="#dt-context-independent"><span class="arrow">·</span>context-independent<span class="arrow">·</span></a>,  and <a title="focus-dependent" class="termref" href="#dt-focus-independent"><span class="arrow">·</span>focus-independent<span class="arrow">·</span></a>. </p>
+                        </dd>
+                        <dt class="label">Rules</dt>
+                        <dd>
+                           <p>The function <code>map:entries</code> takes any <a title="map" class="termref" href="#dt-map"><span class="arrow">·</span>map<span class="arrow">·</span></a>
+            as its <code>$map</code> argument and returns the key-value pairs that are present in the map as
+            a sequence of <a title="singleton map" class="termref" href="#dt-singleton-map"><span class="arrow">·</span>singleton maps<span class="arrow">·</span></a>, in <a title="implementation-dependent" class="termref" href="#implementation-dependent"><span class="arrow">·</span>implementation-dependent<span class="arrow">·</span></a> order.</p>
+                           <p>The function is <b>non-deterministic with respect to ordering</b>
+            (see <a href="#properties-of-functions"><b>1.8.4 Properties of functions</b></a>). This means that two calls with the same argument
+            are not guaranteed to produce the results in the same order.</p>
+                           <p>The effect of the function is equivalent to the expression:</p>
+                           <div class="exampleInner">
+                              <pre>map:for-each($map, ($k, $v) -&gt; {map{$k :$v}})</pre>
+                           </div>
+                        </dd>
+                        <dt class="label">Examples</dt>
+                        <dd>
+                           <div class="example">
+                              <p>The expression <code>map:entries(map{1:"yes", 2:"no"})</code> returns some permutation of <code>(map{1:"yes"}, map{2:"no"})</code>. <em>(The result sequence is in <a title="implementation-dependent" class="termref" href="#implementation-dependent"><span class="arrow">·</span>implementation-dependent<span class="arrow">·</span></a> order.)</em></p>
+                           </div>
+                        </dd>
+                     </dl>
+                  </div>
+               </div>
                <div class="div3">
                   
-                  <h4><a id="func-map-entry"></a>18.1.4 map:entry</h4>
+                  <h4><a id="func-map-entry"></a>18.2.5 map:entry</h4>
                   <dl>
                      <dt class="label">Summary</dt>
                      <dd>
-                        <p><span>Returns</span> a map that contains a single entry (a key-value pair).</p>
+                        <p><span>Returns</span> a <a title="singleton map" class="termref" href="#dt-singleton-map"><span class="arrow">·</span>singleton map<span class="arrow">·</span></a> that 
+            represents a single key-value pair.</p>
                      </dd>
                      <dt class="label">Signature</dt>
                      <dd>
@@ -35212,7 +35330,7 @@ map:merge(for $b in //book return map:entry($b/isbn, $b))</pre>
                <div class="diff-add">
                   <div class="div3">
                      
-                     <h4><a id="func-map-filter"></a>18.1.5 map:filter</h4>
+                     <h4><a id="func-map-filter"></a>18.2.6 map:filter</h4>
                      <dl>
                         <dt class="label">Summary</dt>
                         <dd>
@@ -35257,12 +35375,13 @@ map:merge(for $b in //book return map:entry($b/isbn, $b))</pre>
                         <dt class="label">Examples</dt>
                         <dd>
                            <div class="example">
-                              <p>The expression <code>map:filter(map{1:"Sunday", 2:"Monday", 3:"Tuesday", 4:"Wednesday",
-                  "5: "Thursday", 6:"Friday", 7:"Saturday"}, -&gt;($k,
-                  $v){$k = (1, 7)})</code> returns <code>map:filter(map{1:"Sunday", 7:"Saturday"}</code>.</p>
-                              <p>The expression <code>map:filter(map{1:"Sunday", 2:"Monday", 3:"Tuesday", 4:"Wednesday",
-                  "5: "Thursday", 6:"Friday", 7:"Saturday"}, -&gt;($k,
-                  $v){$v = ("Saturday", "Sunday")})</code> returns <code>map:filter(map{1:"Sunday", 7:"Saturday"}</code>.</p>
+                              <p>The expression <div class="exampleInner"><pre class="small">map:filter(map{1: "Sunday", 2: "Monday", 3: "Tuesday", 4:"Wednesday",
+               5: "Thursday", 6: "Friday", 7: "Saturday"},
+           -&gt;($k, $v){$k = (1, 7)})</pre></div> returns <code>map:filter(map{1:"Sunday", 7:"Saturday"}</code>.</p>
+                              <p>The expression <div class="exampleInner"><pre class="small">
+map:filter(map{1: "Sunday", 2: "Monday", 3: "Tuesday", 4: "Wednesday",
+               5: "Thursday", 6:"Friday", 7:"Saturday"},
+           -&gt;($k, $v){$v = ("Saturday", "Sunday")})</pre></div> returns <code>map:filter(map{1:"Sunday", 7:"Saturday"}</code>.</p>
                            </div>
                         </dd>
                         <dt class="label">History</dt>
@@ -35277,7 +35396,7 @@ map:merge(for $b in //book return map:entry($b/isbn, $b))</pre>
                </div>
                <div class="div3">
                   
-                  <h4><a id="func-map-find"></a>18.1.6 map:find</h4>
+                  <h4><a id="func-map-find"></a>18.2.7 map:find</h4>
                   <dl>
                      <dt class="label">Summary</dt>
                      <dd>
@@ -35373,7 +35492,7 @@ map:merge(for $b in //book return map:entry($b/isbn, $b))</pre>
                </div>
                <div class="div3">
                   
-                  <h4><a id="func-map-for-each"></a>18.1.7 map:for-each</h4>
+                  <h4><a id="func-map-for-each"></a>18.2.8 map:for-each</h4>
                   <dl>
                      <dt class="label">Summary</dt>
                      <dd>
@@ -35449,7 +35568,7 @@ return
                </div>
                <div class="div3">
                   
-                  <h4><a id="func-map-get"></a>18.1.8 map:get</h4>
+                  <h4><a id="func-map-get"></a>18.2.9 map:get</h4>
                   <dl>
                      <dt class="label">Summary</dt>
                      <dd>
@@ -35547,18 +35666,19 @@ return
                <div class="diff-add">
                   <div class="div3">
                      
-                     <h4><a id="func-map-key-value-pairs"></a>18.1.9 map:key-value-pairs</h4>
+                     <h4><a id="func-map-pairs"></a>18.2.10 map:pairs</h4>
                      <dl>
                         <dt class="label">Summary</dt>
                         <dd>
-                           <p>Returns a sequence containing all the key-value pairs present in a map</p>
+                           <p>Returns a sequence containing all the key-value pairs present in a map, each represented
+         as a <a title="key-value pair map" class="termref" href="#dt-key-value-pair-map"><span class="arrow">·</span>key-value pair map<span class="arrow">·</span></a>.</p>
                         </dd>
                         <dt class="label">Signature</dt>
                         <dd>
                            <div class="proto">
                               <table class="proto" border="0">
                                  <tr class="name">
-                                    <td colspan="3"><code class="function">map:key-value-pairs</code>(</td>
+                                    <td colspan="3"><code class="function">map:pairs</code>(</td>
                                  </tr>
                                  <tr class="arg">
                                     <td><code>$map</code></td>
@@ -35577,10 +35697,10 @@ return
                         </dd>
                         <dt class="label">Rules</dt>
                         <dd>
-                           <p>The function <code>map:key-value-pairs</code> takes any <a title="map" class="termref" href="#dt-map"><span class="arrow">·</span>map<span class="arrow">·</span></a>
+                           <p>The function <code>map:pairs</code> takes any <a title="map" class="termref" href="#dt-map"><span class="arrow">·</span>map<span class="arrow">·</span></a>
             as its <code>$map</code> argument and returns the keys that are present in the map as
-            a sequence of <b>key-value records</b>, in <a title="implementation-dependent" class="termref" href="#implementation-dependent"><span class="arrow">·</span>implementation-dependent<span class="arrow">·</span></a> order.
-            A key-value record is an instance of type <code>record(record(key as xs:anyAtomicType, value as item()*)</code>,
+            a sequence of <a title="key-value pair map" class="termref" href="#dt-key-value-pair-map"><span class="arrow">·</span>key-value pair maps<span class="arrow">·</span></a>, in <a title="implementation-dependent" class="termref" href="#implementation-dependent"><span class="arrow">·</span>implementation-dependent<span class="arrow">·</span></a> order.</p>
+                           <p>A key-value pair map is an instance of type <code>record(key as xs:anyAtomicType, value as item()*)</code>:
          that is a map with two entries, one (with key "key") holding the key, and the other (with key "value")
          holding the value.</p>
                            <p>The function is <b>non-deterministic with respect to ordering</b>
@@ -35588,13 +35708,13 @@ return
             are not guaranteed to produce the results in the same order.</p>
                            <p>The effect of the function is equivalent to the expression:</p>
                            <div class="exampleInner">
-                              <pre>map:for-each($map, -&gt;($k, $v){map{"key":$k, "value":$v}})</pre>
+                              <pre>map:for-each($map, ($k, $v) -&gt; {map{"key":$k, "value":$v}})</pre>
                            </div>
                         </dd>
                         <dt class="label">Examples</dt>
                         <dd>
                            <div class="example">
-                              <p>The expression <code>map:key-value-pairs(map{1:"yes", 2:"no"})</code> returns some permutation of <code>(map{"key":1, "value":"yes"}, map{"key":2, "value":"no"})</code>. <em>(The result is in <a title="implementation-dependent" class="termref" href="#implementation-dependent"><span class="arrow">·</span>implementation-dependent<span class="arrow">·</span></a> order.)</em></p>
+                              <p>The expression <code>map:pairs(map{1:"yes", 2:"no"})</code> returns some permutation of <code>(map{"key":1, "value":"yes"}, map{"key":2, "value":"no"})</code>. <em>(The result is in <a title="implementation-dependent" class="termref" href="#implementation-dependent"><span class="arrow">·</span>implementation-dependent<span class="arrow">·</span></a> order.)</em></p>
                            </div>
                         </dd>
                      </dl>
@@ -35602,7 +35722,7 @@ return
                </div>
                <div class="div3">
                   
-                  <h4><a id="func-map-keys"></a>18.1.10 map:keys</h4>
+                  <h4><a id="func-map-keys"></a>18.2.11 map:keys</h4>
                   <dl>
                      <dt class="label">Summary</dt>
                      <dd>
@@ -35638,6 +35758,7 @@ return
                         <p>The function is <b>non-deterministic with respect to ordering</b>
             (see <a href="#properties-of-functions"><b>1.8.4 Properties of functions</b></a>). This means that two calls with the same argument
             are not guaranteed to produce the results in the same order.</p>
+                        <p>The effect of the function is equivalent to <code>map:for-each($map, ($k, $v) -&gt; {$k})</code>.</p>
                      </dd>
                      <dt class="label">Notes</dt>
                      <dd>
@@ -35654,7 +35775,7 @@ return
                </div>
                <div class="div3">
                   
-                  <h4><a id="func-map-merge"></a>18.1.11 map:merge</h4>
+                  <h4><a id="func-map-merge"></a>18.2.12 map:merge</h4>
                   <dl>
                      <dt class="label">Summary</dt>
                      <dd>
@@ -35814,9 +35935,7 @@ $combine-maps := function($A as map(*), $B as map(*), $deduplicator as function(
     })
 }
 return fn:fold-left($MAPS, map{}, 
-    $combine-maps(?, ?, $duplicates-handler(($OPTIONS?duplicates, "use-first")[1]))
-            
-            </pre>
+    $combine-maps(?, ?, $duplicates-handler(($OPTIONS?duplicates, "use-first")[1]))</pre>
                         </div>
                         <div class="note">
                            <p class="prefix"><b>Note:</b></p>
@@ -35893,11 +36012,12 @@ return fn:fold-left($MAPS, map{},
                <div class="diff-add">
                   <div class="div3">
                      
-                     <h4><a id="func-map-of"></a>18.1.12 map:of</h4>
+                     <h4><a id="func-map-of"></a>18.2.13 map:of</h4>
                      <dl>
                         <dt class="label">Summary</dt>
                         <dd>
-                           <p>Returns a map that combines data from a sequence of key-value pairs.</p>
+                           <p>Returns a map that combines data from a sequence of 
+            <a title="key-value pair map" class="termref" href="#dt-key-value-pair-map"><span class="arrow">·</span>key-value pair maps<span class="arrow">·</span></a>.</p>
                         </dd>
                         <dt class="label">Signature</dt>
                         <dd>
@@ -35907,12 +36027,12 @@ return fn:fold-left($MAPS, map{},
                                     <td colspan="3"><code class="function">map:of</code>(</td>
                                  </tr>
                                  <tr class="arg">
-                                    <td><code>$key-value-pairs</code></td>
+                                    <td><code>$pairs</code></td>
                                     <td><code class="as">as&nbsp;</code><code class="type"><code>record(key as xs:anyAtomicType, value as item()*, *)*</code></code>,</td>
                                     <td></td>
                                  </tr>
                                  <tr class="arg">
-                                    <td><code>$compine</code></td>
+                                    <td><code>$combine</code></td>
                                     <td><code class="as">as&nbsp;</code><code class="type"><code>function(item()*, item()*) as item()*</code></code></td>
                                     <td><code class="assign">:=&nbsp;</code><code>fn:op(',')</code></td>
                                  </tr>
@@ -35930,14 +36050,15 @@ return fn:fold-left($MAPS, map{},
                         <dd>
                            <p>The function <code>map:of</code>
             <span>returns a map</span> that
-            is formed by combining key-value records supplied in the <code>$key-value-pairs</code>
+            is formed by combining <a title="key-value pair map" class="termref" href="#dt-key-value-pair-map"><span class="arrow">·</span>key-value pair maps<span class="arrow">·</span></a> supplied in the 
+            <code>$key-value-pairs</code>
             argument.</p>
                            <p>The optional <code>$combine</code> argument can be used to define how
          duplicate keys should be handled. The default is to form the sequence concatenation 
          of the corresponding values, retaining their order in the input sequence.</p>
                            <p>The effect of the function is equivalent to the expression:</p>
                            <div class="exampleInner">
-                              <pre>map:build($key-value-pairs, -&gt;{?key}, -&gt;{?value}, $combine)</pre>
+                              <pre>map:build($key-value-pairs, $kvp-&gt;{$kvp?key}, $kvp-&gt;{$kvp?value}, $combine)</pre>
                            </div>
                         </dd>
                         <dt class="label">Error Conditions</dt>
@@ -35962,23 +36083,26 @@ return fn:fold-left($MAPS, map{},
      3:"Mittwoch", 4:"Donnerstag", 5:"Freitag", 6:"Samstag"}</pre>
                               </div>
                               <p>The expression <code>map:of(())</code> returns <code>map{}</code>. <em>(Returns an empty map).</em></p>
-                              <p>The expression <code>map:of(map:key-value-pairs($week))</code> returns <code>$week</code>. <em>(The function <code>map:of</code> is the inverse of <a href="#func-map-key-value-pairs"><code>map:key-value-pairs</code></a>.)</em></p>
+                              <p>The expression <code>map:of(map:pairs($week))</code> returns <code>$week</code>. <em>(The function <code>map:of</code> is the inverse of <a href="#func-map-pairs"><code>map:pairs</code></a>.)</em></p>
                               <p>The expression <code>map:of((map:entry(0, "no"), map:entry(1, "yes")))</code> returns <code>map{0:"no", 1:"yes"}</code>. <em>(Returns a map with two entries).</em></p>
-                              <p>The expression <code>map:of((map:key-value-pairs($week), map{"key":7, "value":"Unbekannt"}))</code> returns <code>map{0:"Sonntag", 1:"Montag", 2:"Dienstag", 3:"Mittwoch", 4:"Donnerstag",
+                              <p>The expression <code>map:of((map:pairs($week), map{"key":7, "value":"Unbekannt"}))</code> returns <code>map{0:"Sonntag", 1:"Montag", 2:"Dienstag", 3:"Mittwoch", 4:"Donnerstag",
                   5:"Freitag", 6:"Samstag", 7:"Unbekannt"}</code>. <em>(The value of the existing map is unchanged; the returned map 
                   contains all the entries from <code>$week</code>, supplemented with an additional
                   entry.)</em></p>
-                              <p>The expression <code>map:of((map:key-value-pairs($week), map{"key":6, "value":"Sonnabend"}))</code> returns <code>map{0:"Sonntag", 1:"Montag", 2:"Dienstag", 3:"Mittwoch", 4:"Donnerstag",
+                              <p>The expression <code>map:of((map:pairs($week), map{"key":6, "value":"Sonnabend"}))</code> returns <code>map{0:"Sonntag", 1:"Montag", 2:"Dienstag", 3:"Mittwoch", 4:"Donnerstag",
                   5:"Freitag", 6:("Samstag", "Sonnabend")}</code>. <em>(The value of the existing map is unchanged; the returned map
                   contains all the entries from <code>$week</code>, with one entry replaced by a
                   new entry. Both input maps contain an entry with the key <code>6</code>; the
                   one used in the result combines the two supplied values into a single sequence.)</em></p>
-                              <p>The expression <code>map:of((map:key-value-pairs($week), map{"key":6, "value":"Sonnabend"}), -&gt;($old, $new){$new})</code> returns <code>map{0:"Sonntag", 1:"Montag", 2:"Dienstag", 3:"Mittwoch", 4:"Donnerstag",
+                              <p>The expression <code>map:of((map:pairs($week), map{"key":6, "value":"Sonnabend"}), ($old, $new)-&gt;{$new})</code> returns <code>map{0:"Sonntag", 1:"Montag", 2:"Dienstag", 3:"Mittwoch", 4:"Donnerstag",
                   5:"Freitag", 6:"Sonnabend"}</code>. <em>(The value of the existing map is unchanged; the returned map
                   contains all the entries from <code>$week</code>, with one entry replaced by a
                   new entry. Both input maps contain an entry with the key <code>6</code>; the
                   supplied <code>$combine</code> function ensures that the one used in the result 
                   is the one that comes last in the input sequence.)</em></p>
+                              <p>The expression <code>map:of((map:pairs($week), map{"key":6, "value":"Sonnabend"}), ($old, $new)-&gt;{`{$old}|{$new}`})</code> returns <code>map{0:"Sonntag", 1:"Montag", 2:"Dienstag", 3:"Mittwoch", 4:"Donnerstag",
+                  5:"Freitag", 6:"Samstag|Sonnabend"}</code>. <em>(In the result map, the value for key "6" is obtained by concatenating the values
+                  from the two input maps, with a separator character.)</em></p>
                            </div>
                         </dd>
                      </dl>
@@ -35986,7 +36110,7 @@ return fn:fold-left($MAPS, map{},
                </div>
                <div class="div3">
                   
-                  <h4><a id="func-map-put"></a>18.1.13 map:put</h4>
+                  <h4><a id="func-map-put"></a>18.2.14 map:put</h4>
                   <dl>
                      <dt class="label">Summary</dt>
                      <dd>
@@ -36074,7 +36198,7 @@ return fn:fold-left($MAPS, map{},
                </div>
                <div class="div3">
                   
-                  <h4><a id="func-map-remove"></a>18.1.14 map:remove</h4>
+                  <h4><a id="func-map-remove"></a>18.2.15 map:remove</h4>
                   <dl>
                      <dt class="label">Summary</dt>
                      <dd>
@@ -36124,7 +36248,7 @@ map:merge (
                if (some $key in $KEY satisfies (fn:atomic-equal($k, $key)) 
                then () 
                else map:entry($k, $v)
-             } ) ) </pre>
+             } ) )</pre>
                            </div>
                         </div>
                      </dd>
@@ -36149,7 +36273,7 @@ map:merge (
                <div class="diff-add">
                   <div class="div3">
                      
-                     <h4><a id="func-map-replace"></a>18.1.15 map:replace</h4>
+                     <h4><a id="func-map-replace"></a>18.2.16 map:replace</h4>
                      <dl>
                         <dt class="label">Summary</dt>
                         <dd>
@@ -36216,7 +36340,7 @@ else map:put($MAP, $KEY, $ACTION(())</pre>
                </div>
                <div class="div3">
                   
-                  <h4><a id="func-map-size"></a>18.1.16 map:size</h4>
+                  <h4><a id="func-map-size"></a>18.2.17 map:size</h4>
                   <dl>
                      <dt class="label">Summary</dt>
                      <dd>
@@ -36268,7 +36392,7 @@ else map:put($MAP, $KEY, $ACTION(())</pre>
                <div class="diff-add">
                   <div class="div3">
                      
-                     <h4><a id="func-map-substitute"></a>18.1.17 map:substitute</h4>
+                     <h4><a id="func-map-substitute"></a>18.2.18 map:substitute</h4>
                      <dl>
                         <dt class="label">Summary</dt>
                         <dd>
@@ -36328,10 +36452,61 @@ else map:put($MAP, $KEY, $ACTION(())</pre>
                      </dl>
                   </div>
                </div>
+               <div class="diff-add">
+                  <div class="div3">
+                     
+                     <h4><a id="func-map-values"></a>18.2.19 map:values</h4>
+                     <dl>
+                        <dt class="label">Summary</dt>
+                        <dd>
+                           <p>Returns a sequence containing all the values present in a map, in unpredictable order.</p>
+                        </dd>
+                        <dt class="label">Signature</dt>
+                        <dd>
+                           <div class="proto">
+                              <table class="proto" border="0">
+                                 <tr class="name">
+                                    <td colspan="3"><code class="function">map:values</code>(</td>
+                                 </tr>
+                                 <tr class="arg">
+                                    <td><code>$map</code></td>
+                                    <td><code class="as">as&nbsp;</code><code class="type"><code>map(*)</code></code></td>
+                                    <td></td>
+                                 </tr>
+                                 <tr class="return-type">
+                                    <td colspan="3">)<code class="as">&nbsp;as&nbsp;</code><code><code>item()*</code></code></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </dd>
+                        <dt class="label">Properties</dt>
+                        <dd>
+                           <p>This function is <a title="nondeterministic with respect to ordering" class="termref" href="#dt-nondeterministic-wrt-ordering"><span class="arrow">·</span>nondeterministic-wrt-ordering<span class="arrow">·</span></a>, <a title="context-independent" class="termref" href="#dt-context-independent"><span class="arrow">·</span>context-independent<span class="arrow">·</span></a>,  and <a title="focus-dependent" class="termref" href="#dt-focus-independent"><span class="arrow">·</span>focus-independent<span class="arrow">·</span></a>. </p>
+                        </dd>
+                        <dt class="label">Rules</dt>
+                        <dd>
+                           <p>The function <code>map:values</code> takes any <a title="map" class="termref" href="#dt-map"><span class="arrow">·</span>map<span class="arrow">·</span></a>
+            as its <code>$map</code> argument and returns the values that are present in the map as
+            a sequence, in <a title="implementation-dependent" class="termref" href="#implementation-dependent"><span class="arrow">·</span>implementation-dependent<span class="arrow">·</span></a> order.</p>
+                           <p>The function is <b>non-deterministic with respect to ordering</b>
+            (see <a href="#properties-of-functions"><b>1.8.4 Properties of functions</b></a>). This means that two calls with the same argument
+            are not guaranteed to produce the results in the same order.</p>
+                           <p>The effect of the function is equivalent to <code>map:for-each($map, ($k, $v) -&gt; {$v})</code>.</p>
+                        </dd>
+                        <dt class="label">Examples</dt>
+                        <dd>
+                           <div class="example">
+                              <p>The expression <code>map:values(map{1:"yes", 2:"no"})</code> returns some permutation of <code>("yes", "no")</code>. <em>(The result is in <a title="implementation-dependent" class="termref" href="#implementation-dependent"><span class="arrow">·</span>implementation-dependent<span class="arrow">·</span></a> order.)</em></p>
+                              <p>The expression <code>map:values(map{1:("red", "green"), 2:"blue", "yellow", 3:()})</code> returns some permutation of <code>("red", "green", "blue", "yellow")</code>. <em>(The result is in <a title="implementation-dependent" class="termref" href="#implementation-dependent"><span class="arrow">·</span>implementation-dependent<span class="arrow">·</span></a> order.)</em></p>
+                           </div>
+                        </dd>
+                     </dl>
+                  </div>
+               </div>
             </div>
             <div class="div2">
                
-               <h3><a id="map-operations"></a>18.2 Other Operations on Maps </h3>
+               <h3><a id="map-operations"></a>18.3 Other Operations on Maps </h3>
                <p>Because a map is a function item, functions that apply to functions also apply
                to maps. A map is an anonymous function, so <a href="#func-function-name"><code>fn:function-name</code></a> returns the empty
                sequence; <a href="#func-function-arity"><code>fn:function-arity</code></a> always returns <code>1</code>.</p>
@@ -36661,7 +36836,7 @@ else map:put($MAP, $KEY, $ACTION(())</pre>
                         <dt class="label">History</dt>
                         <dd>
                            <div class="example">
-                              <p>Proposed for 4.0, initially under the name <code>array:from-sequence</code>.</p>
+                              <p>Proposed for 4.0.</p>
                            </div>
                         </dd>
                      </dl>
@@ -37173,8 +37348,7 @@ else map:put($MAP, $KEY, $ACTION(())</pre>
                            <pre class="small"><code>array:of(
     fn:for-each-pair(array:members($array1), 
                      array:members($array2), 
-                     function($m, $n) {map{'value': $action($m?value, $n?value)}}))</code>
-         </pre>
+                     function($m, $n) {map{'value': $action($m?value, $n?value)}}))</code></pre>
                         </div>
                      </dd>
                      <dt class="label">Notes</dt>
@@ -37758,8 +37932,7 @@ else $fallback($position)</pre>
    if (empty($a) or $break-when(array:slice($a, start:-1)?*, $b))
    then ($a, [$b])
    else array:replace($a, array:size($a), function($m){$m, $b})
-}   
-         </pre>
+}</pre>
                            </div>
                         </dd>
                         <dt class="label">Notes</dt>
@@ -38300,8 +38473,7 @@ else $fallback($position)</pre>
                            <div class="exampleInner">
                               <pre class="small">
 let $SWEDISH := "http://www.w3.org/2013/collation/UCA?lang=se"
-return array:sort($in, $SWEDISH)
-            </pre>
+return array:sort($in, $SWEDISH)</pre>
                            </div>
                            <p>To sort an array of maps representing employees, using last name as the major sort key and first name as the minor sort key,
                with the default collation:
@@ -41006,8 +41178,7 @@ declare function eg:convertYearToString($year as xs:integer) as xs:string
        else
        if ($length = 3)  then fn:concat($plusMinus, "0", $yearString)
        else fn:concat($plusMinus, $yearString)
-}
-                    </pre>
+}</pre>
                   </div>
                   <div class="exampleInner">
                      <pre class="small">
@@ -41017,8 +41188,7 @@ declare function eg:convertTo2CharString($value as xs:integer) as xs:string
    return 
      if (fn:string-length($string) = 1) then fn:concat("0", $string)
      else $string
-}
-                    </pre>
+}</pre>
                   </div>
                   <div class="exampleInner">
                      <pre class="small">
@@ -41029,8 +41199,7 @@ declare function eg:convertSecondsToString($seconds as xs:decimal) as xs:string
    return 
      if ($intLength = 1) then fn:concat("0", $string)
      else $string
-}
-                    </pre>
+}</pre>
                   </div>
                   <div class="exampleInner">
                      <pre class="small">
@@ -41047,9 +41216,7 @@ declare function eg:convertTZtoString($tz as xs:dayTimeDuration?) as xs:string
      let $tzhString := eg:convertTo2CharString(fn:abs($tzh))
      let $tzmString := eg:convertTo2CharString(fn:abs($tzm))
      return fn:concat($plusMinus, $tzhString, ":", $tzmString)
-}
-
-                    </pre>
+}</pre>
                   </div>
                   <p>Conversion from 
                   <a title="primitive type" class="termref" href="#dt-cast-primitive-type"><span class="arrow">·</span>primitive types<span class="arrow">·</span></a> to date and time types follows the rules below.</p>
@@ -43183,8 +43350,7 @@ declare function eg:if-empty (
   $value as xs:anyAtomicType) as xs:anyAtomicType* 
 {
   ($node[child::node()], $value)[1]
-}
-                    </pre>
+}</pre>
                      </div>
                   </div>
                   <div class="div4">
@@ -43229,8 +43395,7 @@ declare function eg:if-absent (
   $value as xs:anyAtomicType) as xs:anyAtomicType* 
 {
   ($node, $value)[1]
-}
-                    </pre>
+}</pre>
                      </div>
                   </div>
                </div>
@@ -43280,8 +43445,7 @@ declare function eg:value-union (
   $arg2 as xs:anyAtomicType*) as xs:anyAtomicType* 
 {
   fn:distinct-values(($arg1, $arg2))
-}
-                    </pre>
+}</pre>
                      </div>
                   </div>
                   <div class="div4">
@@ -43327,8 +43491,7 @@ declare function eg:value-intersect (
   $arg2 as xs:anyAtomicType* ) as xs:anyAtomicType* 
 {
   fn:distinct-values($arg1[.=$arg2])
-}
-                    </pre>
+}</pre>
                      </div>
                   </div>
                   <div class="div4">
@@ -43482,8 +43645,7 @@ declare function eg:index-of-node($seq as node()*, $search as node()) as xs:inte
   &lt;xsl:param name="padCount" as="xs:integer"/&gt;
   &lt;xsl:sequence select="
      fn:string-join(fn:replicate($padString, $padCount))"/&gt;
- &lt;/xsl:function&gt;
-                </pre>
+ &lt;/xsl:function&gt;</pre>
                      </div>
                   </div>
                   <p>XQuery implementation</p>
@@ -43495,8 +43657,7 @@ declare function eg:string-pad (
   $padCount as xs:integer) as xs:string 
 {
    fn:string-join(fn:replicate($padString, $padCount))
-}
-                </pre>
+}</pre>
                      </div>
                   </div>
                   <p>This returns the zero-length string if <code>$padString</code> is the empty
@@ -43527,8 +43688,7 @@ declare function eg:string-pad (
                     occurrence of each node.</p>
                   <p>XPath</p>
                   <div class="exampleInner">
-                     <pre>$arg[empty(subsequence($arg, 1, position()-1) intersect .)]
-                </pre>
+                     <pre>$arg[empty(subsequence($arg, 1, position()-1) intersect .)]</pre>
                   </div>
                   <p>XSLT implementation</p>
                   <div class="exampleInner">
@@ -43544,8 +43704,7 @@ declare function eg:string-pad (
         else ($foundSoFar, $this)
       })
   "/&gt; 
-&lt;/xsl:function&gt;
-                </pre>
+&lt;/xsl:function&gt;</pre>
                   </div>
                   <p>XQuery implementation</p>
                   <div class="exampleInner">
