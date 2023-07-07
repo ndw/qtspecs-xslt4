@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?><!--XSLT Processor: Saxonica SAXON HE 12.2--><html lang="EN"><head><title>XPath and XQuery Functions and Operators 4.0 </title><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="stylesheet" type="text/css" href="css/w3c-base.css"/><link rel="stylesheet" href="css/qtspecs.css"/><link rel="stylesheet" href="css/xpath-functions-40.css"/></head><body><div class="head"><p><a href="https://www.w3.org/"><img src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" alt="W3C" height="48" width="72"/></a></p>
 <h1><a id="title"/>XPath and XQuery Functions and Operators 4.0 </h1>
-<h2><a id="w3c-doctype"/>W3C Editor's Draft 29 June 2023</h2><dl><dt>This version:</dt><dd>
+<h2><a id="w3c-doctype"/>W3C Editor's Draft 7 July 2023</h2><dl><dt>This version:</dt><dd>
             <a href="https://qt4cg.org/specifications/xpath-functions-40/">https://qt4cg.org/specifications/xpath-functions-40/</a>
         </dd><dt>Latest version of XPath and XQuery Functions and Operators 4.0:</dt><dd>
             <a href="https://qt4cg.org/specifications/xpath-functions-40/">https://qt4cg.org/specifications/xpath-functions-40/</a>
@@ -3447,6 +3447,7 @@ are elided for editorial clarity.</p></td></tr><tr class="testdiv"><th style="ve
   "authority": "uncname",
   "host": "uncname",
   "path": "/path/to/file",
+  "filepath": "/path/to/file",
   "path-segments": array { "", "path", "to", "file" }
 }</pre></div></td></tr><tr class="testdiv"><th style="vertical-align:top">Expression:</th><td style="vertical-align:top"><p><code>parse-uri("file:///c:/path/to/file")</code></p></td></tr><tr><th style="vertical-align:top">Result:</th><td style="vertical-align:top"><div class="exampleInner"><pre class="small">map {
   "uri": "file:///c:/path/to/file",
@@ -3488,6 +3489,7 @@ map {
   "uri": "/path/to/file",
   "hierarchical": true(),
   "path": "/path/to/file",
+  "filepath": "/path/to/file",
   "path-segments": array { "", "path", "to", "file" }
 }</pre></div></td></tr><tr class="testdiv"><th style="vertical-align:top">Expression:</th><td style="vertical-align:top"><p><code>parse-uri("#testing")</code></p></td></tr><tr><th style="vertical-align:top">Result:</th><td style="vertical-align:top"><div class="exampleInner"><pre>
 map {
