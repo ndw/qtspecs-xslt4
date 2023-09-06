@@ -2570,21 +2570,33 @@ This includes all the built-in datatypes defined in <a href="#xmlschema-2">[XML 
                   is not <a title="focus-dependent" class="termref" href="#dt-focus-dependent"><span class="arrow">·</span>focus-dependent<span class="arrow">·</span></a> is called
                   <b>focus-independent</b>.</span></p>
                   <div class="note">
-                     <p class="prefix"><b>Note:</b></p>
-                     <p>Some functions depend on aspects of the dynamic context that remain invariant
+                     <p class="prefix"><b>Notes:</b></p>
+                     <div class="note">
+                        <p class="prefix"><b>Note:</b></p>
+                        <p>Some functions depend on aspects of the dynamic context that remain invariant
                   within an <a title="execution scope" class="termref" href="#execution-scope"><span class="arrow">·</span>execution scope<span class="arrow">·</span></a>, such as the implicit timezone.
                   Formally this is treated in the same way as any other context dependency, but
                   internally, the implementation may be able to take advantage of the fact that the
                   value is invariant.</p>
-                  </div>
-                  <div class="note">
-                     <p class="prefix"><b>Note:</b></p>
-                     <p>User-defined functions in XQuery and XSLT may depend on the static context
+                     </div>
+                     <div class="note">
+                        <p class="prefix"><b>Note:</b></p>
+                        <p>User-defined functions in XQuery and XSLT may depend on the static context
                      of the function definition (for example, the in-scope namespaces) and also in a limited
                      way on the dynamic context (for example, the values of global variables).
                      However, the only way they can depend on the static or dynamic context
                      of the caller — which is what concerns us here — is by defining optional
                      parameters whose default values are context-dependent.</p>
+                     </div>
+                     <div class="note">
+                        <p class="prefix"><b>Note:</b></p>
+                        <p>Because the focus is a specific part of the dynamic context, all 
+                  <a title="focus-dependent" class="termref" href="#dt-focus-dependent"><span class="arrow">·</span>focus-dependent<span class="arrow">·</span></a> functions are also
+                  <a title="context-dependent" class="termref" href="#dt-context-dependent"><span class="arrow">·</span>context-dependent<span class="arrow">·</span></a>. A
+                  <a title="context-dependent" class="termref" href="#dt-context-dependent"><span class="arrow">·</span>context-dependent<span class="arrow">·</span></a> function, however,
+                  may be either <a title="focus-dependent" class="termref" href="#dt-focus-dependent"><span class="arrow">·</span>focus-dependent<span class="arrow">·</span></a> or
+                     <a title="focus-dependent" class="termref" href="#dt-focus-independent"><span class="arrow">·</span>focus-independent<span class="arrow">·</span></a>.</p>
+                     </div>
                   </div>
                   <p>A <span>function definition</span> that is context-dependent 
                   can be used as <span>the target of</span> a named
@@ -37849,7 +37861,7 @@ else
                               
                               <div class="example">
                                  
-                                 <div class="exampleHeader"><a id="d6e42613"></a>Example:</div>
+                                 <div class="exampleHeader"><a id="d6e42632"></a>Example:</div>
                                  <p>An implementation may provide keys for options to the <em>tidy</em>
                                  HTML parser, allowing a user to configure the behaviour of that parser.</p>
                               </div>
@@ -39894,7 +39906,7 @@ else
                   representation. </p>
                   <div class="example">
                      
-                     <div class="exampleHeader"><a id="d6e44600"></a>Example: A JSON Text and its XML Representation</div>
+                     <div class="exampleHeader"><a id="d6e44619"></a>Example: A JSON Text and its XML Representation</div>
                      <p>Consider the following JSON text:</p>
                      <div class="exampleInner">
                         <pre class="small">

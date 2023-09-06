@@ -656,7 +656,7 @@ This includes all the built-in datatypes defined in <a href="#xmlschema-2">[XML 
                   (that is, the context item, position, or size) 
                   <span>of the caller</span>.</span></p><p><span class="termdef"><a id="dt-focus-independent"/>[Definition]  A function that
                   is not <a title="focus-dependent" class="termref" href="#dt-focus-dependent"><span class="arrow">·</span>focus-dependent<span class="arrow">·</span></a> is called
-                  <b>focus-independent</b>.</span></p><div class="note"><p class="prefix"><b>Note:</b></p><p>Some functions depend on aspects of the dynamic context that remain invariant
+                  <b>focus-independent</b>.</span></p><div class="note"><p class="prefix"><b>Notes:</b></p><div class="note"><p class="prefix"><b>Note:</b></p><p>Some functions depend on aspects of the dynamic context that remain invariant
                   within an <a title="execution scope" class="termref" href="#execution-scope"><span class="arrow">·</span>execution scope<span class="arrow">·</span></a>, such as the implicit timezone.
                   Formally this is treated in the same way as any other context dependency, but
                   internally, the implementation may be able to take advantage of the fact that the
@@ -665,7 +665,12 @@ This includes all the built-in datatypes defined in <a href="#xmlschema-2">[XML 
                      way on the dynamic context (for example, the values of global variables).
                      However, the only way they can depend on the static or dynamic context
                      of the caller — which is what concerns us here — is by defining optional
-                     parameters whose default values are context-dependent.</p></div><p>A <span>function definition</span> that is context-dependent 
+                     parameters whose default values are context-dependent.</p></div><div class="note"><p class="prefix"><b>Note:</b></p><p>Because the focus is a specific part of the dynamic context, all 
+                  <a title="focus-dependent" class="termref" href="#dt-focus-dependent"><span class="arrow">·</span>focus-dependent<span class="arrow">·</span></a> functions are also
+                  <a title="context-dependent" class="termref" href="#dt-context-dependent"><span class="arrow">·</span>context-dependent<span class="arrow">·</span></a>. A
+                  <a title="context-dependent" class="termref" href="#dt-context-dependent"><span class="arrow">·</span>context-dependent<span class="arrow">·</span></a> function, however,
+                  may be either <a title="focus-dependent" class="termref" href="#dt-focus-dependent"><span class="arrow">·</span>focus-dependent<span class="arrow">·</span></a> or
+                     <a title="focus-dependent" class="termref" href="#dt-focus-independent"><span class="arrow">·</span>focus-independent<span class="arrow">·</span></a>.</p></div></div><p>A <span>function definition</span> that is context-dependent 
                   can be used as <span>the target of</span> a named
                function reference, can be partially applied, and can be found using <a href="#func-function-lookup"><code>fn:function-lookup</code></a>. 
                The principle in such cases is that the static context used for the function evaluation
@@ -8172,7 +8177,7 @@ else
                         </td></tr><tr><td>*</td><td>
                            <p>Additional <a title="implementation-defined" class="termref" href="#implementation-defined"><span class="arrow">·</span>implementation-defined<span class="arrow">·</span></a> parser options.</p>
                            <div class="example">
-<div class="exampleHeader"><a id="d6e42613"/>Example:</div><p>An implementation may provide keys for options to the <em>tidy</em>
+<div class="exampleHeader"><a id="d6e42632"/>Example:</div><p>An implementation may provide keys for options to the <em>tidy</em>
                                  HTML parser, allowing a user to configure the behaviour of that parser.</p></div>
                         </td></tr></tbody></table></div><div class="div3">
 <h4><a id="func-parse-html"/>15.3.2 fn:parse-html</h4><dl><dt class="label">Summary</dt><dd><p>This function takes as input an HTML document represented as a string, and returns the
@@ -8721,7 +8726,7 @@ else
                   (a) JSON numbers are not exactly representable as double-precision floating point, or (b) duplicate key
                   values appear within a JSON object.</p></div><p>The following example demonstrates the correspondence of a JSON text and the corresponding XML
                   representation. </p><div class="example">
-<div class="exampleHeader"><a id="d6e44600"/>Example: A JSON Text and its XML Representation</div><p>Consider the following JSON text:</p><div class="exampleInner"><pre class="small">
+<div class="exampleHeader"><a id="d6e44619"/>Example: A JSON Text and its XML Representation</div><p>Consider the following JSON text:</p><div class="exampleInner"><pre class="small">
 {
     "desc"    : "Distances between several cities, in kilometers.",
     "updated" : "2014-02-04T18:50:45",
