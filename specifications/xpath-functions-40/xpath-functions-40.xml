@@ -40,12 +40,12 @@
                 cross-document links in this document. Each such link consists of a pointer to a
                 specific section followed a superscript specifying the linked document. The
                 superscripts have the following meanings: XQ <bibref ref="xquery-40"/>, XT <bibref ref="xslt-40"/>,
-            XP <bibref ref="xpath-40"/>, and DM <bibref ref="xpath-datamodel-31"/>.</p><div2 id="operators" diff="add" at="2022-12-20"><head>Operators</head><p>Despite the title of this document, it does not attempt to define the semantics of all the operators available
+            XP <bibref ref="xpath-40"/>, and DM <bibref ref="xpath-datamodel-31"/>.</p><div2 id="operators" diff="add" at="2022-12-20"><head>Operators</head><p>Despite its title, this document does not attempt to define the semantics of all the operators available
                in the <bibref ref="xpath-40"/> language; indeed, in the interests of avoiding duplication, the majority of
                operators (including all higher-order operators such as <code>x/y</code>, <code>x!y</code>, and <code>x[y]</code>,
                as well simple operators such as <code>x,y</code>, <code>x and y</code>, <code>x or y</code>,            
             <code>x&lt;&lt;y</code>, <code>x&gt;&gt;y</code>, <code>x is y</code>, <code>x||y</code>, <code>x|y</code>,
-            <code>x union x</code>, <code>x except y</code>, <code>x intersect y</code>, <code>x to y</code>
+            <code>x union y</code>, <code>x except y</code>, <code>x intersect y</code>, <code>x to y</code>
             and <code>x otherwise y</code>) are now defined entirely within <bibref ref="xpath-40"/>.</p><p>The remaining operators that are described in this publication are those where the semantics of the operator
             depend on the types of the arguments. For these operators, the language specification describes rules for selecting
             an internal function defined in this specification to underpin the operator. For example, when the operator <code>x+y</code>
@@ -87,7 +87,7 @@
             and atomic values that contain characters not allowed by any version of
             XML.
             <termdef id="dt-permitted-character" term="permitted character">A <term>permitted character</term>
-            is one within the repertoire accepted by the implementation.</termdef></p><p>In this document, text labeled as an example or as a Note is
+            is one within the repertoire accepted by the implementation.</termdef></p><p>In this document, text labeled as an example or as a note is
             provided for explanatory purposes and is not normative.</p></div2><div2 id="namespace-prefixes"><head>Namespaces and prefixes</head><p>The functions and operators defined in this document are contained in one of
                     several namespaces (see <bibref ref="xml-names"/>) and referenced using an
                     <code>xs:QName</code>.</p><p>This document uses conventional prefixes to refer to these namespaces. User-written
@@ -260,7 +260,7 @@
                   A dynamic error occurs if the supplied value 
                after conversion is not one of the permitted values for the option in question: the error codes
                for this error are defined in the specification of each function.</p><note><p>It is the responsibility of each function implementation to invoke this conversion; it
-               does not happen automatically as a consequence of the function calling rules.</p></note></item><item><p>In cases where an option is list-valued, by convention the value may be supplied
+               does not happen automatically as a consequence of the function-calling rules.</p></note></item><item><p>In cases where an option is list-valued, by convention the value may be supplied
                either as a sequence or as an array. Accepting a sequence is convenient if the
                value is generated programmatically using an XPath expression; while accepting an array 
                allows the options to be held in an external file in JSON format, to be read using
@@ -273,17 +273,13 @@ This type system comprises two distinct subsystems that both include
 the primitive atomic types. 
 In the diagrams, connecting lines represent relationships between derived types
 and the types from which they are derived;
-the arrowheads point toward the type from which they are derived. 
-The dashed line represents relationships not present in this diagram,
-but that appear in one of the other diagrams. 
-Dotted lines represent additional relationships that follow an evident pattern.
-The information that appears in each diagram is recapitulated in tabular form.
+the former are always below and to the right of the latter.
 </p><p>The <code>xs:IDREFS</code>, <code>xs:NMTOKENS</code>,
 <code>xs:ENTITIES</code> types, and <code>xs:numeric</code> and both the
 <code>user-defined list types</code> and
 <code>user-defined union types</code>
 are special types in that these types are lists or unions
-rather than types derived by extension or restriction.</p><div3 id="item-type-hierarchy"><head>Item Types</head><p>The first diagram and its corresponding table illustrate
+rather than types derived by extension or restriction.</p><div3 id="item-type-hierarchy"><head>Item Types</head><p>The first diagram illustrates
 the relationship of various item types.</p><p>Item types are used to characterize the various types of item that can appear
       in a sequence (nodes, atomic values, and functions), and they are therefore used
       in declaring the types of variables or the argument types and result types of functions.</p><p>Item types in the data model form a directed graph, rather than a
@@ -328,8 +324,8 @@ full model.</p><p role="type-hierarchy-figure">
          <phrase>User-defined types</phrase>
          <phrase role="kind"> (user-defined)</phrase>
       </p></item></ulist>
-</p></div3><div3 id="schema-type-hierarchy"><head>Schema Type Hierarchy</head><p>The next diagram and table illustrate the schema type subsystem, in which
-all types are derived from the distinguished type <code>xs:anyType</code>. </p><p>Schema types include built-in types defined in the XML Schema specification, and user-defined
+</p></div3><div3 id="schema-type-hierarchy"><head>Schema Type Hierarchy</head><p>The next diagram illustrate the schema type subsystem, in which
+all types are derived from <code>xs:anyType</code>. </p><p>Schema types include built-in types defined in the XML Schema specification, and user-defined
       types defined using mechanisms described in the XML Schema specification. Schema types define the
       permitted contents of nodes. The main categories are complex types, which define the permitted content
       of elements, and simple types, which can be used to constrain the values of both elements and attributes.</p><p role="type-hierarchy-figure">
@@ -403,7 +399,7 @@ all types are derived from the distinguished type <code>xs:anyType</code>. </p><
          <phrase>User-defined types</phrase>
          <phrase role="kind"> (user-defined)</phrase>
       </p></item></ulist>
-</p></div3><div3 id="atomic-type-hierarchy"><head>Atomic Type Hierarchy</head><p id="hier_anyAtomicType">The final diagram and table show all of the atomic types, including the primitive simple types and the
+</p></div3><div3 id="atomic-type-hierarchy"><head>Atomic Type Hierarchy</head><p id="hier_anyAtomicType">The final diagram shows all of the atomic types, including the primitive simple types and the
 built-in types derived from the primitive simple types. 
 This includes all the built-in datatypes defined in <bibref ref="xmlschema-2"/>.</p><p>Atomic types are both item types and schema types, so the root type <code>xs:anyAtomicType</code> may be found
       in both the previous diagrams.</p><p role="type-hierarchy-figure">
@@ -521,12 +517,12 @@ This includes all the built-in datatypes defined in <bibref ref="xmlschema-2"/>.
                   “character number” or “code position”. See <bibref ref="charmod"/></p></note><p>Because these terms appear so frequently, they are hyperlinked to the definition only when there
                   is a particular desire to draw the reader’s attention to the definition; the absence of a hyperlink
                   does not mean that the term is being used in some other sense.</p><p>It is <termref def="implementation-defined"/> which version of <bibref ref="Unicode"/> is supported, but it is recommended that the most recent version of Unicode be used.</p><p diff="chg" at="2023-01-17">Unless explicitly stated, the functions in this document do not ensure that any 
-                  returned <code>xs:string</code> values are normalized in the sense of <bibref ref="charmod"/>.</p><notes><p>In functions that involve character counting such
+                  returned <code>xs:string</code> values are normalized in the sense of <bibref ref="charmod"/>.</p><note><p>In functions that involve character counting such
                      as <code>fn:substring</code>, <code>fn:string-length</code> and
                      <code>fn:translate</code>, what is counted is the number of XML <termref def="character">characters</termref>
                      in the string (or equivalently, the number of Unicode codepoints). Some
                      implementations may represent a codepoint above xFFFF using two 16-bit
-                     values known as a surrogate pair. A surrogate pair counts as one character, not two.</p></notes></div3><div3 id="namespace-terminology"><head>Namespaces and URIs</head><p>This document uses the phrase “namespace URI” to identify the concept identified
+                     values known as a surrogate pair. A surrogate pair counts as one character, not two.</p></note></div3><div3 id="namespace-terminology"><head>Namespaces and URIs</head><p>This document uses the phrase “namespace URI” to identify the concept identified
                   in <bibref ref="xml-names"/> as “namespace name”, and the phrase “local name”
                   to identify the concept identified in <bibref ref="xml-names"/> as “local part”.</p><p>It also uses the term <quote>expanded-QName</quote> defined below.</p><p><termdef id="expanded-name" term="expanded-QName"> An <term>expanded-QName</term> 
                   is a value in the value space of the <code>xs:QName</code> datatype as defined in the XDM data model 
@@ -537,7 +533,7 @@ This includes all the built-in datatypes defined in <bibref ref="xmlschema-2"/>.
                   defined in <bibref ref="rfc3986"/> and extended in <bibref ref="rfc3987"/> with a new name <term>IRI</term>.  The term <term>URI   
                      Reference</term>, unless otherwise stated, refers to a string in the lexical space of the <code>xs:anyURI</code> datatype 
                   as defined in <bibref ref="xmlschema-2"/>.</termdef></p><note><p>
-                     Note that this means, in practice, that where this 
+                     This means, in practice, that where this 
                      specification requires a “URI Reference”, an IRI as defined in <bibref ref="rfc3987"/> will be 
                      accepted, provided that other relevant specifications also permit an IRI. The term URI has been 
                      retained in preference to IRI to avoid introducing new names for concepts such as “Base URI” that 
@@ -3154,7 +3150,7 @@ Tak, tak, tak! - da kommen sie.
   &lt;non-match&gt;,&lt;/non-match&gt;
 &lt;/analyze-string-result&gt;</eg><p>(with whitespace added for legibility)</p></td></tr></tbody></table></def></gitem></glist></div3></div2></div1><div1 id="anyURI-functions"><head>Functions that manipulate URIs</head><p>This section specifies functions that manipulate URI values, either as instances
             of <code>xs:anyURI</code> or as strings.</p><table class="index"><thead><tr><th rowspan="1" colspan="1">Function</th><th rowspan="1" colspan="1">Meaning</th></tr></thead><tbody><tr><td style="white-space:nowrap; vertical-align:top" rowspan="1" colspan="1"><code style="padding-right: 10px">fn:resolve-uri</code></td><td rowspan="1" colspan="1">Resolves a relative IRI reference against an absolute IRI.</td></tr><tr><td style="white-space:nowrap; vertical-align:top" rowspan="1" colspan="1"><code style="padding-right: 10px">fn:encode-for-uri</code></td><td rowspan="1" colspan="1">Encodes reserved characters in a string that is intended to be used in the path segment
-            of a URI.</td></tr><tr><td style="white-space:nowrap; vertical-align:top" rowspan="1" colspan="1"><code style="padding-right: 10px">fn:iri-to-uri</code></td><td rowspan="1" colspan="1">Converts a string containing an IRI into a URI according to the rules of <bibref ref="rfc3987"/>.</td></tr><tr><td style="white-space:nowrap; vertical-align:top" rowspan="1" colspan="1"><code style="padding-right: 10px">fn:escape-html-uri</code></td><td rowspan="1" colspan="1">Escapes a URI in the same way that HTML user agents handle attribute values expected to
+            of a URI.</td></tr><tr><td style="white-space:nowrap; vertical-align:top" rowspan="1" colspan="1"><code style="padding-right: 10px">fn:decode-from-uri</code></td><td rowspan="1" colspan="1">Decodes URI-escaped characters in a string.</td></tr><tr><td style="white-space:nowrap; vertical-align:top" rowspan="1" colspan="1"><code style="padding-right: 10px">fn:iri-to-uri</code></td><td rowspan="1" colspan="1">Converts a string containing an IRI into a URI according to the rules of <bibref ref="rfc3987"/>.</td></tr><tr><td style="white-space:nowrap; vertical-align:top" rowspan="1" colspan="1"><code style="padding-right: 10px">fn:escape-html-uri</code></td><td rowspan="1" colspan="1">Escapes a URI in the same way that HTML user agents handle attribute values expected to
             contain URIs.</td></tr></tbody></table><div2 id="func-resolve-uri"><head>fn:resolve-uri</head><glist><gitem><label>Summary</label><def><p>Resolves a relative IRI reference against an absolute IRI.</p></def></gitem><gitem><label>Signature</label><def><example role="signature"><proto isOp="no" prefix="fn" name="resolve-uri" return-type="xs:anyURI?" returnEmptyOk="no" returnSeq="no" returnVaries="no" isSchema="no" isDatatype="no" isSpecial="no"><arg name="href" type="xs:string?"/><arg name="base" type="xs:string?" default="()"/></proto></example></def></gitem><gitem><label>Properties</label><def><p>This function is <termref def="dt-deterministic">deterministic</termref>, <termref def="dt-context-dependent">context-dependent</termref>,  and <termref def="dt-focus-independent">focus-independent</termref>.  It depends on 
 		static base URI.
 	</p></def></gitem><gitem><label>Rules</label><def><p>The function is defined to operate on IRI references as defined in <bibref ref="rfc3987"/>, and the implementation <rfc2119>must</rfc2119> permit all arguments that are valid
@@ -3212,15 +3208,45 @@ Tak, tak, tak! - da kommen sie.
             percent character will be modified by applying the function: for example
                <code>100%</code> becomes <code>100%25</code>, while <code>100%25</code> becomes
                <code>100%2525</code>.</p></def></gitem><gitem><label>Examples</label><def role="example"><table role="medium"><thead><tr><th rowspan="1" colspan="1">Expression</th><th rowspan="1" colspan="1">Result</th></tr></thead><tbody><tr><td valign="top" rowspan="1" colspan="1"><eg xml:space="preserve">encode-for-uri(
-  "http://www.example.com/00/Weather/CA/Los%20Angeles#ocean"
-)</eg></td><td valign="top" rowspan="1" colspan="1"><p><code>"http%3A%2F%2Fwww.example.com%2F00%2FWeather%2FCA%2FLos%2520Angeles%23ocean"</code></p><p><emph>(This is probably not what the user intended because all of the
+  "http://example.com/00/Weather/CA/Los%20Angeles#ocean"
+)</eg></td><td valign="top" rowspan="1" colspan="1"><p><code>"http%3A%2F%2Fexample.com%2F00%2FWeather%2FCA%2FLos%2520Angeles%23ocean"</code></p><p><emph>(This is probably not what the user intended because all of the
                   delimiters have been encoded.)</emph></p></td></tr><tr><td valign="top" rowspan="1" colspan="1"><eg xml:space="preserve">concat(
-  "http://www.example.com/",
+  "http://example.com/",
   encode-for-uri("~bébé")
-)</eg></td><td valign="top" rowspan="1" colspan="1"><p><code>"http://www.example.com/~b%C3%A9b%C3%A9"</code></p></td></tr><tr><td valign="top" rowspan="1" colspan="1"><eg xml:space="preserve">concat(
-  "http://www.example.com/",
+)</eg></td><td valign="top" rowspan="1" colspan="1"><p><code>"http://example.com/~b%C3%A9b%C3%A9"</code></p></td></tr><tr><td valign="top" rowspan="1" colspan="1"><eg xml:space="preserve">concat(
+  "http://example.com/",
   encode-for-uri("100% organic")
-)</eg></td><td valign="top" rowspan="1" colspan="1"><p><code>"http://www.example.com/100%25%20organic"</code></p></td></tr></tbody></table></def></gitem></glist></div2><div2 id="func-iri-to-uri"><head>fn:iri-to-uri</head><glist><gitem><label>Summary</label><def><p>Converts a string containing an IRI into a URI according to the rules of <bibref ref="rfc3987"/>.</p></def></gitem><gitem><label>Signature</label><def><example role="signature"><proto isOp="no" prefix="fn" name="iri-to-uri" return-type="xs:string" returnEmptyOk="no" returnSeq="no" returnVaries="no" isSchema="no" isDatatype="no" isSpecial="no"><arg name="value" type="xs:string?"/></proto></example></def></gitem><gitem><label>Properties</label><def><p>This function is <termref def="dt-deterministic">deterministic</termref>, <termref def="dt-context-independent">context-independent</termref>,  and <termref def="dt-focus-independent">focus-independent</termref>. </p></def></gitem><gitem><label>Rules</label><def><p>If <code>$value</code> is the empty sequence, the function returns the zero-length
+)</eg></td><td valign="top" rowspan="1" colspan="1"><p><code>"http://example.com/100%25%20organic"</code></p></td></tr></tbody></table></def></gitem></glist></div2><div2 id="func-decode-from-uri"><head>fn:decode-from-uri</head><glist><gitem><label>Summary</label><def><p>Decodes URI-escaped characters in a string.</p></def></gitem><gitem><label>Signature</label><def><example role="signature"><proto isOp="no" prefix="fn" name="decode-from-uri" return-type="xs:string" returnEmptyOk="no" returnSeq="no" returnVaries="no" isSchema="no" isDatatype="no" isSpecial="no"><arg name="value" type="xs:string?"/></proto></example></def></gitem><gitem><label>Properties</label><def><p>This function is <termref def="dt-deterministic">deterministic</termref>, <termref def="dt-context-independent">context-independent</termref>,  and <termref def="dt-focus-independent">focus-independent</termref>. </p></def></gitem><gitem><label>Rules</label><def><p>This function returns the original representation of a URI-escaped string.</p><p>If <code>$value</code> is the empty sequence, the function returns the zero-length
+            string.</p><p>Otherwise, the value is first converted to an sequence of octets. Each plus sign
+            (<code>+</code>) is replaced with the octet representing a space character
+            (<code>x20</code>), and any substring that matches the regular expression
+            <code>%[a-fA-F0-9][a-fA-F0-9]</code> is replaced with an octet for the two-digit
+            hexadecimal number that follows the percent sign. Characters that are not part of
+            such a substring are replaced with the octets of their UTF-8 encoding.
+            For example, <code>"A%42+C"</code> results in the octets <code>x41</code>,
+            <code>x42</code>, <code>x20</code>, <code>x43</code>, and <code>"💡"</code> yields
+            <code>xF0</code>, <code>x9F</code>, <code>x92</code>, and <code>xA1</code>.</p><p>If <code>%</code> is followed by up to two characters that are no hexadecimal digits,
+            these characters are replaced by octets <code>xEF</code>, <code>xBF</code>,
+            and <code>xBD</code>, that is, the UTF-8 encoding of the Unicode replacement character
+            (<code>0xFFFD</code>). For example, the incomplete or invalid percent-encoded strings
+            <code>"%"</code>, <code>"%X"</code>, and <code>"%AX"</code> are all replaced with
+            these octets. For the string <code>"%1X!"</code>, the octets <code>xEF</code>,
+            <code>xBF</code>, <code>xBD</code>, and <code>x21</code> are returned.</p><p>Next, the resulting octets are interpreted as UTF-8. For example,
+            <code>x41</code>, <code>x42</code>, <code>x20</code>, and <code>x43</code>
+            becomes <code>"AB C"</code>, and <code>xF0</code>, <code>x9F</code>,
+            <code>x92</code>, and <code>xA1</code> becomes <code>"💡"</code>.</p><p>If an invalid UTF-8 octet sequence is encountered, the octets that have
+            successfully been parsed are replaced with a Unicode replacement character.
+            Examples:</p><ulist><item><p>The single octet <code>xF0</code> is converted to <code>"�"</code>.</p></item><item><p>The octets <code>xF0</code>, <code>x9F</code>, <code>x92</code>, and
+               <code>x41</code> are converted to <code>"�A"</code>:
+               The bit pattern of the first octet indicates that the UTF-8 character comprises
+               four octets. As the fourth octet is invalid, a Unicode replacement character is
+               added for the first three octets, and the fourth (invalid) octet is parsed as a
+               new character.</p></item><item><p>Similarly, the octets <code>xF0</code>, <code>xF0</code>, <code>x9F</code>,
+               <code>x92</code>, and <code>xA1</code> are converted to <code>"�💡"</code>:
+               The second octet is invalid, but it becomes valid when being parsed as the
+               first octet of the remaining UTF-8 sequence.</p></item></ulist><p>Similarly, a UTF-8 octet sequence that represents a codepoint that is not a
+            valid XML character is replaced with a Unicode replacement character.
+            For example, <code>x00</code> becomes <code>"�"</code>.</p></def></gitem><gitem><label>Examples</label><def role="example"><table role="medium"><thead><tr><th rowspan="1" colspan="1">Expression</th><th rowspan="1" colspan="1">Result</th></tr></thead><tbody><tr><td valign="top" rowspan="1" colspan="1"><p><code>decode-from-uri("http://example.com/")</code></p></td><td valign="top" rowspan="1" colspan="1"><p><code>"http://example.com/"</code></p></td></tr><tr><td valign="top" rowspan="1" colspan="1"><p><code>decode-from-uri("~b%C3%A9b%C3%A9?a=b+c")</code></p></td><td valign="top" rowspan="1" colspan="1"><p><code>"~bébé?a=b c"</code></p></td></tr><tr><td valign="top" rowspan="1" colspan="1"><p><code>decode-from-uri("%00-%XX-%F0%9F%92%41-%F0%F0%9F%92%A1")</code></p></td><td valign="top" rowspan="1" colspan="1"><p><code>"�-�-�A-�💡"</code></p></td></tr></tbody></table></def></gitem></glist></div2><div2 id="func-iri-to-uri"><head>fn:iri-to-uri</head><glist><gitem><label>Summary</label><def><p>Converts a string containing an IRI into a URI according to the rules of <bibref ref="rfc3987"/>.</p></def></gitem><gitem><label>Signature</label><def><example role="signature"><proto isOp="no" prefix="fn" name="iri-to-uri" return-type="xs:string" returnEmptyOk="no" returnSeq="no" returnVaries="no" isSchema="no" isDatatype="no" isSpecial="no"><arg name="value" type="xs:string?"/></proto></example></def></gitem><gitem><label>Properties</label><def><p>This function is <termref def="dt-deterministic">deterministic</termref>, <termref def="dt-context-independent">context-independent</termref>,  and <termref def="dt-focus-independent">focus-independent</termref>. </p></def></gitem><gitem><label>Rules</label><def><p>If <code>$value</code> is the empty sequence, the function returns the zero-length
             string.</p><p>Otherwise, the function converts <code>$value</code> into a URI according to
             the rules given in Section 3.1 of <bibref ref="rfc3987"/> by percent-encoding characters
             that are allowed in an IRI but not in a URI. If <code>$value</code> contains a character
@@ -3384,10 +3410,10 @@ Tak, tak, tak! - da kommen sie.
          <code>file</code> or the empty sequence, and <emph>filepath</emph> is
          the empty sequence, <emph>filepath</emph> is also the whole <emph>string</emph>.</p><p>The <emph>path separator</emph> is the value of the
          <code>path-separator</code> option. A
-         <emph>path-segments</emph> array is constructed as follows:
-         tokenize the <emph>string</emph> on the <emph>path
-         separator</emph>, apply <emph>uri decoding</emph> on each
-         token, and convert the result to an array.</p><p>Applying <emph>uri decoding</emph> replaces all occurrences of
+         <emph>path-segments</emph> sequence is constructed by
+         tokenizing the <emph>string</emph> on the <emph>path
+         separator</emph> and applying <emph>uri decoding</emph> on each
+         token.</p><p>Applying <emph>uri decoding</emph> replaces all occurrences of
          plus (<code>+</code>) with spaces and all occurrences of
          <code>%[a-fA-F0-9][a-fA-F0-9]</code> with a single character with the
          codepoint represented by the two digit hexadecimal number that
@@ -3410,8 +3436,7 @@ Tak, tak, tak! - da kommen sie.
          with a value equal to the string following the first equal sign, uri decoded. If the
          token does not contain an equal sign, the map contains a single key named
          <code>value</code> with a value equal to the token, uri decoded. In every case,
-         <emph>uri decoding</emph> is applied to each value add to the map.
-         The resulting sequence of maps is converted into an array.</p><p>If the <emph>filepath</emph> is not the empty sequence,
+         <emph>uri decoding</emph> is applied to each value add to the map.</p><p>If the <emph>filepath</emph> is not the empty sequence,
          it is uri decoded. On a Windows system, any
          forward slashes in the path <rfc2119>may</rfc2119> be
          replaced with backslashes.</p><p>The following map is returned:</p><eg xml:space="preserve">{
@@ -3429,7 +3454,7 @@ Tak, tak, tak! - da kommen sie.
   "query-segments": <emph>query-segments</emph>,
   "filepath": <emph>filepath</emph>
 }</eg><p>The map should only be populated with keys that have a non-empty value (keys
-         whose value is the empty sequence or an empty array <rfc2119>should</rfc2119>
+         whose value is the empty sequence <rfc2119>should</rfc2119>
          be omitted).</p><p>Implementations may implement additional or different rules for URIs that
          have a scheme or pattern that they recognize. An implementation might choose
          to parse <code>jar:</code> URIs with special rules, for example, since they extend the
@@ -3442,7 +3467,7 @@ Tak, tak, tak! - da kommen sie.
          one URI against another and consequently, the errors that can arise under those
          circumstances do not apply here. The <code>fn:parse-uri</code> function will
          accept strings that would raise errors if resolution was attempted,
-         see <code>fn:build-uri</code>.</p></def></gitem><gitem><label>Examples</label><def role="example"><table role="medium"><tbody><tr><td colspan="2" rowspan="1"><p>In the examples that follow, keys with values that are null, or an empty array,
+         see <code>fn:build-uri</code>.</p></def></gitem><gitem><label>Examples</label><def role="example"><table role="medium"><tbody><tr><td colspan="2" rowspan="1"><p>In the examples that follow, keys with values that are null or an empty sequence
     are elided for editorial clarity. String literals that include an ampersand character
     are written as string templates (for example <code>`Barnes&amp;Noble`</code>) to ensure
     that the examples work in both XPath and XQuery.</p></td></tr><tr class="testdiv"><th valign="top" rowspan="1" colspan="1">Expression:</th><td valign="top" rowspan="1" colspan="1"><eg xml:space="preserve">parse-uri(
@@ -3455,7 +3480,7 @@ Tak, tak, tak! - da kommen sie.
   "host": "qt4cg.org",
   "path": "/specifications/xpath-functions-40/Overview.html",
   "fragment": "parse-uri",
-  "path-segments": array { "", "specifications", "xpath-functions-40", "Overview.html" }
+  "path-segments": ("", "specifications", "xpath-functions-40", "Overview.html")
 }</eg></td></tr><tr class="testdiv"><th valign="top" rowspan="1" colspan="1">Expression:</th><td valign="top" rowspan="1" colspan="1"><p><code>parse-uri("http://www.ietf.org/rfc/rfc2396.txt")</code></p></td></tr><tr><th valign="top" rowspan="1" colspan="1">Result:</th><td valign="top" rowspan="1" colspan="1"><eg xml:space="preserve">map {
   "uri": "http://www.ietf.org/rfc/rfc2396.txt",
   "scheme": "http",
@@ -3463,7 +3488,7 @@ Tak, tak, tak! - da kommen sie.
   "authority": "www.ietf.org",
   "host": "www.ietf.org",
   "path": "/rfc/rfc2396.txt",
-  "path-segments": array { "", "rfc", "rfc2396.txt" }
+  "path-segments": ("", "rfc", "rfc2396.txt")
 }</eg></td></tr><tr class="testdiv"><th valign="top" rowspan="1" colspan="1">Expression:</th><td valign="top" rowspan="1" colspan="1"><p><code>parse-uri("https://example.com/path/to/file")</code></p></td></tr><tr><th valign="top" rowspan="1" colspan="1">Result:</th><td valign="top" rowspan="1" colspan="1"><eg xml:space="preserve">map {
   "uri": "https://example.com/path/to/file",
   "scheme": "https",
@@ -3471,7 +3496,7 @@ Tak, tak, tak! - da kommen sie.
   "authority": "example.com",
   "host": "example.com",
   "path": "/path/to/file",
-  "path-segments": array { "", "path", "to", "file" }
+  "path-segments": ("", "path", "to", "file")
 }</eg></td></tr><tr class="testdiv"><th valign="top" rowspan="1" colspan="1">Expression:</th><td valign="top" rowspan="1" colspan="1"><eg xml:space="preserve">parse-uri(
   `https://example.com:8080/path?s=%22hello world%22&amp;sort=relevance`
 )</eg></td></tr><tr><th valign="top" rowspan="1" colspan="1">Result:</th><td valign="top" rowspan="1" colspan="1"><eg xml:space="preserve">map {
@@ -3483,11 +3508,11 @@ Tak, tak, tak! - da kommen sie.
   "port": "8080",
   "path": "/path",
   "query": `s=%22hello world%22&amp;sort=relevance`,
-  "query-segments": array {
+  "query-segments": (
     map { "key": "s", "value": '"hello world"' },
     map { "key": "sort", "value": "relevance" }
-  },
-  "path-segments": array { "", "path" }
+  ),
+  "path-segments": ("", "path")
 }</eg></td></tr><tr class="testdiv"><th valign="top" rowspan="1" colspan="1">Expression:</th><td valign="top" rowspan="1" colspan="1"><p><code>parse-uri("https://user@example.com/path/to/file")</code></p></td></tr><tr><th valign="top" rowspan="1" colspan="1">Result:</th><td valign="top" rowspan="1" colspan="1"><eg xml:space="preserve">map {
   "uri": "https://user@example.com/path/to/file",
   "scheme": "https",
@@ -3496,7 +3521,7 @@ Tak, tak, tak! - da kommen sie.
   "userinfo": "user",
   "host": "example.com",
   "path": "/path/to/file",
-  "path-segments": array { "", "path", "to", "file" }
+  "path-segments": ("", "path", "to", "file")
 }</eg></td></tr><tr class="testdiv"><th valign="top" rowspan="1" colspan="1">Expression:</th><td valign="top" rowspan="1" colspan="1"><p><code>parse-uri("ftp://ftp.is.co.za/rfc/rfc1808.txt")</code></p></td></tr><tr><th valign="top" rowspan="1" colspan="1">Result:</th><td valign="top" rowspan="1" colspan="1"><eg xml:space="preserve">map {
   "uri": "ftp://ftp.is.co.za/rfc/rfc1808.txt",
   "scheme": "ftp",
@@ -3504,7 +3529,7 @@ Tak, tak, tak! - da kommen sie.
   "authority": "ftp.is.co.za",
   "host": "ftp.is.co.za",
   "path": "/rfc/rfc1808.txt",
-  "path-segments": array { "", "rfc", "rfc1808.txt" }
+  "path-segments": ("", "rfc", "rfc1808.txt")
 }</eg></td></tr><tr class="testdiv"><th valign="top" rowspan="1" colspan="1">Expression:</th><td valign="top" rowspan="1" colspan="1"><p><code>parse-uri("file:////uncname/path/to/file")</code></p></td></tr><tr><th valign="top" rowspan="1" colspan="1">Result:</th><td valign="top" rowspan="1" colspan="1"><eg xml:space="preserve">map {
   "uri": "file:////uncname/path/to/file",
   "scheme": "file",
@@ -3513,49 +3538,49 @@ Tak, tak, tak! - da kommen sie.
   "host": "uncname",
   "path": "/path/to/file",
   "filepath": "/path/to/file",
-  "path-segments": array { "", "path", "to", "file" }
+  "path-segments": ("", "path", "to", "file")
 }</eg></td></tr><tr class="testdiv"><th valign="top" rowspan="1" colspan="1">Expression:</th><td valign="top" rowspan="1" colspan="1"><p><code>parse-uri("file:///c:/path/to/file")</code></p></td></tr><tr><th valign="top" rowspan="1" colspan="1">Result:</th><td valign="top" rowspan="1" colspan="1"><eg xml:space="preserve">map {
   "uri": "file:///c:/path/to/file",
   "scheme": "file",
   "hierarchical": true(),
   "path": "/c:/path/to/file",
   "filepath": "c:/path/to/file",
-  "path-segments": array { "", "c: ", "path", "to", "file" }
+  "path-segments": ("", "c: ", "path", "to", "file")
 }</eg></td></tr><tr class="testdiv"><th valign="top" rowspan="1" colspan="1">Expression:</th><td valign="top" rowspan="1" colspan="1"><p><code>parse-uri("file:/C:/Program%20Files/test.jar")</code></p></td></tr><tr><th valign="top" rowspan="1" colspan="1">Result:</th><td valign="top" rowspan="1" colspan="1"><eg xml:space="preserve">map {
   "uri": "file:/C:/Program%20Files/test.jar",
   "scheme": "file",
   "hierarchical": true(),
   "path": "/C:/Program%20Files/test.jar",
   "filepath": "C:/Program Files/test.jar",
-  "path-segments": array { "", "C: ", "Program Files", "test.jar" }
+  "path-segments": ("", "C: ", "Program Files", "test.jar")
 }</eg></td></tr><tr class="testdiv"><th valign="top" rowspan="1" colspan="1">Expression:</th><td valign="top" rowspan="1" colspan="1"><p><code>parse-uri("file:\\c:\path\to\file")</code></p></td></tr><tr><th valign="top" rowspan="1" colspan="1">Result:</th><td valign="top" rowspan="1" colspan="1"><eg xml:space="preserve">map {
   "uri": "file:\\c:\path\to\file",
   "scheme": "file",
   "hierarchical": true(),
   "path": "/c:/path/to/file",
   "filepath": "c:/path/to/file",
-  "path-segments": array { "", "c: ", "path", "to", "file" }
+  "path-segments": ("", "c: ", "path", "to", "file")
 }</eg></td></tr><tr class="testdiv"><th valign="top" rowspan="1" colspan="1">Expression:</th><td valign="top" rowspan="1" colspan="1"><p><code>parse-uri("file:\c:\path\to\file")</code></p></td></tr><tr><th valign="top" rowspan="1" colspan="1">Result:</th><td valign="top" rowspan="1" colspan="1"><eg xml:space="preserve">map {
   "uri": "file:\c:\path\to\file",
   "scheme": "file",
   "hierarchical": true(),
   "path": "/c:/path/to/file",
   "filepath": "c:/path/to/file",
-  "path-segments": array { "", "c: ", "path", "to", "file" }
+  "path-segments": ("", "c: ", "path", "to", "file")
 }</eg></td></tr><tr class="testdiv"><th valign="top" rowspan="1" colspan="1">Expression:</th><td valign="top" rowspan="1" colspan="1"><p><code>parse-uri("c:\path\to\file")</code></p></td></tr><tr><th valign="top" rowspan="1" colspan="1">Result:</th><td valign="top" rowspan="1" colspan="1"><eg xml:space="preserve">map {
   "uri": "c:\path\to\file",
   "scheme": "file",
   "hierarchical": true(),
   "path": "/c:/path/to/file",
   "filepath": "c:/path/to/file",
-  "path-segments": array { "", "c: ", "path", "to", "file" }
+  "path-segments": ("", "c: ", "path", "to", "file")
 }</eg></td></tr><tr class="testdiv"><th valign="top" rowspan="1" colspan="1">Expression:</th><td valign="top" rowspan="1" colspan="1"><p><code>parse-uri("/path/to/file")</code></p></td></tr><tr><th valign="top" rowspan="1" colspan="1">Result:</th><td valign="top" rowspan="1" colspan="1"><eg xml:space="preserve">
 map {
   "uri": "/path/to/file",
   "hierarchical": true(),
   "path": "/path/to/file",
   "filepath": "/path/to/file",
-  "path-segments": array { "", "path", "to", "file" }
+  "path-segments": ("", "path", "to", "file")
 }</eg></td></tr><tr class="testdiv"><th valign="top" rowspan="1" colspan="1">Expression:</th><td valign="top" rowspan="1" colspan="1"><p><code>parse-uri("#testing")</code></p></td></tr><tr><th valign="top" rowspan="1" colspan="1">Result:</th><td valign="top" rowspan="1" colspan="1"><eg xml:space="preserve">
 map {
  "uri": "#testing",
@@ -3564,9 +3589,9 @@ map {
 map {
   "uri": "?q=1",
   "query": "q=1",
-  "query-segments": array {
+  "query-segments": (
     map { "key": "q", "value": "1" }
-  }
+  )
 }</eg></td></tr><tr class="testdiv"><th valign="top" rowspan="1" colspan="1">Expression:</th><td valign="top" rowspan="1" colspan="1"><p><code>parse-uri("ldap://[2001:db8::7]/c=GB?objectClass?one")</code></p></td></tr><tr><th valign="top" rowspan="1" colspan="1">Result:</th><td valign="top" rowspan="1" colspan="1"><eg xml:space="preserve">
 map {
   "uri": "ldap://[2001:db8::7]/c=GB?objectClass?one",
@@ -3576,31 +3601,31 @@ map {
   "host": "[2001:db8::7]",
   "path": "/c=GB",
   "query": "objectClass?one",
-  "query-segments": array {
+  "query-segments": (
     map { "value": "objectClass?one" }
-  },
-  "path-segments": array { "", "c=GB" }
+  ),
+  "path-segments": ("", "c=GB")
 }</eg></td></tr><tr class="testdiv"><th valign="top" rowspan="1" colspan="1">Expression:</th><td valign="top" rowspan="1" colspan="1"><p><code>parse-uri("mailto:John.Doe@example.com")</code></p></td></tr><tr><th valign="top" rowspan="1" colspan="1">Result:</th><td valign="top" rowspan="1" colspan="1"><eg xml:space="preserve">
 map {
   "uri": "mailto:John.Doe@example.com",
   "scheme": "mailto",
   "hierarchical": false(),
   "path": "John.Doe@example.com",
-  "path-segments": array { "John.Doe@example.com" }
+  "path-segments": ("John.Doe@example.com")
 }</eg></td></tr><tr class="testdiv"><th valign="top" rowspan="1" colspan="1">Expression:</th><td valign="top" rowspan="1" colspan="1"><p><code>parse-uri("news:comp.infosystems.www.servers.unix")</code></p></td></tr><tr><th valign="top" rowspan="1" colspan="1">Result:</th><td valign="top" rowspan="1" colspan="1"><eg xml:space="preserve">
 map {
   "uri": "news:comp.infosystems.www.servers.unix",
   "scheme": "news",
   "hierarchical": false(),
   "path": "comp.infosystems.www.servers.unix",
-  "path-segments": array { "comp.infosystems.www.servers.unix" }
+  "path-segments": ("comp.infosystems.www.servers.unix")
 }</eg></td></tr><tr class="testdiv"><th valign="top" rowspan="1" colspan="1">Expression:</th><td valign="top" rowspan="1" colspan="1"><p><code>parse-uri("tel:+1-816-555-1212")</code></p></td></tr><tr><th valign="top" rowspan="1" colspan="1">Result:</th><td valign="top" rowspan="1" colspan="1"><eg xml:space="preserve">
 map {
   "uri": "tel:+1-816-555-1212",
   "scheme": "tel",
   "hierarchical": false(),
   "path": "+1-816-555-1212",
-  "path-segments": array { " 1-816-555-1212" }
+  "path-segments": (" 1-816-555-1212")
 }</eg></td></tr><tr class="testdiv"><th valign="top" rowspan="1" colspan="1">Expression:</th><td valign="top" rowspan="1" colspan="1"><p><code>parse-uri("telnet://192.0.2.16:80/")</code></p></td></tr><tr><th valign="top" rowspan="1" colspan="1">Result:</th><td valign="top" rowspan="1" colspan="1"><eg xml:space="preserve">
 map {
   "uri": "telnet://192.0.2.16:80/",
@@ -3610,7 +3635,7 @@ map {
   "host": "192.0.2.16",
   "port": "80",
   "path": "/",
-  "path-segments": array { "", "" }
+  "path-segments": ("", "")
 }</eg></td></tr><tr class="testdiv"><th valign="top" rowspan="1" colspan="1">Expression:</th><td valign="top" rowspan="1" colspan="1"><eg xml:space="preserve">parse-uri(
   "urn:oasis:names:specification:docbook:dtd:xml:4.1.2"
 )</eg></td></tr><tr><th valign="top" rowspan="1" colspan="1">Result:</th><td valign="top" rowspan="1" colspan="1"><eg xml:space="preserve">
@@ -3619,14 +3644,14 @@ map {
   "scheme": "urn",
   "hierarchical": false(),
   "path": "oasis:names:specification:docbook:dtd:xml:4.1.2",
-  "path-segments": array { "oasis:names:specification:docbook:dtd:xml:4.1.2" }
+  "path-segments": "oasis:names:specification:docbook:dtd:xml:4.1.2"
 }</eg></td></tr><tr class="testdiv"><th valign="top" rowspan="1" colspan="1">Expression:</th><td valign="top" rowspan="1" colspan="1"><p><code>parse-uri("tag:textalign.net,2015:ns")</code></p></td></tr><tr><th valign="top" rowspan="1" colspan="1">Result:</th><td valign="top" rowspan="1" colspan="1"><eg xml:space="preserve">
 map {
   "uri": "tag:textalign.net,2015:ns",
   "scheme": "tag",
   "hierarchical": false(),
   "path": "textalign.net,2015:ns",
-  "path-segments": array { "textalign.net,2015:ns" }
+  "path-segments": "textalign.net,2015:ns"
 }
 </eg></td></tr><tr class="testdiv"><th valign="top" rowspan="1" colspan="1">Expression:</th><td valign="top" rowspan="1" colspan="1"><p><code>parse-uri("tag:jan@example.com,1999-01-31:my-uri")</code></p></td></tr><tr><th valign="top" rowspan="1" colspan="1">Result:</th><td valign="top" rowspan="1" colspan="1"><eg xml:space="preserve">
 map {
@@ -3634,7 +3659,7 @@ map {
   "scheme": "tag",
   "hierarchical": false(),
   "path": "jan@example.com,1999-01-31:my-uri",
-  "path-segments": array { "jan@example.com,1999-01-31:my-uri" }
+  "path-segments": "jan@example.com,1999-01-31:my-uri"
 }
 </eg></td></tr><tr><td colspan="2" rowspan="1"><p>This example uses the algorithm described above, not an algorithm that is
 specifically aware of the <code>jar:</code> scheme.</p></td></tr><tr class="testdiv"><th valign="top" rowspan="1" colspan="1">Expression:</th><td valign="top" rowspan="1" colspan="1"><eg xml:space="preserve">parse-uri(
@@ -3645,7 +3670,7 @@ map {
   "scheme": "jar",
   "hierarchical": false(),
   "path": "file:/C:/Program%20Files/test.jar!/foo/bar",
-  "path-segments": array { "file:", "C:", "Program Files", "test.jar!", "foo", "bar" }
+  "path-segments": ("file:", "C:", "Program Files", "test.jar!", "foo", "bar")
 }
 </eg></td></tr><tr><td colspan="2" rowspan="1"><p>This example demonstrates that parsing the URI treats non-URI characters in
 lexical IRIs as “unreserved characters”. The rationale for this is given in the
@@ -3657,7 +3682,7 @@ map {
   "authority": "www.example.org",
   "host": "www.example.org",
   "path": "/Dürst",
-  "path-segments": array { "", "Dürst" }
+  "path-segments": ("", "Dürst")
 }
 </eg></td></tr><tr><td colspan="2" rowspan="1"><p>This example demonstrates a non-standard query separator.</p></td></tr><tr class="testdiv"><th valign="top" rowspan="1" colspan="1">Expression:</th><td valign="top" rowspan="1" colspan="1"><eg xml:space="preserve">parse-uri(
   "https://example.com:8080/path?s=%22hello world%22;sort=relevance",
@@ -3672,11 +3697,11 @@ map {
   "port": "8080",
   "path": "/path",
   "query": "s=%22hello world%22;sort=relevance",
-  "query-segments": array {
+  "query-segments": (
     map { "key": "s", "value": '"hello world"' },
     map { "key": "sort", "value": "relevance" }
-  },
-  "path-segments": array { "", "path" }
+  ),
+  "path-segments": ("", "path")
 }</eg></td></tr><tr><td colspan="2" rowspan="1"><p>This example uses an invalid query separator so raises an error.</p></td></tr><tr class="testdiv"><th valign="top" rowspan="1" colspan="1">Expression:</th><td valign="top" rowspan="1" colspan="1"><eg xml:space="preserve">parse-uri(
   "https://example.com:8080/path?s=%22hello world%22;;sort=relevance",
   map { "query-separator": ";;" }
@@ -3687,7 +3712,7 @@ path.</p></td></tr><tr class="testdiv"><th valign="top" rowspan="1" colspan="1">
   "hierarchical": true(),
   "path": "/c:/path/to/file",
   "filepath": "c:/path/to/file",
-  "path-segments": array { "", "c:", "path", "to", "file" }
+  "path-segments": ("", "c:", "path", "to", "file")
 }</eg></td></tr><tr><td colspan="2" rowspan="1"><p>This example demonstrates the use of <code>|</code> instead of <code>:</code> in a Windows
 path with an explicit <code>file:</code> scheme.</p></td></tr><tr class="testdiv"><th valign="top" rowspan="1" colspan="1">Expression:</th><td valign="top" rowspan="1" colspan="1"><p><code>parse-uri("file://c|/path/to/file")</code></p></td></tr><tr><th valign="top" rowspan="1" colspan="1">Result:</th><td valign="top" rowspan="1" colspan="1"><eg xml:space="preserve">map {
   "uri": "file://c|/path/to/file",
@@ -3695,7 +3720,7 @@ path with an explicit <code>file:</code> scheme.</p></td></tr><tr class="testdiv
   "hierarchical": true(),
   "path": "/c:/path/to/file",
   "filepath": "c:/path/to/file",
-  "path-segments": array { "", "c:", "path", "to", "file" }
+  "path-segments": ("", "c:", "path", "to", "file")
 }</eg></td></tr></tbody></table></def></gitem><gitem><label>History</label><def role="example"><p>Proposed on 17 Oct 2022 to resolve
          <loc xmlns:xlink="http://www.w3.org/1999/xlink" href="https://github.com/qt4cg/qtspecs/issues/72" xlink:type="simple" xlink:show="replace" xlink:actuate="onRequest">issue #72</loc>.
          Accepted in principle on 15 Nov 2022, with some details still
@@ -9166,7 +9191,7 @@ return function-arity($initial)</eg></td><td valign="top" rowspan="1" colspan="1
             the sort key can be computed using a caller-supplied function.</td></tr><tr><td style="white-space:nowrap; vertical-align:top" rowspan="1" colspan="1"><code style="padding-right: 10px">fn:index-where</code></td><td rowspan="1" colspan="1">Returns the position in an input sequence of items that match a supplied predicate.</td></tr><tr><td style="white-space:nowrap; vertical-align:top" rowspan="1" colspan="1"><code style="padding-right: 10px">fn:items-after</code></td><td rowspan="1" colspan="1">Returns the items from the input sequence that follow the first item to match a supplied predicate.</td></tr><tr><td style="white-space:nowrap; vertical-align:top" rowspan="1" colspan="1"><code style="padding-right: 10px">fn:items-before</code></td><td rowspan="1" colspan="1">Returns the items from the input sequence that precede the first item to match a supplied predicate.</td></tr><tr><td style="white-space:nowrap; vertical-align:top" rowspan="1" colspan="1"><code style="padding-right: 10px">fn:items-starting-where</code></td><td rowspan="1" colspan="1">Returns the items from the input sequence starting from the first item to match a supplied predicate.</td></tr><tr><td style="white-space:nowrap; vertical-align:top" rowspan="1" colspan="1"><code style="padding-right: 10px">fn:items-ending-where</code></td><td rowspan="1" colspan="1">Returns the items from the input sequence ending with the first item to match a supplied predicate.</td></tr><tr><td style="white-space:nowrap; vertical-align:top" rowspan="1" colspan="1"><code style="padding-right: 10px">fn:iterate-while</code></td><td rowspan="1" colspan="1">Processes a supplied value repeatedly, continuing while some condition remains true,
             and returning the first value that does not satisfy the condition.</td></tr><tr><td style="white-space:nowrap; vertical-align:top" rowspan="1" colspan="1"><code style="padding-right: 10px">fn:lowest</code></td><td rowspan="1" colspan="1">Returns those items from a supplied sequence that have the lowest value of a sort key, where
             the sort key can be computed using a caller-supplied function.</td></tr><tr><td style="white-space:nowrap; vertical-align:top" rowspan="1" colspan="1"><code style="padding-right: 10px">fn:partition</code></td><td rowspan="1" colspan="1">Partitions a sequence of items into a sequence of non-empty arrays containing the same items,
-            starting a new partition when a supplied condition is true.</td></tr><tr><td style="white-space:nowrap; vertical-align:top" rowspan="1" colspan="1"><code style="padding-right: 10px">fn:some</code></td><td rowspan="1" colspan="1">Returns <code>true</code> if at least one item in the input sequence matches a supplied predicate.</td></tr><tr><td style="white-space:nowrap; vertical-align:top" rowspan="1" colspan="1"><code style="padding-right: 10px">fn:sort</code></td><td rowspan="1" colspan="1">Sorts a supplied sequence, based on the value of a sort key supplied as a function.</td></tr><tr><td style="white-space:nowrap; vertical-align:top" rowspan="1" colspan="1"><code style="padding-right: 10px">fn:transitive-closure</code></td><td rowspan="1" colspan="1">Given a function <var>F</var> that navigates from one node to other nodes, 
+            starting a new partition when a supplied condition is true.</td></tr><tr><td style="white-space:nowrap; vertical-align:top" rowspan="1" colspan="1"><code style="padding-right: 10px">fn:some</code></td><td rowspan="1" colspan="1">Returns <code>true</code> if at least one item in the input sequence matches a supplied predicate.</td></tr><tr><td style="white-space:nowrap; vertical-align:top" rowspan="1" colspan="1"><code style="padding-right: 10px">fn:sort</code></td><td rowspan="1" colspan="1">Sorts a supplied sequence, based on the value of one or more supplied sort keys supplied as functions.</td></tr><tr><td style="white-space:nowrap; vertical-align:top" rowspan="1" colspan="1"><code style="padding-right: 10px">fn:transitive-closure</code></td><td rowspan="1" colspan="1">Given a function <var>F</var> that navigates from one node to other nodes, 
             returns a function that applies <var>F</var> repeatedly.</td></tr></tbody></table><p>With all these functions, if the caller-supplied function fails with a dynamic error,
             this error is propagated as an error from the higher-order function itself.</p><div3 id="func-apply"><head>fn:apply</head><glist><gitem><label>Summary</label><def><p>Makes a dynamic call on a function with an argument list supplied in the form of an array.</p></def></gitem><gitem><label>Signature</label><def><example role="signature"><proto isOp="no" prefix="fn" name="apply" return-type="item()*" returnEmptyOk="no" returnSeq="no" returnVaries="no" isSchema="no" isDatatype="no" isSpecial="no"><arg name="function" type="function(*)"/><arg name="arguments" type="array(*)"/></proto></example></def></gitem><gitem><label>Properties</label><def><p>This function is <termref def="dt-deterministic">deterministic</termref>, <termref def="dt-context-independent">context-independent</termref>,  and <termref def="dt-focus-independent">focus-independent</termref>. </p></def></gitem><gitem><label>Rules</label><def><p>The result of the function is obtained by invoking the supplied function <code>$function</code> with arguments
          taken from the members of the supplied array <code>$arguments</code>. The first argument of the function call is the first
@@ -9447,7 +9472,7 @@ function($item) {
 )</eg></td><td valign="top" rowspan="1" colspan="1"><p><code>("May")</code></p></td></tr><tr><td valign="top" rowspan="1" colspan="1"><p><code>items-after(10 to 20, function { . gt 100 })</code></p></td><td valign="top" rowspan="1" colspan="1"><p><code>()</code></p></td></tr><tr><td valign="top" rowspan="1" colspan="1"><p><code>items-after((), boolean#1)</code></p></td><td valign="top" rowspan="1" colspan="1"><p><code>()</code></p></td></tr><tr><td valign="top" rowspan="1" colspan="1"><eg xml:space="preserve">parse-xml("&lt;doc&gt;&lt;p/&gt;&lt;p/&gt;&lt;h2/&gt;&lt;img/&gt;&lt;/doc&gt;")//doc/*
 =&gt; items-after(function { boolean(self::h2) })</eg></td><td valign="top" rowspan="1" colspan="1"><p><code>&lt;img/&gt;</code></p></td></tr></tbody></table></def></gitem><gitem><label>History</label><def role="example"><p>New in 4.0. Accepted 2022-10-25.</p></def></gitem></glist></div3><div3 id="func-items-before" diff="add" at="A"><head>fn:items-before</head><glist><gitem><label>Summary</label><def><p>Returns the items from the input sequence that precede the first item to match a supplied predicate.</p></def></gitem><gitem><label>Signature</label><def><example role="signature"><proto isOp="no" prefix="fn" name="items-before" return-type="item()*" returnEmptyOk="no" returnSeq="no" returnVaries="no" isSchema="no" isDatatype="no" isSpecial="no"><arg name="input" type="item()*"/><arg name="predicate" type="function(item()) as xs:boolean"/></proto></example></def></gitem><gitem><label>Properties</label><def><p>This function is <termref def="dt-deterministic">deterministic</termref>, <termref def="dt-context-independent">context-independent</termref>,  and <termref def="dt-focus-independent">focus-independent</termref>. </p></def></gitem><gitem><label>Rules</label><def><p>The supplied <code>$predicate</code> function is called for each item in the input sequence <code>$input</code>,
             to return a boolean value. Let <code>$P</code> be the 1-based position of the first item to match the predicate, 
-            or -1 if no item matches the predicate.</p><p>The function then returns <code>if ($P lt 0) then $seq else fn:subsequence($input, 1, $P - 1)</code>.</p></def></gitem><gitem><label>Notes</label><def><p role="note">To retain the first matching item, use <code>fn:items-ending-where</code>.</p></def></gitem><gitem><label>Examples</label><def role="example"><table role="medium"><thead><tr><th rowspan="1" colspan="1">Expression</th><th rowspan="1" colspan="1">Result</th></tr></thead><tbody><tr><td valign="top" rowspan="1" colspan="1"><p><code>items-before(10 to 20, function { . gt 12 })</code></p></td><td valign="top" rowspan="1" colspan="1"><p><code>(10, 11, 12)</code></p></td></tr><tr><td valign="top" rowspan="1" colspan="1"><eg xml:space="preserve">items-before(
+            or -1 if no item matches the predicate.</p><p>The function then returns <code>if ($P lt 0) then $input else fn:subsequence($input, 1, $P - 1)</code>.</p></def></gitem><gitem><label>Notes</label><def><p role="note">To retain the first matching item, use <code>fn:items-ending-where</code>.</p></def></gitem><gitem><label>Examples</label><def role="example"><table role="medium"><thead><tr><th rowspan="1" colspan="1">Expression</th><th rowspan="1" colspan="1">Result</th></tr></thead><tbody><tr><td valign="top" rowspan="1" colspan="1"><p><code>items-before(10 to 20, function { . gt 12 })</code></p></td><td valign="top" rowspan="1" colspan="1"><p><code>(10, 11, 12)</code></p></td></tr><tr><td valign="top" rowspan="1" colspan="1"><eg xml:space="preserve">items-before(
   ("January", "February", "March", "April", "May"),
   starts-with(?, "A")
 )</eg></td><td valign="top" rowspan="1" colspan="1"><p><code>("January", "February", "March")</code></p></td></tr><tr><td valign="top" rowspan="1" colspan="1"><p><code>items-before(10 to 20, function { . gt 100 })</code></p></td><td valign="top" rowspan="1" colspan="1"><p><code>(10 to 20)</code></p></td></tr><tr><td valign="top" rowspan="1" colspan="1"><p><code>items-before((), boolean#1)</code></p></td><td valign="top" rowspan="1" colspan="1"><p><code>()</code></p></td></tr><tr><td valign="top" rowspan="1" colspan="1"><eg xml:space="preserve">parse-xml("&lt;doc&gt;&lt;p/&gt;&lt;p/&gt;&lt;h2/&gt;&lt;img/&gt;&lt;/doc&gt;")//doc/*
@@ -9462,9 +9487,9 @@ function($item) {
   starts-with(?, "A")
 )</eg></td><td valign="top" rowspan="1" colspan="1"><p><code>("April", "May")</code></p></td></tr><tr><td valign="top" rowspan="1" colspan="1"><p><code>items-starting-where(10 to 20, function { . gt 100 })</code></p></td><td valign="top" rowspan="1" colspan="1"><p><code>()</code></p></td></tr><tr><td valign="top" rowspan="1" colspan="1"><p><code>items-starting-where((), boolean#1)</code></p></td><td valign="top" rowspan="1" colspan="1"><p><code>()</code></p></td></tr><tr><td valign="top" rowspan="1" colspan="1"><eg xml:space="preserve">parse-xml("&lt;doc&gt;&lt;p/&gt;&lt;p/&gt;&lt;h2/&gt;&lt;img/&gt;&lt;/doc&gt;")//doc/*
 =&gt; items-starting-where(function { boolean(self::h2) })
-=!&gt; name()</eg></td><td valign="top" rowspan="1" colspan="1"><p><code>"h2", "img"</code></p></td></tr></tbody></table></def></gitem><gitem><label>History</label><def role="example"><p>New in 4.0. Accepted 2022-10-25.</p></def></gitem></glist></div3><div3 id="func-items-ending-where" diff="add" at="A"><head>fn:items-ending-where</head><glist><gitem><label>Summary</label><def><p>Returns the items from the input sequence ending with the first item to match a supplied predicate.</p></def></gitem><gitem><label>Signature</label><def><example role="signature"><proto isOp="no" prefix="fn" name="items-until" return-type="item()*" returnEmptyOk="no" returnSeq="no" returnVaries="no" isSchema="no" isDatatype="no" isSpecial="no"><arg name="input" type="item()*"/><arg name="predicate" type="function(item()) as xs:boolean"/></proto></example></def></gitem><gitem><label>Properties</label><def><p>This function is <termref def="dt-deterministic">deterministic</termref>, <termref def="dt-context-independent">context-independent</termref>,  and <termref def="dt-focus-independent">focus-independent</termref>. </p></def></gitem><gitem><label>Rules</label><def><p>The supplied <code>$predicate</code> function is called for each item in the input sequence <code>$input</code>,
+=!&gt; name()</eg></td><td valign="top" rowspan="1" colspan="1"><p><code>"h2", "img"</code></p></td></tr></tbody></table></def></gitem><gitem><label>History</label><def role="example"><p>New in 4.0. Accepted 2022-10-25.</p></def></gitem></glist></div3><div3 id="func-items-ending-where" diff="add" at="A"><head>fn:items-ending-where</head><glist><gitem><label>Summary</label><def><p>Returns the items from the input sequence ending with the first item to match a supplied predicate.</p></def></gitem><gitem><label>Signature</label><def><example role="signature"><proto isOp="no" prefix="fn" name="items-ending-where" return-type="item()*" returnEmptyOk="no" returnSeq="no" returnVaries="no" isSchema="no" isDatatype="no" isSpecial="no"><arg name="input" type="item()*"/><arg name="predicate" type="function(item()) as xs:boolean"/></proto></example></def></gitem><gitem><label>Properties</label><def><p>This function is <termref def="dt-deterministic">deterministic</termref>, <termref def="dt-context-independent">context-independent</termref>,  and <termref def="dt-focus-independent">focus-independent</termref>. </p></def></gitem><gitem><label>Rules</label><def><p>The supplied <code>$predicate</code> function is called for each item in the input sequence <code>$input</code>,
             to return a boolean value. Let <code>$P</code> be the 1-based position of the first item to match the predicate, 
-            or -1 if no item matches the predicate.</p><p>The function then returns <code>if ($P lt 0) then $seq else fn:subsequence($input, 1, $P)</code>.</p></def></gitem><gitem><label>Notes</label><def><p role="note">To exclude the last item, use <code>fn:items-before</code>.</p></def></gitem><gitem><label>Examples</label><def role="example"><table role="medium"><thead><tr><th rowspan="1" colspan="1">Expression</th><th rowspan="1" colspan="1">Result</th></tr></thead><tbody><tr><td valign="top" rowspan="1" colspan="1"><p><code>items-ending-where(10 to 20, function { . gt 12 })</code></p></td><td valign="top" rowspan="1" colspan="1"><p><code>(10, 11, 12, 13)</code></p></td></tr><tr><td valign="top" rowspan="1" colspan="1"><eg xml:space="preserve">items-ending-where(
+            or -1 if no item matches the predicate.</p><p>The function then returns <code>if ($P lt 0) then $input else fn:subsequence($input, 1, $P)</code>.</p></def></gitem><gitem><label>Notes</label><def><p role="note">To exclude the last item, use <code>fn:items-before</code>.</p></def></gitem><gitem><label>Examples</label><def role="example"><table role="medium"><thead><tr><th rowspan="1" colspan="1">Expression</th><th rowspan="1" colspan="1">Result</th></tr></thead><tbody><tr><td valign="top" rowspan="1" colspan="1"><p><code>items-ending-where(10 to 20, function { . gt 12 })</code></p></td><td valign="top" rowspan="1" colspan="1"><p><code>(10, 11, 12, 13)</code></p></td></tr><tr><td valign="top" rowspan="1" colspan="1"><eg xml:space="preserve">items-ending-where(
   ("January", "February", "March", "April", "May"),
   starts-with(?, "A")
 )</eg></td><td valign="top" rowspan="1" colspan="1"><p><code>("January", "February", "March", "April")</code></p></td></tr><tr><td valign="top" rowspan="1" colspan="1"><p><code>items-ending-where(10 to 20, function { . gt 100 })</code></p></td><td valign="top" rowspan="1" colspan="1"><p><code>(10 to 20)</code></p></td></tr><tr><td valign="top" rowspan="1" colspan="1"><p><code>items-ending-where((), boolean#1)</code></p></td><td valign="top" rowspan="1" colspan="1"><p><code>()</code></p></td></tr><tr><td valign="top" rowspan="1" colspan="1"><eg xml:space="preserve">parse-xml("&lt;doc&gt;&lt;p/&gt;&lt;p/&gt;&lt;h2/&gt;&lt;img/&gt;&lt;/doc&gt;")//doc/*
@@ -9621,22 +9646,50 @@ declare function fn:some(
   ("January", "February", "March", "April",
    "September", "October", "November", "December")
   =!&gt; contains("r")
-)</eg></td><td valign="top" rowspan="1" colspan="1"><p><code>true()</code></p></td></tr></tbody></table></def></gitem><gitem><label>History</label><def role="example"><p>New in 4.0. Accepted 2022-09-13.</p></def></gitem></glist></div3><div3 id="func-sort"><head>fn:sort</head><glist><gitem><label>Summary</label><def><p>Sorts a supplied sequence, based on the value of a sort key supplied as a function.</p></def></gitem><gitem><label>Signature</label><def><example role="signature"><proto isOp="no" prefix="fn" name="sort" return-type="item()*" returnEmptyOk="no" returnSeq="no" returnVaries="no" isSchema="no" isDatatype="no" isSpecial="no"><arg name="input" type="item()*"/><arg name="collation" type="xs:string?" default="fn:default-collation()"/><arg name="key" type="function(item()) as xs:anyAtomicType*" default="fn:data#1"/></proto></example></def></gitem><gitem><label>Properties</label><def><p>The one-argument form of this function is <termref def="dt-deterministic">deterministic</termref>, <termref def="dt-context-dependent">context-dependent</termref>,  and <termref def="dt-focus-independent">focus-independent</termref>.  It depends on 
+)</eg></td><td valign="top" rowspan="1" colspan="1"><p><code>true()</code></p></td></tr></tbody></table></def></gitem><gitem><label>History</label><def role="example"><p>New in 4.0. Accepted 2022-09-13.</p></def></gitem></glist></div3><div3 id="func-sort"><head>fn:sort</head><glist><gitem><label>Summary</label><def><p>Sorts a supplied sequence, based on the value of one or more supplied sort keys supplied as functions.</p></def></gitem><gitem><label>Signature</label><def><example role="signature"><proto isOp="no" prefix="fn" name="sort" return-type="item()*" returnEmptyOk="no" returnSeq="no" returnVaries="no" isSchema="no" isDatatype="no" isSpecial="no"><arg name="input" type="item()*"/><arg name="collation" type="xs:string*" default="fn:default-collation()"/><arg name="key" type="(function(item()) as xs:anyAtomicType*)+" default="fn:data#1"/><arg name="order" type="enum('ascending', 'descending')*" default="'ascending'"/></proto></example></def></gitem><gitem><label>Properties</label><def><p>This function is <termref def="dt-deterministic">deterministic</termref>, <termref def="dt-context-dependent">context-dependent</termref>,  and <termref def="dt-focus-independent">focus-independent</termref>.  It depends on 
 		collations.
-	</p><p>The two-argument form of this function is <termref def="dt-deterministic">deterministic</termref>, <termref def="dt-context-dependent">context-dependent</termref>,  and <termref def="dt-focus-independent">focus-independent</termref>.  It depends on 
-		collations.
-	</p><p>The three-argument form of this function is <termref def="dt-deterministic">deterministic</termref>, <termref def="dt-context-dependent">context-dependent</termref>,  and <termref def="dt-focus-independent">focus-independent</termref>.  It depends on 
-		collations.
-	</p></def></gitem><gitem><label>Rules</label><def><p>Calling the single-argument version of the function is equivalent to calling the two-argument form
-         with <code>default-collation()</code> as the second argument: that is, it sorts a sequence of items according
-         to the typed value of the items, using the default collation to compare strings.</p><p>Calling the two-argument version of the function is equivalent to calling the three-argument form 
-            with <code>fn:data#1</code> as the third argument: that is, it sorts a sequence of items according 
-            to the typed value of the items, using a specified collation to compare strings.</p><p>In the case of both <code>fn:sort#2</code> and <code>fn:sort#3</code>, supplying an empty
-         sequence as the second argument is equivalent to supplying <code>fn:default-collation()</code>. For more
-         information on collations see <specref ref="choosing-a-collation"/>.</p><p>The result of the function is obtained as follows:</p><ulist><item><p>For each item in the sequence <code>$input</code>, the function supplied as <code>$key</code> 
-               is evaluated with that item as its argument. 
-               The resulting values are the sort keys of the items in the input sequence.
-            </p></item><item><p>The result sequence contains the same items as the input sequence <code>$input</code>, but generally in a different order.</p></item><item><p>Let <var>$C</var> be the selected collation, or the default collation where applicable.</p></item><item diff="chg" at="A"><p>The order of items in the result is such that, given two items <code>$A</code> and <code>$B</code>:</p><olist><item><p>Let <code>$REL</code> be the result of evaluating <code>op:lexicographic-compare($key($A), $key($B), $C)</code>
+	</p></def></gitem><gitem><label>Rules</label><def><p>The result of the function is a sequence that contains all the items from <code>$input</code>,
+         typically in a different order, the order being defined by one or more <term>sort key definitions</term>.</p><p>A <term>sort key definition</term> has three parts:</p><olist><item><p>A <term>sort key function</term>, which is applied to each item in the input sequence to
+            determine a <term>sort key value</term>.</p></item><item><p>A <term>collation</term>, which is used when comparing <term>sort key values</term>
+               that are of type <code>xs:string</code> or <code>xs:untypedAtomic</code>.</p></item><item><p>An <term>order direction</term>, which is <code>ascending</code> or
+            <code>descending</code>.</p></item></olist><p>The number of sort key definitions is determined by the number of function items supplied
+            in the <code>$key</code> argument. If the argument is absent or empty, the default is
+            a single sort key definition using the function <code>data#1</code>.</p><p>The <code>$n</code>'th sort key definition (where <code>$n</code> counts from one (1))
+         is established as follows:</p><olist><item><p>The <term>sort key function</term> is <code>$key[$n] otherwise data#1</code>.</p></item><item><p>The <term>collation</term> is <code>$collation[$n] otherwise $collation[last()]
+               otherwise default-collation()</code>.
+            That is, it is the collation supplied in the corresponding item of the supplied
+             <code>$collation</code> argument; or in its absence, the last entry in 
+            <code>$collation</code>; or if <code>$collation</code> is absent or empty, the
+            default collation from the static context of the caller.</p></item><item><p>The <term>order direction</term> is 
+               <code>$order[$n] otherwise $order[last()] otherwise "ascending"</code>.
+            That is, it is <code>"ascending"</code> or <code>"descending"</code> according
+            to the value of the corresponding item in the supplied <code>$order</code>
+            argument; or in its absence, the last entry in <code>$order</code>; or
+            if <code>$order</code> is absent or empty, then <code>"ascending"</code>.</p></item></olist><p>When comparing values of types other than <code>xs:string</code> or <code>xs:untypedAtomic</code>,
+         the corresponding collation is ignored, and no error is reported if the supplied value is
+         not a known or valid collation name. If it is necessary to supply such an ignored value
+         (for example, in the case where a non-string sort key is followed by another sort key 
+         that requires a collation) the empty string can be supplied.</p><p>The result of the function is obtained as follows:</p><olist><item><p>The result sequence contains the same items as the input sequence <code>$input</code>, 
+                  but generally in a different order.</p></item><item><p>The sort key definitions are established as described above.
+                  The sort key definitions are in major-to-minor order. That is, the position of two
+                  items <code>$A</code> and <code>$B</code> in the result sequence is determined first by the 
+                  relative magnitude of their
+                  primary sort key values, which are computed by evaluating the <term>sort key function</term> in the 
+                  first sort key definition.
+                  If those two sort key values are equal, then the position is determined by the relative magnitude
+                  of their secondary sort key values, computed by evaluating the 
+                  sort key function in the second sort key definition, and so on.</p></item><item><p>When a pair of corresponding sort key values of <code>$A</code> and <code>$B</code> are 
+                  found to be not equal,
+                  then <code>$A</code> precedes <code>$B</code> in the result sequence 
+                  if both the following conditions are true, or if both conditions are false:</p><olist><item><p>The sort key value for <code>$A</code> is less than the sort key value for <code>$B</code>,
+                           as defined below.</p></item><item><p>The <term>order direction</term> in the corresponding sort key definition
+                        is <code>"ascending"</code>.</p></item></olist></item><item><p>If all the sort key values for <code>$A</code> and <code>$B</code> are pairwise equal, then 
+               <code>$A</code> precedes <code>$B</code> in the result sequence if and only if
+               <code>$A</code> precedes <code>$B</code> in the input sequence.</p><note><p>That is, the sort is <emph>stable</emph>.</p></note></item><item><p>Each sort key value for a given item is obtained by applying the sort key
+               function of the corresponding sort key definition to that item. The result
+               of this function is in the general case a sequence of atomic values.
+               Two sort key values <code>$a</code> and <code>$b</code> are compared as follows:</p><olist><item><p>Let <var>$C</var> be the collation in the corresponding
+                     sort key definition.</p></item><item><p>Let <code>$REL</code> be the result of evaluating <code>op:lexicographic-compare($key($A), $key($B), $C)</code>
                      where <code>op:lexicographic-compare($a, $b, $C)</code> is defined as follows:</p><eg xml:space="preserve">if (empty($a) and empty($b)) then 0 
 else if (empty($a)) then -1
 else if (empty($b)) then +1
@@ -9644,28 +9697,39 @@ else let $rel = op:simple-compare(head($a), head($b), $C)
      return if ($rel eq 0)
             then op:lexicographic-compare(tail($a), tail($b), $C)
             else $rel</eg></item><item><p>Here <code>op:simple-compare($k1, $k2)</code> is defined as follows:</p><eg xml:space="preserve">if ($k1 instance of union(xs:string, xs:anyURI, xs:untypedAtomic)
-        and $k2 instance of union(xs:string, xs:anyURI, xs:untypedAtomic))
-    then compare($k1, $k2, $C)
-    else if ($k1 eq $k2 or (is-NaN($k1) and is-NaN($k2))) then 0
-    else if (is-NaN($k1) or $k2 lt $k2) then -1
-    else +1</eg><note><p>This raises an error if two keys are not comparable, for example
-                     if one is a string and the other is a number, or if both belong to a non-ordered
-                     type such as <code>xs:QName</code>.</p></note></item></olist></item><item><p>If <code>$REL eq 0</code>, then the relative order of <code>$A</code> and <code>$B</code> 
-                  in the output is the same as their relative order in the input (that is, the sort is stable)
-               </p></item><item><p>Otherwise, if <code>$REL lt 0</code>, then <code>$A</code> precedes <code>$B</code> in the output.
-                     </p></item></ulist></def></gitem><gitem><label>Error Conditions</label><def><p>If the set of computed sort keys contains values that are not comparable using the <code>lt</code> operator then the sort 
+    and $k2 instance of union(xs:string, xs:anyURI, xs:untypedAtomic))
+then compare($k1, $k2, $C)
+else if ($k1 eq $k2 or (is-NaN($k1) and is-NaN($k2))) then 0
+else if (is-NaN($k1) or $k2 lt $k2) then -1
+else +1</eg><note><p>This raises an error if two keys are not comparable, for example
+                        if one is a string and the other is a number, or if both belong to a non-ordered
+                        type such as <code>xs:QName</code>.</p></note></item><item><p>If <code>$REL</code> is zero, then the two sort key values are deemed
+                     equal; if <code>$REL</code> is -1 then <code>$a</code> is deemed less than
+                     <code>$b</code>, and if <code>$REL</code> is +1 then <code>$a</code> is deemed greater than
+                     <code>$b</code></p></item></olist></item></olist></def></gitem><gitem><label>Error Conditions</label><def><p>If the set of computed sort keys contains values that are not comparable using the <code>lt</code> operator then the sort 
             operation will fail with a type error (<xerrorref spec="XP" class="TY" code="0004"/>).
-         </p></def></gitem><gitem><label>Notes</label><def><p role="note">XSLT and XQuery both provide native sorting capability, but previous releases of XPath provided no sorting functionality
+         </p></def></gitem><gitem><label>Notes</label><def><p role="note">XSLT and XQuery both provide native sorting capability, but earlier releases of XPath provided no sorting functionality
          for use in standalone environments.</p><p role="note">In addition there are cases where this function may be more flexible than the built-in sorting capability for XQuery or XSLT,
          for example when the sort key or collation is chosen dynamically, or when the sort key is a sequence of items rather than a single
          item.</p><p role="note">The results are compatible with the results of XSLT sorting (using <code>xsl:sort</code>) in the case where the sort key evaluates to a sequence of
-         length zero or one, given the options <code>stable="yes"</code> and <code>order="ascending"</code>.</p><p role="note">The results are compatible with the results of XQuery sorting (using the <code>order by</code> clause) in the case where the sort key evaluates to a sequence of
-            length zero or one, given the options <code>stable</code>, <code>ascending</code>, and <code>empty least</code>.</p></def></gitem><gitem><label>Examples</label><def role="example"><table role="medium"><thead><tr><th rowspan="1" colspan="1">Expression</th><th rowspan="1" colspan="1">Result</th></tr></thead><tbody><tr><td valign="top" rowspan="1" colspan="1"><p><code>sort((1, 4, 6, 5, 3))</code></p></td><td valign="top" rowspan="1" colspan="1"><p><code>(1, 3, 4, 5, 6)</code></p></td></tr><tr><td valign="top" rowspan="1" colspan="1"><p><code>sort((1, -2, 5, 10, -10, 10, 8), (), abs#1)</code></p></td><td valign="top" rowspan="1" colspan="1"><p><code>(1, -2, 5, 8, 10, -10, 10)</code></p></td></tr><tr><td colspan="2" rowspan="1"><p>To sort a set of strings <code>$in</code> using Swedish collation:</p></td></tr><tr><td colspan="2" rowspan="1"><eg xml:space="preserve">
-let $SWEDISH := "http://www.w3.org/2013/collation/UCA?lang=se"
-return sort($in, $SWEDISH)
-            </eg></td></tr><tr><td colspan="2" rowspan="1"><p>To sort a sequence of employees by last name as the major sort key and first name as the minor sort key,
+         length zero or one, given the options <code>stable="yes"</code>.</p><p role="note">The results are compatible with the results of XQuery sorting (using the <code>order by</code> clause) in the case where the sort key evaluates to a sequence of
+            length zero or one, given the options <code>stable</code>, <code>ascending</code>, and <code>empty least</code>.</p><p role="note">The function has been enhanced in 4.0 to allow multiple sort keys to be defined, each potentially with
+         a different collation, and to allow sorting in descending order.</p><p role="note">The effect of the XQuery option <code>empty least|greatest</code>, which controls
+         whether the empty sequence is sorted before or after all other values, can be achieved by adding an
+         extra sort key definition that evaluates whether or not the actual sort key is empty (when sorting
+         boolean values, <code>false</code> precedes <code>true</code>).</p><p role="note">Supplying too many items in the <code>$collation</code> and/or <code>$order</code> arguments
+         is not an error; the excess values are ignored except for type-checking against the function
+         signature.</p></def></gitem><gitem><label>Examples</label><def role="example"><table role="medium"><thead><tr><th rowspan="1" colspan="1">Expression</th><th rowspan="1" colspan="1">Result</th></tr></thead><tbody><tr><td valign="top" rowspan="1" colspan="1"><p><code>sort((1, 4, 6, 5, 3))</code></p></td><td valign="top" rowspan="1" colspan="1"><p><code>(1, 3, 4, 5, 6)</code></p></td></tr><tr><td valign="top" rowspan="1" colspan="1"><p><code>sort((1, 4, 4e0, 6, 5, 3), order:="descending")</code></p></td><td valign="top" rowspan="1" colspan="1"><p><code>(6, 5, 4, 4e0, 3, 1)</code></p></td></tr><tr><td valign="top" rowspan="1" colspan="1"><p><code>sort((1, -2, 5, 10, -10, 10, 8), (), abs#1)</code></p></td><td valign="top" rowspan="1" colspan="1"><p><code>(1, -2, 5, 8, 10, -10, 10)</code></p></td></tr><tr><td colspan="2" rowspan="1"><p>To sort a set of strings <code>$in</code> using Swedish collation:</p></td></tr><tr><td colspan="2" rowspan="1"><eg xml:space="preserve">let $SWEDISH := "http://www.w3.org/2013/collation/UCA?lang=se"
+return sort($in, $SWEDISH)</eg></td></tr><tr><td colspan="2" rowspan="1"><p>To sort a sequence of employees by last name as the major sort key and first name as the minor sort key,
                using the default collation:
-            </p></td></tr><tr><td colspan="2" rowspan="1"><eg xml:space="preserve">sort($employees, (), function($emp) {$emp/name ! (last, first)})</eg></td></tr></tbody></table></def></gitem></glist></div3><div3 id="func-transitive-closure"><head>fn:transitive-closure</head><glist><gitem><label>Summary</label><def><p>Given a function <var>F</var> that navigates from one node to other nodes, 
+            </p></td></tr><tr><td colspan="2" rowspan="1"><eg xml:space="preserve">sort($employees, (), fn{name ! (last, first)})</eg></td></tr><tr><td colspan="2" rowspan="1"><p>To sort a sequence of employees first by increasing last name (using Swedish collation order)
+               and then by decreasing salary:
+            </p></td></tr><tr><td colspan="2" rowspan="1"><eg xml:space="preserve">let $SWEDISH := "http://www.w3.org/2013/collation/UCA?lang=se"
+               return sort($employees, 
+                           $SWEDISH, 
+                           (fn{name/last}, fn{xs:decimal(salary)}), 
+                           ("ascending", "descending"))</eg></td></tr></tbody></table></def></gitem><gitem><label>History</label><def role="example"><p>Substantially revised in 4.0 to allow multiple sort
+            key definitions.</p></def></gitem></glist></div3><div3 id="func-transitive-closure"><head>fn:transitive-closure</head><glist><gitem><label>Summary</label><def><p>Given a function <var>F</var> that navigates from one node to other nodes, 
             returns a function that applies <var>F</var> repeatedly.</p></def></gitem><gitem><label>Signature</label><def><example role="signature"><proto isOp="no" prefix="fn" name="transitive-closure" return-type="function(node()) as node()*" returnEmptyOk="no" returnSeq="no" returnVaries="no" isSchema="no" isDatatype="no" isSpecial="no"><arg name="step" type="function(node()) as node()*"/><arg name="min" type="xs:nonNegativeInteger?" default="1"/><arg name="max" type="xs:positiveInteger?" default="()"/></proto></example></def></gitem><gitem><label>Properties</label><def><p>This function is <termref def="dt-deterministic">deterministic</termref>, <termref def="dt-context-independent">context-independent</termref>,  and <termref def="dt-focus-independent">focus-independent</termref>. </p></def></gitem><gitem><label>Rules</label><def><p>The argument is a function <code>$step</code> that takes a single node as input, and returns a set of nodes as its result. 
             The result of the <code>fn:transitive-closure</code> function is a function <var>TC</var> that takes a 
             single node <var>N</var> as input, and returns all nodes that can be reached from
@@ -12371,7 +12435,7 @@ declare function eg:distinct-nodes-stable ($arg as node()*) as node()* {
         else ($foundSoFar, $this)
       })
 
-};</eg></div3></div2></inform-div1><inform-div1 id="impl-def"><head>Checklist of implementation-defined features</head><?imp-def-features?></inform-div1><inform-div1 id="changelog" diff="chg" at="2022-11-16"><head>Changes since version 3.1</head><div2 id="new-functions"><head>New Functions</head><p>A number of new functions have been defined:</p><ulist><item><p><code>fn:all-different</code></p></item><item><p><code>fn:all-equal</code></p></item><item><p><code>fn:atomic-equal</code></p></item><item><p><code>fn:build-uri</code></p></item><item><p><code>fn:char</code></p></item><item><p><code>fn:characters</code></p></item><item><p><code>fn:contains-sequence</code></p></item><item><p><code>fn:duplicate-values</code></p></item><item><p><code>fn:ends-with-sequence</code></p></item><item><p><code>fn:every</code></p></item><item><p><code>fn:expanded-QName</code></p></item><item><p><code>fn:foot</code></p></item><item><p><code>fn:highest</code></p></item><item><p><code>fn:identity</code></p></item><item><p><code>fn:in-scope-namespaces</code></p></item><item><p><code>fn:index-where</code></p></item><item><p><code>fn:intersperse</code></p></item><item><p><code>fn:is-NaN</code></p></item><item><p><code>fn:items-after</code></p></item><item><p><code>fn:items-before</code></p></item><item><p><code>fn:items-ending-where</code></p></item><item><p><code>fn:items-starting-where</code></p></item><item><p><code>fn:iterate-while</code></p></item><item><p><code>fn:log</code></p></item><item><p><code>fn:lowest</code></p></item><item><p><code>fn:op</code></p></item><item><p><code>fn:parse-integer</code></p></item><item><p><code>fn:parse-QName</code></p></item><item><p><code>fn:parse-uri</code></p></item><item><p><code>fn:partition</code></p></item><item><p><code>fn:replicate</code></p></item><item><p><code>fn:slice</code></p></item><item><p><code>fn:some</code></p></item><item><p><code>fn:starts-with-sequence</code></p></item><item><p><code>fn:transitive-closure</code></p></item><item><p><code>fn:trunk</code></p></item><item><p><code>fn:void</code></p></item><item><p><code>fn:xdm-to-json</code></p></item><item><p><code>array:build</code></p></item><item><p><code>array:foot</code></p></item><item><p><code>array:members</code></p></item><item><p><code>array:of-members</code></p></item><item><p><code>array:slice</code></p></item><item><p><code>array:split</code></p></item><item><p><code>array:trunk</code></p></item><item><p><code>map:build</code></p></item><item><p><code>map:filter</code></p></item><item><p><code>map:of-pairs</code></p></item><item><p><code>map:pair</code></p></item></ulist><p>A number of functions are included in the draft specification but have not yet been reviewed or accepted:</p><ulist><item><p><code>fn:stack-trace</code></p></item><item><p><code>map:filter</code></p></item><item><p><code>map:replace</code></p></item><item><p><code>map:substitute</code></p></item><item><p><code>fn:parse-csv</code></p></item><item><p><code>fn:csv-to-xdm</code></p></item><item><p><code>fn:csv-to-xml</code></p></item><item><p><code>fn:csv-fetch-field-by-column</code></p></item><item><p><code>array:replace</code></p></item><item><p><code>array:slice</code></p></item></ulist></div2><div2 id="changes-to-existing-functions"><head>Changes to Existing Functions</head><olist><item><p>The keywords used for parameter names have been changed. Previously these names were
+};</eg></div3></div2></inform-div1><inform-div1 id="impl-def"><head>Checklist of implementation-defined features</head><?imp-def-features?></inform-div1><inform-div1 id="changelog" diff="chg" at="2022-11-16"><head>Changes since version 3.1</head><div2 id="new-functions"><head>New Functions</head><p>A number of new functions have been defined:</p><ulist><item><p><code>fn:all-different</code></p></item><item><p><code>fn:all-equal</code></p></item><item><p><code>fn:atomic-equal</code></p></item><item><p><code>fn:build-uri</code></p></item><item><p><code>fn:char</code></p></item><item><p><code>fn:characters</code></p></item><item><p><code>fn:contains-sequence</code></p></item><item><p><code>fn:decode-from-uri</code></p></item><item><p><code>fn:duplicate-values</code></p></item><item><p><code>fn:ends-with-sequence</code></p></item><item><p><code>fn:every</code></p></item><item><p><code>fn:expanded-QName</code></p></item><item><p><code>fn:foot</code></p></item><item><p><code>fn:highest</code></p></item><item><p><code>fn:identity</code></p></item><item><p><code>fn:in-scope-namespaces</code></p></item><item><p><code>fn:index-where</code></p></item><item><p><code>fn:intersperse</code></p></item><item><p><code>fn:is-NaN</code></p></item><item><p><code>fn:items-after</code></p></item><item><p><code>fn:items-before</code></p></item><item><p><code>fn:items-ending-where</code></p></item><item><p><code>fn:items-starting-where</code></p></item><item><p><code>fn:iterate-while</code></p></item><item><p><code>fn:log</code></p></item><item><p><code>fn:lowest</code></p></item><item><p><code>fn:op</code></p></item><item><p><code>fn:parse-integer</code></p></item><item><p><code>fn:parse-QName</code></p></item><item><p><code>fn:parse-uri</code></p></item><item><p><code>fn:partition</code></p></item><item><p><code>fn:replicate</code></p></item><item><p><code>fn:slice</code></p></item><item><p><code>fn:some</code></p></item><item><p><code>fn:starts-with-sequence</code></p></item><item><p><code>fn:transitive-closure</code></p></item><item><p><code>fn:trunk</code></p></item><item><p><code>fn:void</code></p></item><item><p><code>fn:xdm-to-json</code></p></item><item><p><code>array:build</code></p></item><item><p><code>array:foot</code></p></item><item><p><code>array:members</code></p></item><item><p><code>array:of-members</code></p></item><item><p><code>array:slice</code></p></item><item><p><code>array:split</code></p></item><item><p><code>array:trunk</code></p></item><item><p><code>map:build</code></p></item><item><p><code>map:filter</code></p></item><item><p><code>map:of-pairs</code></p></item><item><p><code>map:pair</code></p></item></ulist><p>A number of functions are included in the draft specification but have not yet been reviewed or accepted:</p><ulist><item><p><code>fn:stack-trace</code></p></item><item><p><code>map:filter</code></p></item><item><p><code>map:replace</code></p></item><item><p><code>map:substitute</code></p></item><item><p><code>fn:parse-csv</code></p></item><item><p><code>fn:csv-to-xdm</code></p></item><item><p><code>fn:csv-to-xml</code></p></item><item><p><code>fn:csv-fetch-field-by-column</code></p></item><item><p><code>array:replace</code></p></item><item><p><code>array:slice</code></p></item></ulist></div2><div2 id="changes-to-existing-functions"><head>Changes to Existing Functions</head><olist><item><p>The keywords used for parameter names have been changed. Previously these names were
 	              of no significance, but in 4.0 they can be used with <code>keyword := value</code>
 	              argument syntax in function calls.</p></item><item><p>The <code>fn:deep-equal</code> function has an <code>options</code> argument
 	           giving detailed control over how two values are compared.</p></item><item><p>The <code>fn:format-integer</code> function can produce output in non-decimal

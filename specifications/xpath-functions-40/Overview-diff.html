@@ -23,7 +23,7 @@
          
          <h1><a id="title"></a>XPath and XQuery Functions and Operators 4.0 </h1>
          
-         <h2><a id="w3c-doctype"></a>W3C Editor's Draft 12&nbsp;September&nbsp;2023</h2>
+         <h2><a id="w3c-doctype"></a>W3C Editor's Draft 13&nbsp;September&nbsp;2023</h2>
          <dl>
             <dt>This version:</dt>
             <dd>
@@ -113,6 +113,7 @@
                   <option value="func-day-from-date">day-from-date</option>
                   <option value="func-day-from-dateTime">day-from-dateTime</option>
                   <option value="func-days-from-duration">days-from-duration</option>
+                  <option value="func-decode-from-uri">decode-from-uri</option>
                   <option value="func-deep-equal">deep-equal</option>
                   <option value="func-default-collation">default-collation</option>
                   <option value="func-default-language">default-language</option>
@@ -578,11 +579,12 @@
                <ol class="toc">
                   <li><a href="#func-resolve-uri"><span class="secno">6.1 </span><span class="content"><span class="diff-chg">fn:resolve-uri</span></span></a></li>
                   <li><a href="#func-encode-for-uri"><span class="secno">6.2 </span><span class="content">fn:encode-for-uri</span></a></li>
-                  <li><a href="#func-iri-to-uri"><span class="secno">6.3 </span><span class="content">fn:iri-to-uri</span></a></li>
-                  <li><a href="#func-escape-html-uri"><span class="secno">6.4 </span><span class="content">fn:escape-html-uri</span></a></li>
-                  <li><a href="#parse-build"><span class="secno">6.5 </span><span class="content">Parsing and building URIs</span></a><ol class="toc">
-                        <li><a href="#func-parse-uri"><span class="secno">6.5.1 </span><span class="content"><span class="diff-chg">fn:parse-uri</span></span></a></li>
-                        <li><a href="#func-build-uri"><span class="secno">6.5.2 </span><span class="content">fn:build-uri</span></a></li>
+                  <li><a href="#func-decode-from-uri"><span class="secno">6.3 </span><span class="content">fn:decode-from-uri</span></a></li>
+                  <li><a href="#func-iri-to-uri"><span class="secno">6.4 </span><span class="content">fn:iri-to-uri</span></a></li>
+                  <li><a href="#func-escape-html-uri"><span class="secno">6.5 </span><span class="content">fn:escape-html-uri</span></a></li>
+                  <li><a href="#parse-build"><span class="secno">6.6 </span><span class="content">Parsing and building URIs</span></a><ol class="toc">
+                        <li><a href="#func-parse-uri"><span class="secno">6.6.1 </span><span class="content"><span class="diff-chg">fn:parse-uri</span></span></a></li>
+                        <li><a href="#func-build-uri"><span class="secno">6.6.2 </span><span class="content">fn:build-uri</span></a></li>
                      </ol>
                   </li>
                </ol>
@@ -955,7 +957,7 @@
                         <li><a href="#func-lowest"><span class="secno">17.2.15 </span><span class="content"><span class="diff-chg">fn:lowest</span></span></a></li>
                         <li><a href="#func-partition"><span class="secno">17.2.16 </span><span class="content"><span class="diff-chg">fn:partition</span></span></a></li>
                         <li><a href="#func-some"><span class="secno">17.2.17 </span><span class="content"><span class="diff-chg">fn:some</span></span></a></li>
-                        <li><a href="#func-sort"><span class="secno">17.2.18 </span><span class="content"><span class="diff-chg">fn:sort</span></span></a></li>
+                        <li><a href="#func-sort"><span class="secno">17.2.18 </span><span class="content">fn:sort</span></a></li>
                         <li><a href="#func-transitive-closure"><span class="secno">17.2.19 </span><span class="content">fn:transitive-closure</span></a></li>
                      </ol>
                   </li>
@@ -1189,12 +1191,12 @@
                <div class="div2">
                   
                   <h3><a id="operators"></a>1.1 Operators</h3>
-                  <p>Despite the title of this document, it does not attempt to define the semantics of all the operators available
+                  <p>Despite its title, this document does not attempt to define the semantics of all the operators available
                in the <a href="#xpath-40">[XML Path Language (XPath) 4.0]</a> language; indeed, in the interests of avoiding duplication, the majority of
                operators (including all higher-order operators such as <code>x/y</code>, <code>x!y</code>, and <code>x[y]</code>,
                as well simple operators such as <code>x,y</code>, <code>x and y</code>, <code>x or y</code>,            
             <code>x&lt;&lt;y</code>, <code>x&gt;&gt;y</code>, <code>x is y</code>, <code>x||y</code>, <code>x|y</code>,
-            <code>x union x</code>, <code>x except y</code>, <code>x intersect y</code>, <code>x to y</code>
+            <code>x union y</code>, <code>x except y</code>, <code>x intersect y</code>, <code>x to y</code>
             and <code>x otherwise y</code>) are now defined entirely within <a href="#xpath-40">[XML Path Language (XPath) 4.0]</a>.</p>
                   <p>The remaining operators that are described in this publication are those where the semantics of the operator
             depend on the types of the arguments. For these operators, the language specification describes rules for selecting
@@ -1299,7 +1301,7 @@
             <span class="termdef"><a id="dt-permitted-character"></a>[Definition]  A <b>permitted character</b>
             is one within the repertoire accepted by the implementation.</span></p>
                </div>
-               <p>In this document, text labeled as an example or as a Note is
+               <p>In this document, text labeled as an example or as a note is
             provided for explanatory purposes and is not normative.</p>
             </div>
             <div class="div2">
@@ -1713,7 +1715,7 @@
                      <div class="note">
                         <p class="prefix"><b>Note:</b></p>
                         <p>It is the responsibility of each function implementation to invoke this conversion; it
-               does not happen automatically as a consequence of the function calling rules.</p>
+               does not happen automatically as a consequence of the function-calling rules.</p>
                      </div>
                   </li>
                   <li>
@@ -1740,11 +1742,7 @@ This type system comprises two distinct subsystems that both include
 the primitive atomic types. 
 In the diagrams, connecting lines represent relationships between derived types
 and the types from which they are derived;
-the arrowheads point toward the type from which they are derived. 
-The dashed line represents relationships not present in this diagram,
-but that appear in one of the other diagrams. 
-Dotted lines represent additional relationships that follow an evident pattern.
-The information that appears in each diagram is recapitulated in tabular form.
+the former are always below and to the right of the latter.
 </p>
                <p>The <code>xs:IDREFS</code>, <code>xs:NMTOKENS</code>,
 <code>xs:ENTITIES</code> types, and <code>xs:numeric</code> and both the
@@ -1755,7 +1753,7 @@ rather than types derived by extension or restriction.</p>
                <div class="div3">
                   
                   <h4><a id="item-type-hierarchy"></a>1.7.1 Item Types</h4>
-                  <p>The first diagram and its corresponding table illustrate
+                  <p>The first diagram illustrates
 the relationship of various item types.</p>
                   <p>Item types are used to characterize the various types of item that can appear
       in a sequence (nodes, atomic values, and functions), and they are therefore used
@@ -1899,8 +1897,8 @@ full model.</p>
                <div class="div3">
                   
                   <h4><a id="schema-type-hierarchy"></a>1.7.2 Schema Type Hierarchy</h4>
-                  <p>The next diagram and table illustrate the schema type subsystem, in which
-all types are derived from the distinguished type <code>xs:anyType</code>. </p>
+                  <p>The next diagram illustrate the schema type subsystem, in which
+all types are derived from <code>xs:anyType</code>. </p>
                   <p>Schema types include built-in types defined in the XML Schema specification, and user-defined
       types defined using mechanisms described in the XML Schema specification. Schema types define the
       permitted contents of nodes. The main categories are complex types, which define the permitted content
@@ -2078,7 +2076,7 @@ all types are derived from the distinguished type <code>xs:anyType</code>. </p>
                <div class="div3">
                   
                   <h4><a id="atomic-type-hierarchy"></a>1.7.3 Atomic Type Hierarchy</h4>
-                  <p id="hier_anyAtomicType">The final diagram and table show all of the atomic types, including the primitive simple types and the
+                  <p id="hier_anyAtomicType">The final diagram shows all of the atomic types, including the primitive simple types and the
 built-in types derived from the primitive simple types. 
 This includes all the built-in datatypes defined in <a href="#xmlschema-2">[XML Schema Part 2: Datatypes Second Edition]</a>.</p>
                   <p>Atomic types are both item types and schema types, so the root type <code>xs:anyAtomicType</code> may be found
@@ -2420,7 +2418,7 @@ This includes all the built-in datatypes defined in <a href="#xmlschema-2">[XML 
                   returned <code>xs:string</code> values are normalized in the sense of <a href="#charmod">[Character Model for the World Wide Web 1.0: Fundamentals]</a>.</p>
                   </div>
                   <div class="note">
-                     <p class="prefix"><b>Notes:</b></p>
+                     <p class="prefix"><b>Note:</b></p>
                      <p>In functions that involve character counting such
                      as <a href="#func-substring"><code>fn:substring</code></a>, <a href="#func-string-length"><code>fn:string-length</code></a> and
                      <a href="#func-translate"><code>fn:translate</code></a>, what is counted is the number of XML <a title="character" class="termref" href="#character"><span class="arrow">·</span>characters<span class="arrow">·</span></a>
@@ -2450,7 +2448,7 @@ This includes all the built-in datatypes defined in <a href="#xmlschema-2">[XML 
                   <div class="note">
                      <p class="prefix"><b>Note:</b></p>
                      <p>
-                     Note that this means, in practice, that where this 
+                     This means, in practice, that where this 
                      specification requires a “URI Reference”, an IRI as defined in <a href="#rfc3987">[RFC 3987]</a> will be 
                      accepted, provided that other relevant specifications also permit an IRI. The term URI has been 
                      retained in preference to IRI to avoid introducing new names for concepts such as “Base URI” that 
@@ -15019,6 +15017,10 @@ Tak, tak, tak! - da kommen sie.
                         of a URI.</td>
                   </tr>
                   <tr>
+                     <td style="white-space:nowrap; vertical-align:top"><a href="#func-decode-from-uri"><code>fn:decode-from-uri</code></a></td>
+                     <td>Decodes URI-escaped characters in a string.</td>
+                  </tr>
+                  <tr>
                      <td style="white-space:nowrap; vertical-align:top"><a href="#func-iri-to-uri"><code>fn:iri-to-uri</code></a></td>
                      <td>Converts a string containing an IRI into a URI according to the rules of <a href="#rfc3987">[RFC 3987]</a>.</td>
                   </tr>
@@ -15227,12 +15229,12 @@ Tak, tak, tak! - da kommen sie.
                                  <td style="vertical-align:top">
                                     <div class="exampleInner">
                                        <pre>encode-for-uri(
-  "http://www.example.com/00/Weather/CA/Los%20Angeles#ocean"
+  "http://example.com/00/Weather/CA/Los%20Angeles#ocean"
 )</pre>
                                     </div>
                                  </td>
                                  <td style="vertical-align:top">
-                                    <p><code>"http%3A%2F%2Fwww.example.com%2F00%2FWeather%2FCA%2FLos%2520Angeles%23ocean"</code></p>
+                                    <p><code>"http%3A%2F%2Fexample.com%2F00%2FWeather%2FCA%2FLos%2520Angeles%23ocean"</code></p>
                                     <p><em>(This is probably not what the user intended because all of the
                   delimiters have been encoded.)</em></p>
                                  </td>
@@ -15241,26 +15243,26 @@ Tak, tak, tak! - da kommen sie.
                                  <td style="vertical-align:top">
                                     <div class="exampleInner">
                                        <pre>concat(
-  "http://www.example.com/",
+  "http://example.com/",
   encode-for-uri("~bébé")
 )</pre>
                                     </div>
                                  </td>
                                  <td style="vertical-align:top">
-                                    <p><code>"http://www.example.com/~b%C3%A9b%C3%A9"</code></p>
+                                    <p><code>"http://example.com/~b%C3%A9b%C3%A9"</code></p>
                                  </td>
                               </tr>
                               <tr>
                                  <td style="vertical-align:top">
                                     <div class="exampleInner">
                                        <pre>concat(
-  "http://www.example.com/",
+  "http://example.com/",
   encode-for-uri("100% organic")
 )</pre>
                                     </div>
                                  </td>
                                  <td style="vertical-align:top">
-                                    <p><code>"http://www.example.com/100%25%20organic"</code></p>
+                                    <p><code>"http://example.com/100%25%20organic"</code></p>
                                  </td>
                               </tr>
                            </tbody>
@@ -15271,7 +15273,129 @@ Tak, tak, tak! - da kommen sie.
             </div>
             <div class="div2">
                
-               <h3><a id="func-iri-to-uri"></a>6.3 fn:iri-to-uri</h3>
+               <h3><a id="func-decode-from-uri"></a>6.3 fn:decode-from-uri</h3>
+               <dl>
+                  <dt class="label">Summary</dt>
+                  <dd>
+                     <p>Decodes URI-escaped characters in a string.</p>
+                  </dd>
+                  <dt class="label">Signature</dt>
+                  <dd>
+                     <div class="proto">
+                        <table class="proto" border="0">
+                           <tr class="name">
+                              <td colspan="3"><code class="function">fn:decode-from-uri</code>(</td>
+                           </tr>
+                           <tr class="arg">
+                              <td><code>$value</code></td>
+                              <td><code class="as">as&nbsp;</code><code class="type"><code>xs:string?</code></code></td>
+                              <td></td>
+                           </tr>
+                           <tr class="return-type">
+                              <td colspan="3">)<code class="as">&nbsp;as&nbsp;</code><code><code>xs:string</code></code></td>
+                           </tr>
+                        </table>
+                     </div>
+                  </dd>
+                  <dt class="label">Properties</dt>
+                  <dd>
+                     <p>This function is <a title="deterministic" class="termref" href="#dt-deterministic"><span class="arrow">·</span>deterministic<span class="arrow">·</span></a>, <a title="context-independent" class="termref" href="#dt-context-independent"><span class="arrow">·</span>context-independent<span class="arrow">·</span></a>,  and <a title="focus-dependent" class="termref" href="#dt-focus-independent"><span class="arrow">·</span>focus-independent<span class="arrow">·</span></a>. </p>
+                  </dd>
+                  <dt class="label">Rules</dt>
+                  <dd>
+                     <p>This function returns the original representation of a URI-escaped string.</p>
+                     <p>If <code>$value</code> is the empty sequence, the function returns the zero-length
+            string.</p>
+                     <p>Otherwise, the value is first converted to an sequence of octets. Each plus sign
+            (<code>+</code>) is replaced with the octet representing a space character
+            (<code>x20</code>), and any substring that matches the regular expression
+            <code>%[a-fA-F0-9][a-fA-F0-9]</code> is replaced with an octet for the two-digit
+            hexadecimal number that follows the percent sign. Characters that are not part of
+            such a substring are replaced with the octets of their UTF-8 encoding.
+            For example, <code>"A%42+C"</code> results in the octets <code>x41</code>,
+            <code>x42</code>, <code>x20</code>, <code>x43</code>, and <code>"💡"</code> yields
+            <code>xF0</code>, <code>x9F</code>, <code>x92</code>, and <code>xA1</code>.</p>
+                     <p>If <code>%</code> is followed by up to two characters that are no hexadecimal digits,
+            these characters are replaced by octets <code>xEF</code>, <code>xBF</code>,
+            and <code>xBD</code>, that is, the UTF-8 encoding of the Unicode replacement character
+            (<code>0xFFFD</code>). For example, the incomplete or invalid percent-encoded strings
+            <code>"%"</code>, <code>"%X"</code>, and <code>"%AX"</code> are all replaced with
+            these octets. For the string <code>"%1X!"</code>, the octets <code>xEF</code>,
+            <code>xBF</code>, <code>xBD</code>, and <code>x21</code> are returned.</p>
+                     <p>Next, the resulting octets are interpreted as UTF-8. For example,
+            <code>x41</code>, <code>x42</code>, <code>x20</code>, and <code>x43</code>
+            becomes <code>"AB C"</code>, and <code>xF0</code>, <code>x9F</code>,
+            <code>x92</code>, and <code>xA1</code> becomes <code>"💡"</code>.</p>
+                     <p>If an invalid UTF-8 octet sequence is encountered, the octets that have
+            successfully been parsed are replaced with a Unicode replacement character.
+            Examples:</p>
+                     <ul>
+                        <li>
+                           <p>The single octet <code>xF0</code> is converted to <code>"�"</code>.</p>
+                        </li>
+                        <li>
+                           <p>The octets <code>xF0</code>, <code>x9F</code>, <code>x92</code>, and
+               <code>x41</code> are converted to <code>"�A"</code>:
+               The bit pattern of the first octet indicates that the UTF-8 character comprises
+               four octets. As the fourth octet is invalid, a Unicode replacement character is
+               added for the first three octets, and the fourth (invalid) octet is parsed as a
+               new character.</p>
+                        </li>
+                        <li>
+                           <p>Similarly, the octets <code>xF0</code>, <code>xF0</code>, <code>x9F</code>,
+               <code>x92</code>, and <code>xA1</code> are converted to <code>"�💡"</code>:
+               The second octet is invalid, but it becomes valid when being parsed as the
+               first octet of the remaining UTF-8 sequence.</p>
+                        </li>
+                     </ul>
+                     <p>Similarly, a UTF-8 octet sequence that represents a codepoint that is not a
+            valid XML character is replaced with a Unicode replacement character.
+            For example, <code>x00</code> becomes <code>"�"</code>.</p>
+                  </dd>
+                  <dt class="label">Examples</dt>
+                  <dd>
+                     <div class="example">
+                        <table class="medium">
+                           <thead>
+                              <tr>
+                                 <th>Expression</th>
+                                 <th>Result</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr>
+                                 <td style="vertical-align:top">
+                                    <p><code>decode-from-uri("http://example.com/")</code></p>
+                                 </td>
+                                 <td style="vertical-align:top">
+                                    <p><code>"http://example.com/"</code></p>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td style="vertical-align:top">
+                                    <p><code>decode-from-uri("~b%C3%A9b%C3%A9?a=b+c")</code></p>
+                                 </td>
+                                 <td style="vertical-align:top">
+                                    <p><code>"~bébé?a=b c"</code></p>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td style="vertical-align:top">
+                                    <p><code>decode-from-uri("%00-%XX-%F0%9F%92%41-%F0%F0%9F%92%A1")</code></p>
+                                 </td>
+                                 <td style="vertical-align:top">
+                                    <p><code>"�-�-�A-�💡"</code></p>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                  </dd>
+               </dl>
+            </div>
+            <div class="div2">
+               
+               <h3><a id="func-iri-to-uri"></a>6.4 fn:iri-to-uri</h3>
                <dl>
                   <dt class="label">Summary</dt>
                   <dd>
@@ -15370,7 +15494,7 @@ Tak, tak, tak! - da kommen sie.
             </div>
             <div class="div2">
                
-               <h3><a id="func-escape-html-uri"></a>6.4 fn:escape-html-uri</h3>
+               <h3><a id="func-escape-html-uri"></a>6.5 fn:escape-html-uri</h3>
                <dl>
                   <dt class="label">Summary</dt>
                   <dd>
@@ -15460,7 +15584,7 @@ Tak, tak, tak! - da kommen sie.
             </div>
             <div class="div2">
                
-               <h3><a id="parse-build"></a>6.5 Parsing and building URIs</h3>
+               <h3><a id="parse-build"></a>6.6 Parsing and building URIs</h3>
                <p>This section specifies functions that parse strings as
          URIs, to identify their structure, and construct URI strings
          from their structured representation.</p>
@@ -15639,7 +15763,7 @@ Tak, tak, tak! - da kommen sie.
            in this example.</p>
                <div class="div3">
                   
-                  <h4><a id="func-parse-uri"></a>6.5.1 fn:parse-uri</h4>
+                  <h4><a id="func-parse-uri"></a>6.6.1 fn:parse-uri</h4>
                   <dl>
                      <dt class="label">Summary</dt>
                      <dd>
@@ -15938,10 +16062,10 @@ Tak, tak, tak! - da kommen sie.
          the empty sequence, <em>filepath</em> is also the whole <em>string</em>.</p>
                         <p>The <em>path separator</em> is the value of the
          <code>path-separator</code> option. A
-         <em>path-segments</em> array is constructed as follows:
-         tokenize the <em>string</em> on the <em>path
-         separator</em>, apply <em>uri decoding</em> on each
-         token, and convert the result to an array.</p>
+         <em>path-segments</em> sequence is constructed by
+         tokenizing the <em>string</em> on the <em>path
+         separator</em> and applying <em>uri decoding</em> on each
+         token.</p>
                         <p>Applying <em>uri decoding</em> replaces all occurrences of
          plus (<code>+</code>) with spaces and all occurrences of
          <code>%[a-fA-F0-9][a-fA-F0-9]</code> with a single character with the
@@ -15966,8 +16090,7 @@ Tak, tak, tak! - da kommen sie.
          with a value equal to the string following the first equal sign, uri decoded. If the
          token does not contain an equal sign, the map contains a single key named
          <code>value</code> with a value equal to the token, uri decoded. In every case,
-         <em>uri decoding</em> is applied to each value add to the map.
-         The resulting sequence of maps is converted into an array.</p>
+         <em>uri decoding</em> is applied to each value add to the map.</p>
                         <p>If the <em>filepath</em> is not the empty sequence,
          it is uri decoded. On a Windows system, any
          forward slashes in the path <span class="verb">may</span> be
@@ -15991,7 +16114,7 @@ Tak, tak, tak! - da kommen sie.
 }</pre>
                         </div>
                         <p>The map should only be populated with keys that have a non-empty value (keys
-         whose value is the empty sequence or an empty array <span class="verb">should</span>
+         whose value is the empty sequence <span class="verb">should</span>
          be omitted).</p>
                         <p>Implementations may implement additional or different rules for URIs that
          have a scheme or pattern that they recognize. An implementation might choose
@@ -16023,7 +16146,7 @@ Tak, tak, tak! - da kommen sie.
                               <tbody>
                                  <tr>
                                     <td colspan="2">
-                                       <p>In the examples that follow, keys with values that are null, or an empty array,
+                                       <p>In the examples that follow, keys with values that are null or an empty sequence
     are elided for editorial clarity. String literals that include an ampersand character
     are written as string templates (for example <code>`Barnes&amp;Noble`</code>) to ensure
     that the examples work in both XPath and XQuery.</p>
@@ -16051,7 +16174,7 @@ Tak, tak, tak! - da kommen sie.
   "host": "qt4cg.org",
   "path": "/specifications/xpath-functions-40/Overview.html",
   "fragment": "parse-uri",
-  "path-segments": array { "", "specifications", "xpath-functions-40", "Overview.html" }
+  "path-segments": ("", "specifications", "xpath-functions-40", "Overview.html")
 }</pre>
                                        </div>
                                     </td>
@@ -16073,7 +16196,7 @@ Tak, tak, tak! - da kommen sie.
   "authority": "www.ietf.org",
   "host": "www.ietf.org",
   "path": "/rfc/rfc2396.txt",
-  "path-segments": array { "", "rfc", "rfc2396.txt" }
+  "path-segments": ("", "rfc", "rfc2396.txt")
 }</pre>
                                        </div>
                                     </td>
@@ -16095,7 +16218,7 @@ Tak, tak, tak! - da kommen sie.
   "authority": "example.com",
   "host": "example.com",
   "path": "/path/to/file",
-  "path-segments": array { "", "path", "to", "file" }
+  "path-segments": ("", "path", "to", "file")
 }</pre>
                                        </div>
                                     </td>
@@ -16123,11 +16246,11 @@ Tak, tak, tak! - da kommen sie.
   "port": "8080",
   "path": "/path",
   "query": `s=%22hello world%22&amp;sort=relevance`,
-  "query-segments": array {
+  "query-segments": (
     map { "key": "s", "value": '"hello world"' },
     map { "key": "sort", "value": "relevance" }
-  },
-  "path-segments": array { "", "path" }
+  ),
+  "path-segments": ("", "path")
 }</pre>
                                        </div>
                                     </td>
@@ -16150,7 +16273,7 @@ Tak, tak, tak! - da kommen sie.
   "userinfo": "user",
   "host": "example.com",
   "path": "/path/to/file",
-  "path-segments": array { "", "path", "to", "file" }
+  "path-segments": ("", "path", "to", "file")
 }</pre>
                                        </div>
                                     </td>
@@ -16172,7 +16295,7 @@ Tak, tak, tak! - da kommen sie.
   "authority": "ftp.is.co.za",
   "host": "ftp.is.co.za",
   "path": "/rfc/rfc1808.txt",
-  "path-segments": array { "", "rfc", "rfc1808.txt" }
+  "path-segments": ("", "rfc", "rfc1808.txt")
 }</pre>
                                        </div>
                                     </td>
@@ -16195,7 +16318,7 @@ Tak, tak, tak! - da kommen sie.
   "host": "uncname",
   "path": "/path/to/file",
   "filepath": "/path/to/file",
-  "path-segments": array { "", "path", "to", "file" }
+  "path-segments": ("", "path", "to", "file")
 }</pre>
                                        </div>
                                     </td>
@@ -16216,7 +16339,7 @@ Tak, tak, tak! - da kommen sie.
   "hierarchical": true(),
   "path": "/c:/path/to/file",
   "filepath": "c:/path/to/file",
-  "path-segments": array { "", "c: ", "path", "to", "file" }
+  "path-segments": ("", "c: ", "path", "to", "file")
 }</pre>
                                        </div>
                                     </td>
@@ -16237,7 +16360,7 @@ Tak, tak, tak! - da kommen sie.
   "hierarchical": true(),
   "path": "/C:/Program%20Files/test.jar",
   "filepath": "C:/Program Files/test.jar",
-  "path-segments": array { "", "C: ", "Program Files", "test.jar" }
+  "path-segments": ("", "C: ", "Program Files", "test.jar")
 }</pre>
                                        </div>
                                     </td>
@@ -16258,7 +16381,7 @@ Tak, tak, tak! - da kommen sie.
   "hierarchical": true(),
   "path": "/c:/path/to/file",
   "filepath": "c:/path/to/file",
-  "path-segments": array { "", "c: ", "path", "to", "file" }
+  "path-segments": ("", "c: ", "path", "to", "file")
 }</pre>
                                        </div>
                                     </td>
@@ -16279,7 +16402,7 @@ Tak, tak, tak! - da kommen sie.
   "hierarchical": true(),
   "path": "/c:/path/to/file",
   "filepath": "c:/path/to/file",
-  "path-segments": array { "", "c: ", "path", "to", "file" }
+  "path-segments": ("", "c: ", "path", "to", "file")
 }</pre>
                                        </div>
                                     </td>
@@ -16300,7 +16423,7 @@ Tak, tak, tak! - da kommen sie.
   "hierarchical": true(),
   "path": "/c:/path/to/file",
   "filepath": "c:/path/to/file",
-  "path-segments": array { "", "c: ", "path", "to", "file" }
+  "path-segments": ("", "c: ", "path", "to", "file")
 }</pre>
                                        </div>
                                     </td>
@@ -16321,7 +16444,7 @@ map {
   "hierarchical": true(),
   "path": "/path/to/file",
   "filepath": "/path/to/file",
-  "path-segments": array { "", "path", "to", "file" }
+  "path-segments": ("", "path", "to", "file")
 }</pre>
                                        </div>
                                     </td>
@@ -16358,9 +16481,9 @@ map {
 map {
   "uri": "?q=1",
   "query": "q=1",
-  "query-segments": array {
+  "query-segments": (
     map { "key": "q", "value": "1" }
-  }
+  )
 }</pre>
                                        </div>
                                     </td>
@@ -16384,10 +16507,10 @@ map {
   "host": "[2001:db8::7]",
   "path": "/c=GB",
   "query": "objectClass?one",
-  "query-segments": array {
+  "query-segments": (
     map { "value": "objectClass?one" }
-  },
-  "path-segments": array { "", "c=GB" }
+  ),
+  "path-segments": ("", "c=GB")
 }</pre>
                                        </div>
                                     </td>
@@ -16408,7 +16531,7 @@ map {
   "scheme": "mailto",
   "hierarchical": false(),
   "path": "John.Doe@example.com",
-  "path-segments": array { "John.Doe@example.com" }
+  "path-segments": ("John.Doe@example.com")
 }</pre>
                                        </div>
                                     </td>
@@ -16429,7 +16552,7 @@ map {
   "scheme": "news",
   "hierarchical": false(),
   "path": "comp.infosystems.www.servers.unix",
-  "path-segments": array { "comp.infosystems.www.servers.unix" }
+  "path-segments": ("comp.infosystems.www.servers.unix")
 }</pre>
                                        </div>
                                     </td>
@@ -16450,7 +16573,7 @@ map {
   "scheme": "tel",
   "hierarchical": false(),
   "path": "+1-816-555-1212",
-  "path-segments": array { " 1-816-555-1212" }
+  "path-segments": (" 1-816-555-1212")
 }</pre>
                                        </div>
                                     </td>
@@ -16474,7 +16597,7 @@ map {
   "host": "192.0.2.16",
   "port": "80",
   "path": "/",
-  "path-segments": array { "", "" }
+  "path-segments": ("", "")
 }</pre>
                                        </div>
                                     </td>
@@ -16499,7 +16622,7 @@ map {
   "scheme": "urn",
   "hierarchical": false(),
   "path": "oasis:names:specification:docbook:dtd:xml:4.1.2",
-  "path-segments": array { "oasis:names:specification:docbook:dtd:xml:4.1.2" }
+  "path-segments": "oasis:names:specification:docbook:dtd:xml:4.1.2"
 }</pre>
                                        </div>
                                     </td>
@@ -16520,7 +16643,7 @@ map {
   "scheme": "tag",
   "hierarchical": false(),
   "path": "textalign.net,2015:ns",
-  "path-segments": array { "textalign.net,2015:ns" }
+  "path-segments": "textalign.net,2015:ns"
 }</pre>
                                        </div>
                                     </td>
@@ -16541,7 +16664,7 @@ map {
   "scheme": "tag",
   "hierarchical": false(),
   "path": "jan@example.com,1999-01-31:my-uri",
-  "path-segments": array { "jan@example.com,1999-01-31:my-uri" }
+  "path-segments": "jan@example.com,1999-01-31:my-uri"
 }</pre>
                                        </div>
                                     </td>
@@ -16572,7 +16695,7 @@ map {
   "scheme": "jar",
   "hierarchical": false(),
   "path": "file:/C:/Program%20Files/test.jar!/foo/bar",
-  "path-segments": array { "file:", "C:", "Program Files", "test.jar!", "foo", "bar" }
+  "path-segments": ("file:", "C:", "Program Files", "test.jar!", "foo", "bar")
 }</pre>
                                        </div>
                                     </td>
@@ -16602,7 +16725,7 @@ map {
   "authority": "www.example.org",
   "host": "www.example.org",
   "path": "/Dürst",
-  "path-segments": array { "", "Dürst" }
+  "path-segments": ("", "Dürst")
 }</pre>
                                        </div>
                                     </td>
@@ -16637,11 +16760,11 @@ map {
   "port": "8080",
   "path": "/path",
   "query": "s=%22hello world%22;sort=relevance",
-  "query-segments": array {
+  "query-segments": (
     map { "key": "s", "value": '"hello world"' },
     map { "key": "sort", "value": "relevance" }
-  },
-  "path-segments": array { "", "path" }
+  ),
+  "path-segments": ("", "path")
 }</pre>
                                        </div>
                                     </td>
@@ -16690,7 +16813,7 @@ path.</p>
   "hierarchical": true(),
   "path": "/c:/path/to/file",
   "filepath": "c:/path/to/file",
-  "path-segments": array { "", "c:", "path", "to", "file" }
+  "path-segments": ("", "c:", "path", "to", "file")
 }</pre>
                                        </div>
                                     </td>
@@ -16717,7 +16840,7 @@ path with an explicit <code>file:</code> scheme.</p>
   "hierarchical": true(),
   "path": "/c:/path/to/file",
   "filepath": "c:/path/to/file",
-  "path-segments": array { "", "c:", "path", "to", "file" }
+  "path-segments": ("", "c:", "path", "to", "file")
 }</pre>
                                        </div>
                                     </td>
@@ -16743,7 +16866,7 @@ path with an explicit <code>file:</code> scheme.</p>
                </div>
                <div class="div3">
                   
-                  <h4><a id="func-build-uri"></a>6.5.2 fn:build-uri</h4>
+                  <h4><a id="func-build-uri"></a>6.6.2 fn:build-uri</h4>
                   <dl>
                      <dt class="label">Summary</dt>
                      <dd>
@@ -38578,7 +38701,7 @@ else
                               
                               <div class="example">
                                  
-                                 <div class="exampleHeader"><a id="d7e42392"></a>Example:</div>
+                                 <div class="exampleHeader"><a id="d7e42592"></a>Example:</div>
                                  <p>An implementation may provide keys for options to the <em>tidy</em>
                                  HTML parser, allowing a user to configure the behaviour of that parser.</p>
                               </div>
@@ -40623,7 +40746,7 @@ else
                   representation. </p>
                   <div class="example">
                      
-                     <div class="exampleHeader"><a id="d7e44379"></a>Example: A JSON Text and its XML Representation</div>
+                     <div class="exampleHeader"><a id="d7e44579"></a>Example: A JSON Text and its XML Representation</div>
                      <p>Consider the following JSON text:</p>
                      <div class="exampleInner">
                         <pre class="small">
@@ -43209,7 +43332,8 @@ return function-arity($initial)</pre>
                      </tr>
                      <tr>
                         <td style="white-space:nowrap; vertical-align:top"><a href="#func-sort"><code>fn:sort</code></a></td>
-                        <td>Sorts a supplied sequence, based on the value of a sort key supplied as a function.</td>
+                        <td>Sorts a supplied sequence, based on the value of one or more supplied sort keys supplied
+                           as functions.</td>
                      </tr>
                      <tr>
                         <td style="white-space:nowrap; vertical-align:top"><a href="#func-transitive-closure"><code>fn:transitive-closure</code></a></td>
@@ -44692,7 +44816,7 @@ function($item) {
                            <p>The supplied <code>$predicate</code> function is called for each item in the input sequence <code>$input</code>,
             to return a boolean value. Let <code>$P</code> be the 1-based position of the first item to match the predicate, 
             or -1 if no item matches the predicate.</p>
-                           <p>The function then returns <code>if ($P lt 0) then $seq else fn:subsequence($input, 1, $P - 1)</code>.</p>
+                           <p>The function then returns <code>if ($P lt 0) then $input else fn:subsequence($input, 1, $P - 1)</code>.</p>
                         </dd>
                         <dt class="label">Notes</dt>
                         <dd>
@@ -44918,7 +45042,7 @@ function($item) {
                            <div class="proto">
                               <table class="proto" border="0">
                                  <tr class="name">
-                                    <td colspan="3"><code class="function">fn:items-until</code>(</td>
+                                    <td colspan="3"><code class="function">fn:items-ending-where</code>(</td>
                                  </tr>
                                  <tr class="arg">
                                     <td><code>$input</code></td>
@@ -44945,7 +45069,7 @@ function($item) {
                            <p>The supplied <code>$predicate</code> function is called for each item in the input sequence <code>$input</code>,
             to return a boolean value. Let <code>$P</code> be the 1-based position of the first item to match the predicate, 
             or -1 if no item matches the predicate.</p>
-                           <p>The function then returns <code>if ($P lt 0) then $seq else fn:subsequence($input, 1, $P)</code>.</p>
+                           <p>The function then returns <code>if ($P lt 0) then $input else fn:subsequence($input, 1, $P)</code>.</p>
                         </dd>
                         <dt class="label">Notes</dt>
                         <dd>
@@ -45767,7 +45891,7 @@ declare function fn:some(
                   <dl>
                      <dt class="label">Summary</dt>
                      <dd>
-                        <p>Sorts a supplied sequence, based on the value of a sort key supplied as a function.</p>
+                        <p>Sorts a supplied sequence, based on the value of one or more supplied sort keys supplied as functions.</p>
                      </dd>
                      <dt class="label">Signature</dt>
                      <dd>
@@ -45783,13 +45907,18 @@ declare function fn:some(
                               </tr>
                               <tr class="arg">
                                  <td><code>$collation</code></td>
-                                 <td><code class="as">as&nbsp;</code><code class="type"><code>xs:string?</code></code></td>
+                                 <td><code class="as">as&nbsp;</code><code class="type"><code>xs:string*</code></code></td>
                                  <td><code class="assign">:=&nbsp;</code><code>fn:default-collation()</code>,</td>
                               </tr>
                               <tr class="arg">
                                  <td><code>$key</code></td>
-                                 <td><code class="as">as&nbsp;</code><code class="type"><code>function(item()) as xs:anyAtomicType*</code></code></td>
-                                 <td><code class="assign">:=&nbsp;</code><code>fn:data#1</code></td>
+                                 <td><code class="as">as&nbsp;</code><code class="type"><code>(function(item()) as xs:anyAtomicType*)+</code></code></td>
+                                 <td><code class="assign">:=&nbsp;</code><code>fn:data#1</code>,</td>
+                              </tr>
+                              <tr class="arg">
+                                 <td><code>$order</code></td>
+                                 <td><code class="as">as&nbsp;</code><code class="type"><code>enum('ascending', 'descending')*</code></code></td>
+                                 <td><code class="assign">:=&nbsp;</code><code>'ascending'</code></td>
                               </tr>
                               <tr class="return-type">
                                  <td colspan="3">)<code class="as">&nbsp;as&nbsp;</code><code><code>item()*</code></code></td>
@@ -45799,44 +45928,112 @@ declare function fn:some(
                      </dd>
                      <dt class="label">Properties</dt>
                      <dd>
-                        <p>The one-argument form of this function is <a title="deterministic" class="termref" href="#dt-deterministic"><span class="arrow">·</span>deterministic<span class="arrow">·</span></a>, <a title="context-dependent" class="termref" href="#dt-context-dependent"><span class="arrow">·</span>context-dependent<span class="arrow">·</span></a>,  and <a title="focus-dependent" class="termref" href="#dt-focus-independent"><span class="arrow">·</span>focus-independent<span class="arrow">·</span></a>.  It depends on 
-		collations.
-	</p>
-                        <p>The two-argument form of this function is <a title="deterministic" class="termref" href="#dt-deterministic"><span class="arrow">·</span>deterministic<span class="arrow">·</span></a>, <a title="context-dependent" class="termref" href="#dt-context-dependent"><span class="arrow">·</span>context-dependent<span class="arrow">·</span></a>,  and <a title="focus-dependent" class="termref" href="#dt-focus-independent"><span class="arrow">·</span>focus-independent<span class="arrow">·</span></a>.  It depends on 
-		collations.
-	</p>
-                        <p>The three-argument form of this function is <a title="deterministic" class="termref" href="#dt-deterministic"><span class="arrow">·</span>deterministic<span class="arrow">·</span></a>, <a title="context-dependent" class="termref" href="#dt-context-dependent"><span class="arrow">·</span>context-dependent<span class="arrow">·</span></a>,  and <a title="focus-dependent" class="termref" href="#dt-focus-independent"><span class="arrow">·</span>focus-independent<span class="arrow">·</span></a>.  It depends on 
+                        <p>This function is <a title="deterministic" class="termref" href="#dt-deterministic"><span class="arrow">·</span>deterministic<span class="arrow">·</span></a>, <a title="context-dependent" class="termref" href="#dt-context-dependent"><span class="arrow">·</span>context-dependent<span class="arrow">·</span></a>,  and <a title="focus-dependent" class="termref" href="#dt-focus-independent"><span class="arrow">·</span>focus-independent<span class="arrow">·</span></a>.  It depends on 
 		collations.
 	</p>
                      </dd>
                      <dt class="label">Rules</dt>
                      <dd>
-                        <p>Calling the single-argument version of the function is equivalent to calling the two-argument form
-         with <code>default-collation()</code> as the second argument: that is, it sorts a sequence of items according
-         to the typed value of the items, using the default collation to compare strings.</p>
-                        <p>Calling the two-argument version of the function is equivalent to calling the three-argument form 
-            with <a href="#func-data"><code>fn:data#1</code></a> as the third argument: that is, it sorts a sequence of items according 
-            to the typed value of the items, using a specified collation to compare strings.</p>
-                        <p>In the case of both <code>fn:sort#2</code> and <code>fn:sort#3</code>, supplying an empty
-         sequence as the second argument is equivalent to supplying <code>fn:default-collation()</code>. For more
-         information on collations see <a href="#choosing-a-collation"><b>5.3.5 Choosing a collation</b></a>.</p>
+                        <p>The result of the function is a sequence that contains all the items from <code>$input</code>,
+         typically in a different order, the order being defined by one or more <b>sort key definitions</b>.</p>
+                        <p>A <b>sort key definition</b> has three parts:</p>
+                        <ol class="enumar">
+                           <li>
+                              <p>A <b>sort key function</b>, which is applied to each item in the input sequence to
+            determine a <b>sort key value</b>.</p>
+                           </li>
+                           <li>
+                              <p>A <b>collation</b>, which is used when comparing <b>sort key values</b>
+               that are of type <code>xs:string</code> or <code>xs:untypedAtomic</code>.</p>
+                           </li>
+                           <li>
+                              <p>An <b>order direction</b>, which is <code>ascending</code> or
+            <code>descending</code>.</p>
+                           </li>
+                        </ol>
+                        <p>The number of sort key definitions is determined by the number of function items supplied
+            in the <code>$key</code> argument. If the argument is absent or empty, the default is
+            a single sort key definition using the function <code>data#1</code>.</p>
+                        <p>The <code>$n</code>'th sort key definition (where <code>$n</code> counts from one (1))
+         is established as follows:</p>
+                        <ol class="enumar">
+                           <li>
+                              <p>The <b>sort key function</b> is <code>$key[$n] otherwise data#1</code>.</p>
+                           </li>
+                           <li>
+                              <p>The <b>collation</b> is <code>$collation[$n] otherwise $collation[last()]
+               otherwise default-collation()</code>.
+            That is, it is the collation supplied in the corresponding item of the supplied
+             <code>$collation</code> argument; or in its absence, the last entry in 
+            <code>$collation</code>; or if <code>$collation</code> is absent or empty, the
+            default collation from the static context of the caller.</p>
+                           </li>
+                           <li>
+                              <p>The <b>order direction</b> is 
+               <code>$order[$n] otherwise $order[last()] otherwise "ascending"</code>.
+            That is, it is <code>"ascending"</code> or <code>"descending"</code> according
+            to the value of the corresponding item in the supplied <code>$order</code>
+            argument; or in its absence, the last entry in <code>$order</code>; or
+            if <code>$order</code> is absent or empty, then <code>"ascending"</code>.</p>
+                           </li>
+                        </ol>
+                        <p>When comparing values of types other than <code>xs:string</code> or <code>xs:untypedAtomic</code>,
+         the corresponding collation is ignored, and no error is reported if the supplied value is
+         not a known or valid collation name. If it is necessary to supply such an ignored value
+         (for example, in the case where a non-string sort key is followed by another sort key 
+         that requires a collation) the empty string can be supplied.</p>
                         <p>The result of the function is obtained as follows:</p>
-                        <ul>
+                        <ol class="enumar">
                            <li>
-                              <p>For each item in the sequence <code>$input</code>, the function supplied as <code>$key</code> 
-               is evaluated with that item as its argument. 
-               The resulting values are the sort keys of the items in the input sequence.
-            </p>
+                              <p>The result sequence contains the same items as the input sequence <code>$input</code>, 
+                  but generally in a different order.</p>
                            </li>
                            <li>
-                              <p>The result sequence contains the same items as the input sequence <code>$input</code>, but generally in a different order.</p>
+                              <p>The sort key definitions are established as described above.
+                  The sort key definitions are in major-to-minor order. That is, the position of two
+                  items <code>$A</code> and <code>$B</code> in the result sequence is determined first by the 
+                  relative magnitude of their
+                  primary sort key values, which are computed by evaluating the <b>sort key function</b> in the 
+                  first sort key definition.
+                  If those two sort key values are equal, then the position is determined by the relative magnitude
+                  of their secondary sort key values, computed by evaluating the 
+                  sort key function in the second sort key definition, and so on.</p>
                            </li>
                            <li>
-                              <p>Let <var>$C</var> be the selected collation, or the default collation where applicable.</p>
+                              <p>When a pair of corresponding sort key values of <code>$A</code> and <code>$B</code> are 
+                  found to be not equal,
+                  then <code>$A</code> precedes <code>$B</code> in the result sequence 
+                  if both the following conditions are true, or if both conditions are false:</p>
+                              <ol class="enumla">
+                                 <li>
+                                    <p>The sort key value for <code>$A</code> is less than the sort key value for <code>$B</code>,
+                           as defined below.</p>
+                                 </li>
+                                 <li>
+                                    <p>The <b>order direction</b> in the corresponding sort key definition
+                        is <code>"ascending"</code>.</p>
+                                 </li>
+                              </ol>
                            </li>
-                           <li class="diff-chg">
-                              <p>The order of items in the result is such that, given two items <code>$A</code> and <code>$B</code>:</p>
-                              <ol class="enumar">
+                           <li>
+                              <p>If all the sort key values for <code>$A</code> and <code>$B</code> are pairwise equal, then 
+               <code>$A</code> precedes <code>$B</code> in the result sequence if and only if
+               <code>$A</code> precedes <code>$B</code> in the input sequence.</p>
+                              <div class="note">
+                                 <p class="prefix"><b>Note:</b></p>
+                                 <p>That is, the sort is <em>stable</em>.</p>
+                              </div>
+                           </li>
+                           <li>
+                              <p>Each sort key value for a given item is obtained by applying the sort key
+               function of the corresponding sort key definition to that item. The result
+               of this function is in the general case a sequence of atomic values.
+               Two sort key values <code>$a</code> and <code>$b</code> are compared as follows:</p>
+                              <ol class="enumla">
+                                 <li>
+                                    <p>Let <var>$C</var> be the collation in the corresponding
+                     sort key definition.</p>
+                                 </li>
                                  <li>
                                     <p>Let <code>$REL</code> be the result of evaluating <code>op:lexicographic-compare($key($A), $key($B), $C)</code>
                      where <code>op:lexicographic-compare($a, $b, $C)</code> is defined as follows:</p>
@@ -45854,31 +46051,28 @@ else let $rel = op:simple-compare(head($a), head($b), $C)
                                     <p>Here <code>op:simple-compare($k1, $k2)</code> is defined as follows:</p>
                                     <div class="exampleInner">
                                        <pre class="small">if ($k1 instance of union(xs:string, xs:anyURI, xs:untypedAtomic)
-        and $k2 instance of union(xs:string, xs:anyURI, xs:untypedAtomic))
-    then compare($k1, $k2, $C)
-    else if ($k1 eq $k2 or (is-NaN($k1) and is-NaN($k2))) then 0
-    else if (is-NaN($k1) or $k2 lt $k2) then -1
-    else +1</pre>
+    and $k2 instance of union(xs:string, xs:anyURI, xs:untypedAtomic))
+then compare($k1, $k2, $C)
+else if ($k1 eq $k2 or (is-NaN($k1) and is-NaN($k2))) then 0
+else if (is-NaN($k1) or $k2 lt $k2) then -1
+else +1</pre>
                                     </div>
                                     <div class="note">
                                        <p class="prefix"><b>Note:</b></p>
                                        <p>This raises an error if two keys are not comparable, for example
-                     if one is a string and the other is a number, or if both belong to a non-ordered
-                     type such as <code>xs:QName</code>.</p>
+                        if one is a string and the other is a number, or if both belong to a non-ordered
+                        type such as <code>xs:QName</code>.</p>
                                     </div>
+                                 </li>
+                                 <li>
+                                    <p>If <code>$REL</code> is zero, then the two sort key values are deemed
+                     equal; if <code>$REL</code> is -1 then <code>$a</code> is deemed less than
+                     <code>$b</code>, and if <code>$REL</code> is +1 then <code>$a</code> is deemed greater than
+                     <code>$b</code></p>
                                  </li>
                               </ol>
                            </li>
-                           <li>
-                              <p>If <code>$REL eq 0</code>, then the relative order of <code>$A</code> and <code>$B</code> 
-                  in the output is the same as their relative order in the input (that is, the sort is stable)
-               </p>
-                           </li>
-                           <li>
-                              <p>Otherwise, if <code>$REL lt 0</code>, then <code>$A</code> precedes <code>$B</code> in the output.
-                     </p>
-                           </li>
-                        </ul>
+                        </ol>
                      </dd>
                      <dt class="label">Error Conditions</dt>
                      <dd>
@@ -45888,15 +46082,24 @@ else let $rel = op:simple-compare(head($a), head($b), $C)
                      </dd>
                      <dt class="label">Notes</dt>
                      <dd>
-                        <p class="note">XSLT and XQuery both provide native sorting capability, but previous releases of XPath provided no sorting functionality
+                        <p class="note">XSLT and XQuery both provide native sorting capability, but earlier releases of XPath provided no sorting functionality
          for use in standalone environments.</p>
                         <p class="note">In addition there are cases where this function may be more flexible than the built-in sorting capability for XQuery or XSLT,
          for example when the sort key or collation is chosen dynamically, or when the sort key is a sequence of items rather than a single
          item.</p>
                         <p class="note">The results are compatible with the results of XSLT sorting (using <code>xsl:sort</code>) in the case where the sort key evaluates to a sequence of
-         length zero or one, given the options <code>stable="yes"</code> and <code>order="ascending"</code>.</p>
+         length zero or one, given the options <code>stable="yes"</code>.</p>
                         <p class="note">The results are compatible with the results of XQuery sorting (using the <code>order by</code> clause) in the case where the sort key evaluates to a sequence of
             length zero or one, given the options <code>stable</code>, <code>ascending</code>, and <code>empty least</code>.</p>
+                        <p class="note">The function has been enhanced in 4.0 to allow multiple sort keys to be defined, each potentially with
+         a different collation, and to allow sorting in descending order.</p>
+                        <p class="note">The effect of the XQuery option <code>empty least|greatest</code>, which controls
+         whether the empty sequence is sorted before or after all other values, can be achieved by adding an
+         extra sort key definition that evaluates whether or not the actual sort key is empty (when sorting
+         boolean values, <code>false</code> precedes <code>true</code>).</p>
+                        <p class="note">Supplying too many items in the <code>$collation</code> and/or <code>$order</code> arguments
+         is not an error; the excess values are ignored except for type-checking against the function
+         signature.</p>
                      </dd>
                      <dt class="label">Examples</dt>
                      <dd>
@@ -45919,6 +46122,14 @@ else let $rel = op:simple-compare(head($a), head($b), $C)
                                  </tr>
                                  <tr>
                                     <td style="vertical-align:top">
+                                       <p><code>sort((1, 4, 4e0, 6, 5, 3), order:="descending")</code></p>
+                                    </td>
+                                    <td style="vertical-align:top">
+                                       <p><code>(6, 5, 4, 4e0, 3, 1)</code></p>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td style="vertical-align:top">
                                        <p><code>sort((1, -2, 5, 10, -10, 10, 8), (), abs#1)</code></p>
                                     </td>
                                     <td style="vertical-align:top">
@@ -45933,8 +46144,7 @@ else let $rel = op:simple-compare(head($a), head($b), $C)
                                  <tr>
                                     <td colspan="2">
                                        <div class="exampleInner">
-                                          <pre class="small">
-let $SWEDISH := "http://www.w3.org/2013/collation/UCA?lang=se"
+                                          <pre>let $SWEDISH := "http://www.w3.org/2013/collation/UCA?lang=se"
 return sort($in, $SWEDISH)</pre>
                                        </div>
                                     </td>
@@ -45949,12 +46159,37 @@ return sort($in, $SWEDISH)</pre>
                                  <tr>
                                     <td colspan="2">
                                        <div class="exampleInner">
-                                          <pre>sort($employees, (), function($emp) {$emp/name ! (last, first)})</pre>
+                                          <pre>sort($employees, (), fn{name ! (last, first)})</pre>
+                                       </div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td colspan="2">
+                                       <p>To sort a sequence of employees first by increasing last name (using Swedish collation order)
+               and then by decreasing salary:
+            </p>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td colspan="2">
+                                       <div class="exampleInner">
+                                          <pre class="small">let $SWEDISH := "http://www.w3.org/2013/collation/UCA?lang=se"
+               return sort($employees, 
+                           $SWEDISH, 
+                           (fn{name/last}, fn{xs:decimal(salary)}), 
+                           ("ascending", "descending"))</pre>
                                        </div>
                                     </td>
                                  </tr>
                               </tbody>
                            </table>
+                        </div>
+                     </dd>
+                     <dt class="label">History</dt>
+                     <dd>
+                        <div class="example">
+                           <p>Substantially revised in 4.0 to allow multiple sort
+            key definitions.</p>
                         </div>
                      </dd>
                   </dl>
@@ -60060,6 +60295,9 @@ currently, Version 9.0.0.
                      </li>
                      <li>
                         <p><a href="#func-contains-sequence"><code>fn:contains-sequence</code></a></p>
+                     </li>
+                     <li>
+                        <p><a href="#func-decode-from-uri"><code>fn:decode-from-uri</code></a></p>
                      </li>
                      <li>
                         <p><a href="#func-duplicate-values"><code>fn:duplicate-values</code></a></p>
