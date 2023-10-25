@@ -3510,7 +3510,7 @@ Tak, tak, tak! - da kommen sie.
          and the <em>string</em> matches <code>^//*([a-zA-Z]:.*)$</code>,
          the <em>authority</em> is empty and the <em>string</em> is
          the first match group.</p></li><li><p>Otherwise, if the <em>string</em>
-         matches <code>^///*([^/]+)(/.*)?$</code>, the <em>authority</em>
+         matches <code>^///*([^/]+)?(/.*)?$</code>, the <em>authority</em>
          is the first match group and the <em>string</em> is the second
          match group.</p></li><li><p>Finally, if the <em>string</em> does not match either
          regular expression, the <em>authority</em> is the empty sequence
