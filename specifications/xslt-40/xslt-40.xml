@@ -23,7 +23,7 @@
             function library introduce a number of enhancements, for example the availability of
             union and record types. </p><p>XSLT 4.0 also includes optional facilities to serialize the results of a transformation,
             by means of an interface to the serialization component described in 
-            <bibref ref="xslt-xquery-serialization-31"/>.
+            <bibref ref="xslt-xquery-serialization-40"/>.
          </p><p>
             <emph>This document contains hyperlinks to specific sections or definitions within other
                documents in this family of specifications. These links are indicated visually by a
@@ -712,7 +712,7 @@
                      parameters defined in the unnamed <termref def="dt-output-definition"/> of the
                      <termref def="dt-top-level-package"/>.</p><note><p>The first phase of serialization, called <xtermref spec="SER30" ref="sequence-normalization"/>,
                      takes place for some output methods but not others. For example, if the <code>json</code> output method
-                        (defined in <bibref ref="xslt-xquery-serialization-31"/>) is selected, then the process of constructing
+                        (defined in <bibref ref="xslt-xquery-serialization-40"/>) is selected, then the process of constructing
                      a tree is bypassed.</p></note><p>The effect of serialization is to generate a sequence of octets, representing the serialized result
                      in some character encoding. The processor’s API may define mechanisms enabling this sequence of octets
                   to be written to persistent storage at some location. The default location is the location identified
@@ -1751,7 +1751,7 @@
       <e:attribute name="fixed-namespaces" required="no">
          <e:data-type name="string"/>
       </e:attribute>
-      <e:attribute name="use-when" required="no">
+      <e:attribute name="use-when" required="no" default="true()">
          <e:data-type name="expression"/>
       </e:attribute>
       <e:attribute name="xpath-default-namespace" required="no">
@@ -2292,6 +2292,7 @@
          <e:constant value="attribute-set"/>
          <e:constant value="variable"/>
          <e:constant value="mode"/>
+         <e:constant value="item-type"/>
          <e:constant value="*"/>
       </e:attribute>
       <e:attribute name="names" required="yes">
@@ -2321,7 +2322,8 @@
                      functions, and distinguishes functions with the same name and different
                      arity. <phrase diff="add" at="2022-01-01">A <xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-NameTest" xlink:type="simple">NameTest</xnt>
                      on its own (that is, with no arity) cannot be used to identify a function. [XSLT 3.0 Erratum E36, bug 30323].</phrase></p><p>The visibility of a 
-                     named template, function, variable, attribute set, or mode
+                     named template, function, variable, attribute set, mode,
+                     <phrase diff="add" at="2024-01-12">or named item type</phrase>
                      declared within a package is the first of the following that applies, subject to consistency
                      constraints which are defined below:</p><olist><item><p>The visibility of a variable declared using
                            an <elcode>xsl:param</elcode> element is
@@ -2416,6 +2418,7 @@
          <e:constant value="attribute-set"/>
          <e:constant value="variable"/>
          <e:constant value="mode"/>
+         <e:constant value="item-type"/>
          <e:constant value="*"/>
       </e:attribute>
       <e:attribute name="names" required="yes">
@@ -2641,7 +2644,8 @@
                               overridden is that they are typically used during stylesheet
                               compilation (for example, in <code>[xsl:]use-when</code> expressions
                               and shadow attributes) and it is a design goal that packages should be
-                              capable of independent compilation.</p></note></item></ulist><p><termdef id="dt-identical-types" term="identical (types)">Types S and T are considered <term>identical</term> for the purpose of
+                              capable of independent compilation.</p></note></item></ulist><p><termdef id="dt-identical-types" term="identical (types)">Types <var>S</var> 
+                     and <var>T</var> are considered <term>identical</term> for the purpose of
                         these rules if and only if <code>subtype(S, T)</code> and <code>subtype(T,
                            S)</code> both hold, where the subtype relation is defined in <xspecref spec="XP40" ref="id-seqtype-subtype"/>.</termdef></p><note><olist><item><p>One consequence of this rule is that two plain union types are
                               considered identical if they have the same set of member types, even
@@ -2666,7 +2670,11 @@
                               component identity is well defined if the components are named simple
                               type definitions, which will always apply in this case. For named
                               atomic types, the final result of these rules is that two atomic types
-                              are identical if and only if they have the same name.</p></item></olist></note><p>Modes are not overridable, so the <elcode>xsl:mode</elcode> declaration cannot
+                              are identical if and only if they have the same name.</p></item><item><p>Except where recursive types are involved, a named item type
+                           (declared in an <elcode>xsl:item-type</elcode> declaration) is considered
+                           identical to its expansion. With recursive types, the same type names must
+                           be used. By implication, the named type must itself be declared or exposed
+                           with <code>visibility="final"</code>.</p></item></olist></note><p>Modes are not overridable, so the <elcode>xsl:mode</elcode> declaration cannot
                      appear as a child of <elcode>xsl:override</elcode>.</p></div4><div4 id="refer-to-overridden"><head>Referring to Overridden Components</head><p>Within the declaration of an overriding named <termref def="dt-component"/>
                      (that is, a component whose declaration is a child of
                         <elcode>xsl:override</elcode>, and has a <code>name</code> attribute), where
@@ -5215,7 +5223,8 @@
                      as lexical QNames during stylesheet evaluation, such as the effective value 
                      of the name attribute of <elcode>xsl:element</elcode> or the string supplied as the first 
                      argument to the <code>key</code> function.
-                  </p></div4><div4 id="unprefixed-function-names"><head>Unprefixed Function Names</head><p>Unprefixed function names are treated as being in the <termref def="dt-standard-function-namespace"/>.</p></div4><div4 id="other-unprefixed-names"><head>Other Unprefixed Names</head><p>For other unprefixed names, for example variable
+                  </p></div4><div4 id="unprefixed-function-names"><head>Unprefixed Function Names</head><p>Unprefixed function names are treated as names in the 
+                     <termref def="dt-standard-function-namespace"/>.</p></div4><div4 id="other-unprefixed-names"><head>Other Unprefixed Names</head><p>For other unprefixed names, for example variable
                      names, template names, mode names, or strings that are interpreted as <termref def="dt-lexical-qname">lexical QNames</termref> during stylesheet evaluation,
                      such as the <termref def="dt-effective-value">effective value</termref> of the
                      <code>name</code> attribute of <elcode>xsl:element</elcode> or the string
@@ -5930,7 +5939,7 @@
                   keys <code>"longitude"</code> and <code>"latitude"</code></p></item><item><p>A <code>NodePattern</code> matches nodes in a tree, typically by specifying a path that
                   can be used to locate the nodes: for example <code>order</code> matches an element node
                   named <code>order</code>, while <code>billing-address/city</code> matches an element named <code>city</code>
-                  whose parent node is an element named <code>billing-address</code>.</p></item></ulist><p diff="add" at="2022-01-01">The following sections define the rules for each of these groups.</p><div4 id="predicate-patterns"><head>Predicate Patterns</head><scrap headstyle="show" id="PredicatePatterns-scrap"><head/><prod num="2" id="noid_d4e14778.doc-xslt40-patterns-PredicatePattern"><lhs>PredicatePattern</lhs><rhs>"."  <xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-PredicateList" xlink:type="simple">PredicateList</xnt></rhs></prod><prod num="86" id="doc-xslt40-patterns-PredicateList"><lhs>PredicateList</lhs><rhs><xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-Predicate" xlink:type="simple">Predicate</xnt>*</rhs></prod></scrap><p>A <nt xmlns:xlink="http://www.w3.org/1999/xlink" def="doc-xslt40-patterns-PredicatePattern" xlink:type="simple">PredicatePattern</nt>
+                  whose parent node is an element named <code>billing-address</code>.</p></item></ulist><p diff="add" at="2022-01-01">The following sections define the rules for each of these groups.</p><div4 id="predicate-patterns"><head>Predicate Patterns</head><scrap headstyle="show" id="PredicatePatterns-scrap"><head/><prod num="2" id="noid_d4e14793.doc-xslt40-patterns-PredicatePattern"><lhs>PredicatePattern</lhs><rhs>"."  <xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-PredicateList" xlink:type="simple">PredicateList</xnt></rhs></prod><prod num="86" id="doc-xslt40-patterns-PredicateList"><lhs>PredicateList</lhs><rhs><xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-Predicate" xlink:type="simple">Predicate</xnt>*</rhs></prod></scrap><p>A <nt xmlns:xlink="http://www.w3.org/1999/xlink" def="doc-xslt40-patterns-PredicatePattern" xlink:type="simple">PredicatePattern</nt>
                      <var>PP</var> matches an item <var>J</var> if and only if the XPath expression taking
                      the same form as <var>PP</var> returns a non-empty sequence when evaluated with a
                      <termref def="dt-singleton-focus"/> based on <var>J</var>.</p><note><p>The pattern <code>.</code>, which is a <code>PredicatePattern</code> with an
@@ -5949,7 +5958,7 @@
                      be the array <code>["XSLT", 1999]</code>. It will also fail if the item cannot be atomized,
                      for example if it is a map. The rules in <specref ref="pattern-errors"/> cause these errors
                      to be masked: they simply result in the pattern being treated as non-matching.
-                  </p></note></div4><div4 id="type-patterns" diff="add" at="2022-01-01"><head>Type Patterns</head><scrap headstyle="show" id="TypePatterns-scrap"><head/><prod num="3" id="noid_d4e14838.doc-xslt40-patterns-TypePattern"><lhs>TypePattern</lhs><rhs>(<nt xmlns:xlink="http://www.w3.org/1999/xlink" def="prod-xslt40-patterns-WrappedItemTest" xlink:type="simple">WrappedItemTest</nt>  |  <xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-AnyItemTest" xlink:type="simple">AnyItemTest</xnt>  |  <xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-FunctionTest" xlink:type="simple">FunctionTest</xnt>  |  <xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-MapTest" xlink:type="simple">MapTest</xnt>  |  <xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-ArrayTest" xlink:type="simple">ArrayTest</xnt>  |  <xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-RecordTest" xlink:type="simple">RecordTest</xnt>  |  <xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-LocalUnionType" xlink:type="simple">LocalUnionType</xnt>  |  <xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-EnumerationType" xlink:type="simple">EnumerationType</xnt>)  <xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-PredicateList" xlink:type="simple">PredicateList</xnt></rhs></prod><prod num="4" id="doc-xslt40-patterns-WrappedItemTest"><lhs>WrappedItemTest</lhs><rhs>"type"  "("  <xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-ItemType" xlink:type="simple">ItemType</xnt>  ")"</rhs></prod><prod num="109" id="doc-xslt40-patterns-AnyItemTest"><lhs>AnyItemTest</lhs><rhs>"item"  "("  ")"</rhs></prod><prod num="128" id="doc-xslt40-patterns-FunctionTest"><lhs>FunctionTest</lhs><rhs><xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-AnyFunctionTest" xlink:type="simple">AnyFunctionTest</xnt><br/>|  <xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-TypedFunctionTest" xlink:type="simple">TypedFunctionTest</xnt></rhs></prod><prod num="131" id="doc-xslt40-patterns-MapTest"><lhs>MapTest</lhs><rhs><xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-AnyMapTest" xlink:type="simple">AnyMapTest</xnt>  |  <xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-TypedMapTest" xlink:type="simple">TypedMapTest</xnt></rhs></prod><prod num="143" id="doc-xslt40-patterns-ArrayTest"><lhs>ArrayTest</lhs><rhs><xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-AnyArrayTest" xlink:type="simple">AnyArrayTest</xnt>  |  <xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-TypedArrayTest" xlink:type="simple">TypedArrayTest</xnt></rhs></prod><prod num="134" id="doc-xslt40-patterns-RecordTest"><lhs>RecordTest</lhs><rhs><xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-AnyRecordTest" xlink:type="simple">AnyRecordTest</xnt>  |  <xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-TypedRecordTest" xlink:type="simple">TypedRecordTest</xnt></rhs></prod><prod num="137" id="doc-xslt40-patterns-FieldDeclaration"><lhs>FieldDeclaration</lhs><rhs><xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-FieldName" xlink:type="simple">FieldName</xnt>  "?"?  ("as"  (<xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-SequenceType" xlink:type="simple">SequenceType</xnt>  |  <xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-SelfReference" xlink:type="simple">SelfReference</xnt>))?</rhs></prod><prod num="138" id="doc-xslt40-patterns-FieldName"><lhs>FieldName</lhs><rhs><xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-NCName" xlink:type="simple">NCName</xnt>  |  <xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-StringLiteral" xlink:type="simple">StringLiteral</xnt></rhs></prod><prod num="140" id="doc-xslt40-patterns-ExtensibleFlag"><lhs>ExtensibleFlag</lhs><rhs>","  "*"</rhs></prod><prod num="142" id="doc-xslt40-patterns-EnumerationType"><lhs>EnumerationType</lhs><rhs>"enum"  "("  <xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-StringLiteral" xlink:type="simple">StringLiteral</xnt>  (","  <xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-StringLiteral" xlink:type="simple">StringLiteral</xnt>)*  ")"</rhs></prod><prod num="86" id="noid_d4e14851.doc-xslt40-patterns-PredicateList"><lhs>PredicateList</lhs><rhs><xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-Predicate" xlink:type="simple">Predicate</xnt>*</rhs></prod></scrap><p>A type pattern tests whether an item matches a given item type, optionally qualified
+                  </p></note></div4><div4 id="type-patterns" diff="add" at="2022-01-01"><head>Type Patterns</head><scrap headstyle="show" id="TypePatterns-scrap"><head/><prod num="3" id="noid_d4e14853.doc-xslt40-patterns-TypePattern"><lhs>TypePattern</lhs><rhs>(<nt xmlns:xlink="http://www.w3.org/1999/xlink" def="prod-xslt40-patterns-WrappedItemTest" xlink:type="simple">WrappedItemTest</nt>  |  <xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-AnyItemTest" xlink:type="simple">AnyItemTest</xnt>  |  <xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-FunctionTest" xlink:type="simple">FunctionTest</xnt>  |  <xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-MapTest" xlink:type="simple">MapTest</xnt>  |  <xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-ArrayTest" xlink:type="simple">ArrayTest</xnt>  |  <xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-RecordTest" xlink:type="simple">RecordTest</xnt>  |  <xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-LocalUnionType" xlink:type="simple">LocalUnionType</xnt>  |  <xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-EnumerationType" xlink:type="simple">EnumerationType</xnt>)  <xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-PredicateList" xlink:type="simple">PredicateList</xnt></rhs></prod><prod num="4" id="doc-xslt40-patterns-WrappedItemTest"><lhs>WrappedItemTest</lhs><rhs>"type"  "("  <xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-ItemType" xlink:type="simple">ItemType</xnt>  ")"</rhs></prod><prod num="109" id="doc-xslt40-patterns-AnyItemTest"><lhs>AnyItemTest</lhs><rhs>"item"  "("  ")"</rhs></prod><prod num="128" id="doc-xslt40-patterns-FunctionTest"><lhs>FunctionTest</lhs><rhs><xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-AnyFunctionTest" xlink:type="simple">AnyFunctionTest</xnt><br/>|  <xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-TypedFunctionTest" xlink:type="simple">TypedFunctionTest</xnt></rhs></prod><prod num="131" id="doc-xslt40-patterns-MapTest"><lhs>MapTest</lhs><rhs><xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-AnyMapTest" xlink:type="simple">AnyMapTest</xnt>  |  <xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-TypedMapTest" xlink:type="simple">TypedMapTest</xnt></rhs></prod><prod num="142" id="doc-xslt40-patterns-ArrayTest"><lhs>ArrayTest</lhs><rhs><xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-AnyArrayTest" xlink:type="simple">AnyArrayTest</xnt>  |  <xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-TypedArrayTest" xlink:type="simple">TypedArrayTest</xnt></rhs></prod><prod num="134" id="doc-xslt40-patterns-RecordTest"><lhs>RecordTest</lhs><rhs><xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-AnyRecordTest" xlink:type="simple">AnyRecordTest</xnt>  |  <xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-TypedRecordTest" xlink:type="simple">TypedRecordTest</xnt></rhs></prod><prod num="137" id="doc-xslt40-patterns-FieldDeclaration"><lhs>FieldDeclaration</lhs><rhs><xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-FieldName" xlink:type="simple">FieldName</xnt>  "?"?  ("as"  <xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-SequenceType" xlink:type="simple">SequenceType</xnt>)?</rhs></prod><prod num="138" id="doc-xslt40-patterns-FieldName"><lhs>FieldName</lhs><rhs><xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-NCName" xlink:type="simple">NCName</xnt>  |  <xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-StringLiteral" xlink:type="simple">StringLiteral</xnt></rhs></prod><prod num="139" id="doc-xslt40-patterns-ExtensibleFlag"><lhs>ExtensibleFlag</lhs><rhs>","  "*"</rhs></prod><prod num="141" id="doc-xslt40-patterns-EnumerationType"><lhs>EnumerationType</lhs><rhs>"enum"  "("  <xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-StringLiteral" xlink:type="simple">StringLiteral</xnt>  (","  <xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-StringLiteral" xlink:type="simple">StringLiteral</xnt>)*  ")"</rhs></prod><prod num="86" id="noid_d4e14866.doc-xslt40-patterns-PredicateList"><lhs>PredicateList</lhs><rhs><xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-Predicate" xlink:type="simple">Predicate</xnt>*</rhs></prod></scrap><p>A type pattern tests whether an item matches a given item type, optionally qualified
                   with one or more predicates that the value must also satisfy.</p><p>The general-purpose construct <code>type(ItemType)</code> allows any <code>ItemType</code>
                   to be used in a pattern. Where syntactic constraints permit, many <code>ItemTypes</code> can 
                      also be used directly: for example
@@ -5968,7 +5977,7 @@
                         as a <code>NodeTest</code>: for example <code>match="type(element(PERSON))"</code> has the same meaning as
                         <code>match="element(PERSON)"</code>, which in turn is usually abbreviated to <code>match="PERSON"</code>.</p><p>Although <code>match="type(element(PERSON))"</code> matches exactly the same items as
                      <code>match="PERSON"</code>, the priority relative to other template rules (in the absence of an explicit
-                     <code>priority</code> attribute) may be different.</p></note></div4><div4 id="node-patterns"><head>Node Patterns</head><scrap id="NodePatterns-scrap" headstyle="show"><head/><prod num="5" id="noid_d4e14942.doc-xslt40-patterns-NodePattern"><lhs>NodePattern</lhs><rhs><nt xmlns:xlink="http://www.w3.org/1999/xlink" def="prod-xslt40-patterns-UnionExprP" xlink:type="simple">UnionExprP</nt></rhs></prod><prod num="6" id="doc-xslt40-patterns-UnionExprP"><lhs>UnionExprP</lhs><rhs><nt xmlns:xlink="http://www.w3.org/1999/xlink" def="prod-xslt40-patterns-IntersectExceptExprP" xlink:type="simple">IntersectExceptExprP</nt>  (("union"  |  "|")  <nt xmlns:xlink="http://www.w3.org/1999/xlink" def="prod-xslt40-patterns-IntersectExceptExprP" xlink:type="simple">IntersectExceptExprP</nt>)*</rhs></prod><prod num="7" id="doc-xslt40-patterns-IntersectExceptExprP"><lhs>IntersectExceptExprP</lhs><rhs><nt xmlns:xlink="http://www.w3.org/1999/xlink" def="prod-xslt40-patterns-PathExprP" xlink:type="simple">PathExprP</nt>  (("intersect"  |  "except")  <nt xmlns:xlink="http://www.w3.org/1999/xlink" def="prod-xslt40-patterns-PathExprP" xlink:type="simple">PathExprP</nt>)*</rhs></prod><prod num="8" id="doc-xslt40-patterns-PathExprP"><lhs>PathExprP</lhs><rhs><nt xmlns:xlink="http://www.w3.org/1999/xlink" def="prod-xslt40-patterns-RootedPath" xlink:type="simple">RootedPath</nt><br/>|  ("/"  <nt xmlns:xlink="http://www.w3.org/1999/xlink" def="prod-xslt40-patterns-RelativePathExprP" xlink:type="simple">RelativePathExprP</nt>?)<br/>|  ("//"  <nt xmlns:xlink="http://www.w3.org/1999/xlink" def="prod-xslt40-patterns-RelativePathExprP" xlink:type="simple">RelativePathExprP</nt>)<br/>|  <nt xmlns:xlink="http://www.w3.org/1999/xlink" def="prod-xslt40-patterns-RelativePathExprP" xlink:type="simple">RelativePathExprP</nt></rhs></prod><prod num="9" id="doc-xslt40-patterns-RootedPath"><lhs>RootedPath</lhs><rhs>(<xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-VarRef" xlink:type="simple">VarRef</xnt>  |  <nt xmlns:xlink="http://www.w3.org/1999/xlink" def="prod-xslt40-patterns-FunctionCallP" xlink:type="simple">FunctionCallP</nt>)  <xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-PredicateList" xlink:type="simple">PredicateList</xnt>  (("/"  |  "//")  <nt xmlns:xlink="http://www.w3.org/1999/xlink" def="prod-xslt40-patterns-RelativePathExprP" xlink:type="simple">RelativePathExprP</nt>)?</rhs></prod><prod num="10" id="doc-xslt40-patterns-FunctionCallP"><lhs>FunctionCallP</lhs><rhs><nt xmlns:xlink="http://www.w3.org/1999/xlink" def="prod-xslt40-patterns-OuterFunctionName" xlink:type="simple">OuterFunctionName</nt>  <nt xmlns:xlink="http://www.w3.org/1999/xlink" def="prod-xslt40-patterns-ArgumentListP" xlink:type="simple">ArgumentListP</nt></rhs></prod><prod num="11" id="doc-xslt40-patterns-OuterFunctionName"><lhs>OuterFunctionName</lhs><rhs>"doc"  |  "id"  |  "element-with-id"  |  "key"  |  <xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-URIQualifiedName" xlink:type="simple">URIQualifiedName</xnt></rhs></prod><prod num="12" id="doc-xslt40-patterns-ArgumentListP"><lhs>ArgumentListP</lhs><rhs>"("  (<nt xmlns:xlink="http://www.w3.org/1999/xlink" def="prod-xslt40-patterns-ArgumentP" xlink:type="simple">ArgumentP</nt>  (","  <nt xmlns:xlink="http://www.w3.org/1999/xlink" def="prod-xslt40-patterns-ArgumentP" xlink:type="simple">ArgumentP</nt>)*)?  ")"</rhs></prod><prod num="13" id="doc-xslt40-patterns-ArgumentP"><lhs>ArgumentP</lhs><rhs><xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-VarRef" xlink:type="simple">VarRef</xnt>  |  <xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-Literal" xlink:type="simple">Literal</xnt></rhs></prod><prod num="14" id="doc-xslt40-patterns-RelativePathExprP"><lhs>RelativePathExprP</lhs><rhs><nt xmlns:xlink="http://www.w3.org/1999/xlink" def="prod-xslt40-patterns-StepExprP" xlink:type="simple">StepExprP</nt>  (("/"  |  "//")  <nt xmlns:xlink="http://www.w3.org/1999/xlink" def="prod-xslt40-patterns-StepExprP" xlink:type="simple">StepExprP</nt>)*</rhs></prod><prod num="15" id="doc-xslt40-patterns-StepExprP"><lhs>StepExprP</lhs><rhs><nt xmlns:xlink="http://www.w3.org/1999/xlink" def="prod-xslt40-patterns-PostfixExprP" xlink:type="simple">PostfixExprP</nt>  |  <nt xmlns:xlink="http://www.w3.org/1999/xlink" def="prod-xslt40-patterns-AxisStepP" xlink:type="simple">AxisStepP</nt></rhs></prod><prod num="16" id="doc-xslt40-patterns-PostfixExprP"><lhs>PostfixExprP</lhs><rhs><nt xmlns:xlink="http://www.w3.org/1999/xlink" def="prod-xslt40-patterns-ParenthesizedExprP" xlink:type="simple">ParenthesizedExprP</nt>  <xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-PredicateList" xlink:type="simple">PredicateList</xnt></rhs></prod><prod num="17" id="doc-xslt40-patterns-ParenthesizedExprP"><lhs>ParenthesizedExprP</lhs><rhs>"("  <nt xmlns:xlink="http://www.w3.org/1999/xlink" def="prod-xslt40-patterns-UnionExprP" xlink:type="simple">UnionExprP</nt>  ")"</rhs></prod><prod num="18" id="doc-xslt40-patterns-AxisStepP"><lhs>AxisStepP</lhs><rhs><nt xmlns:xlink="http://www.w3.org/1999/xlink" def="prod-xslt40-patterns-ForwardStepP" xlink:type="simple">ForwardStepP</nt>  <xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-PredicateList" xlink:type="simple">PredicateList</xnt></rhs></prod><prod num="19" id="doc-xslt40-patterns-ForwardStepP"><lhs>ForwardStepP</lhs><rhs>(<nt xmlns:xlink="http://www.w3.org/1999/xlink" def="prod-xslt40-patterns-ForwardAxisP" xlink:type="simple">ForwardAxisP</nt>  <xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-NodeTest" xlink:type="simple">NodeTest</xnt>)  |  <xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-AbbrevForwardStep" xlink:type="simple">AbbrevForwardStep</xnt></rhs></prod><prod num="20" id="doc-xslt40-patterns-ForwardAxisP"><lhs>ForwardAxisP</lhs><rhs>("child"  "::")<br/>|  ("descendant"  "::")<br/>|  ("attribute"  "::")<br/>|  ("self"  "::")<br/>|  ("descendant-or-self"  "::")<br/>|  ("namespace"  "::")</rhs></prod></scrap><p>Node Patterns are used to match XDM nodes.</p><p>The names of these constructs are chosen to align with the XPath 3.0 grammar.
+                     <code>priority</code> attribute) may be different.</p></note></div4><div4 id="node-patterns"><head>Node Patterns</head><scrap id="NodePatterns-scrap" headstyle="show"><head/><prod num="5" id="noid_d4e14957.doc-xslt40-patterns-NodePattern"><lhs>NodePattern</lhs><rhs><nt xmlns:xlink="http://www.w3.org/1999/xlink" def="prod-xslt40-patterns-UnionExprP" xlink:type="simple">UnionExprP</nt></rhs></prod><prod num="6" id="doc-xslt40-patterns-UnionExprP"><lhs>UnionExprP</lhs><rhs><nt xmlns:xlink="http://www.w3.org/1999/xlink" def="prod-xslt40-patterns-IntersectExceptExprP" xlink:type="simple">IntersectExceptExprP</nt>  (("union"  |  "|")  <nt xmlns:xlink="http://www.w3.org/1999/xlink" def="prod-xslt40-patterns-IntersectExceptExprP" xlink:type="simple">IntersectExceptExprP</nt>)*</rhs></prod><prod num="7" id="doc-xslt40-patterns-IntersectExceptExprP"><lhs>IntersectExceptExprP</lhs><rhs><nt xmlns:xlink="http://www.w3.org/1999/xlink" def="prod-xslt40-patterns-PathExprP" xlink:type="simple">PathExprP</nt>  (("intersect"  |  "except")  <nt xmlns:xlink="http://www.w3.org/1999/xlink" def="prod-xslt40-patterns-PathExprP" xlink:type="simple">PathExprP</nt>)*</rhs></prod><prod num="8" id="doc-xslt40-patterns-PathExprP"><lhs>PathExprP</lhs><rhs><nt xmlns:xlink="http://www.w3.org/1999/xlink" def="prod-xslt40-patterns-RootedPath" xlink:type="simple">RootedPath</nt><br/>|  ("/"  <nt xmlns:xlink="http://www.w3.org/1999/xlink" def="prod-xslt40-patterns-RelativePathExprP" xlink:type="simple">RelativePathExprP</nt>?)<br/>|  ("//"  <nt xmlns:xlink="http://www.w3.org/1999/xlink" def="prod-xslt40-patterns-RelativePathExprP" xlink:type="simple">RelativePathExprP</nt>)<br/>|  <nt xmlns:xlink="http://www.w3.org/1999/xlink" def="prod-xslt40-patterns-RelativePathExprP" xlink:type="simple">RelativePathExprP</nt></rhs></prod><prod num="9" id="doc-xslt40-patterns-RootedPath"><lhs>RootedPath</lhs><rhs>(<xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-VarRef" xlink:type="simple">VarRef</xnt>  |  <nt xmlns:xlink="http://www.w3.org/1999/xlink" def="prod-xslt40-patterns-FunctionCallP" xlink:type="simple">FunctionCallP</nt>)  <xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-PredicateList" xlink:type="simple">PredicateList</xnt>  (("/"  |  "//")  <nt xmlns:xlink="http://www.w3.org/1999/xlink" def="prod-xslt40-patterns-RelativePathExprP" xlink:type="simple">RelativePathExprP</nt>)?</rhs></prod><prod num="10" id="doc-xslt40-patterns-FunctionCallP"><lhs>FunctionCallP</lhs><rhs><nt xmlns:xlink="http://www.w3.org/1999/xlink" def="prod-xslt40-patterns-OuterFunctionName" xlink:type="simple">OuterFunctionName</nt>  <nt xmlns:xlink="http://www.w3.org/1999/xlink" def="prod-xslt40-patterns-ArgumentListP" xlink:type="simple">ArgumentListP</nt></rhs></prod><prod num="11" id="doc-xslt40-patterns-OuterFunctionName"><lhs>OuterFunctionName</lhs><rhs>"doc"  |  "id"  |  "element-with-id"  |  "key"  |  <xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-URIQualifiedName" xlink:type="simple">URIQualifiedName</xnt></rhs></prod><prod num="12" id="doc-xslt40-patterns-ArgumentListP"><lhs>ArgumentListP</lhs><rhs>"("  (<nt xmlns:xlink="http://www.w3.org/1999/xlink" def="prod-xslt40-patterns-ArgumentP" xlink:type="simple">ArgumentP</nt>  (","  <nt xmlns:xlink="http://www.w3.org/1999/xlink" def="prod-xslt40-patterns-ArgumentP" xlink:type="simple">ArgumentP</nt>)*)?  ")"</rhs></prod><prod num="13" id="doc-xslt40-patterns-ArgumentP"><lhs>ArgumentP</lhs><rhs><xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-VarRef" xlink:type="simple">VarRef</xnt>  |  <xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-Literal" xlink:type="simple">Literal</xnt></rhs></prod><prod num="14" id="doc-xslt40-patterns-RelativePathExprP"><lhs>RelativePathExprP</lhs><rhs><nt xmlns:xlink="http://www.w3.org/1999/xlink" def="prod-xslt40-patterns-StepExprP" xlink:type="simple">StepExprP</nt>  (("/"  |  "//")  <nt xmlns:xlink="http://www.w3.org/1999/xlink" def="prod-xslt40-patterns-StepExprP" xlink:type="simple">StepExprP</nt>)*</rhs></prod><prod num="15" id="doc-xslt40-patterns-StepExprP"><lhs>StepExprP</lhs><rhs><nt xmlns:xlink="http://www.w3.org/1999/xlink" def="prod-xslt40-patterns-PostfixExprP" xlink:type="simple">PostfixExprP</nt>  |  <nt xmlns:xlink="http://www.w3.org/1999/xlink" def="prod-xslt40-patterns-AxisStepP" xlink:type="simple">AxisStepP</nt></rhs></prod><prod num="16" id="doc-xslt40-patterns-PostfixExprP"><lhs>PostfixExprP</lhs><rhs><nt xmlns:xlink="http://www.w3.org/1999/xlink" def="prod-xslt40-patterns-ParenthesizedExprP" xlink:type="simple">ParenthesizedExprP</nt>  <xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-PredicateList" xlink:type="simple">PredicateList</xnt></rhs></prod><prod num="17" id="doc-xslt40-patterns-ParenthesizedExprP"><lhs>ParenthesizedExprP</lhs><rhs>"("  <nt xmlns:xlink="http://www.w3.org/1999/xlink" def="prod-xslt40-patterns-UnionExprP" xlink:type="simple">UnionExprP</nt>  ")"</rhs></prod><prod num="18" id="doc-xslt40-patterns-AxisStepP"><lhs>AxisStepP</lhs><rhs><nt xmlns:xlink="http://www.w3.org/1999/xlink" def="prod-xslt40-patterns-ForwardStepP" xlink:type="simple">ForwardStepP</nt>  <xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-PredicateList" xlink:type="simple">PredicateList</xnt></rhs></prod><prod num="19" id="doc-xslt40-patterns-ForwardStepP"><lhs>ForwardStepP</lhs><rhs>(<nt xmlns:xlink="http://www.w3.org/1999/xlink" def="prod-xslt40-patterns-ForwardAxisP" xlink:type="simple">ForwardAxisP</nt>  <xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-NodeTest" xlink:type="simple">NodeTest</xnt>)  |  <xnt xmlns:xlink="http://www.w3.org/1999/xlink" spec="XP40" ref="prod-xpath40-AbbrevForwardStep" xlink:type="simple">AbbrevForwardStep</xnt></rhs></prod><prod num="20" id="doc-xslt40-patterns-ForwardAxisP"><lhs>ForwardAxisP</lhs><rhs>("child"  "::")<br/>|  ("descendant"  "::")<br/>|  ("attribute"  "::")<br/>|  ("self"  "::")<br/>|  ("descendant-or-self"  "::")<br/>|  ("namespace"  "::")</rhs></prod></scrap><p>Node Patterns are used to match XDM nodes.</p><p>The names of these constructs are chosen to align with the XPath 3.0 grammar.
                   Constructs whose names are suffixed with <code>P</code> are restricted forms of
                   the corresponding XPath 3.0 construct without the suffix. Constructs labeled with
                   the suffix “XP40” are defined in <bibref ref="xpath-40"/>.</p><p diff="del" at="2022-01-01">Where the XSLT 3.0 processor implements the XPath 3.1 feature, the definitions that apply to constructs labeled
@@ -6146,18 +6155,24 @@
             to the way complex numbers are implemented in this example is less likely to affect users of the function
             library. However, named item types do not provide true encapsulation or information hiding; users of the 
             function library can still treat complex numbers as raw maps if they wish.</p><p>The <elcode>xsl:item-type</elcode> declaration adds an entry to the 
-               <xtermref spec="XP40" ref="dt-type-alias"/>
+               <xtermref spec="XP40" ref="dt-in-scope-named-item-types"/>
             component of the static context for XPath expressions, and also becomes available for use wherever
             XSLT allows an <code>ItemType</code> to appear.</p><p>The scope of a named item type is the <termref def="dt-package"/> in which it is declared. If it
             is declared with <code>visibility="final"</code> then it also becomes available for use in using
             packages. Named item types cannot be overridden in a using package, so the only permitted values for
             <code>visibility</code> are <code>private</code> and <code>final</code>.</p><p>The name of the item type is the expanded name formed by resolving the <code>name</code> attribute.
             A lexical QName with no prefix is treated as a no-namespace name.</p><p>If two <elcode>xsl:item-type</elcode> declarations in a <termref def="dt-package"/> have the same
-            name, then the one with higher <termref def="dt-import-precedence"/> is used. </p><p><error spec="XT" type="static" class="SE" code="9ZZZ"><p>It is a <termref def="dt-static-error">static error</termref> if a package contains two 
+            name, then the one with higher <termref def="dt-import-precedence"/> is used. </p><p><error spec="XT" type="static" class="SE" code="4030"><p>It is a <termref def="dt-static-error">static error</termref> if a package contains two 
                   <elcode>xsl:item-type</elcode>
                   declarations having the same <termref def="dt-import-precedence">import
                      precedence</termref>, unless there is another definition of the same
-                  item type with higher import precedence.</p></error></p><p>TODO: add named item types to xsl:accept and xsl:expose. Clarify that when a function or variable
+                  item type with higher import precedence.</p></error></p><p diff="add" at="issue295">An item type declaration may refer directly or indirectly to itself if
+               it satisfies the conditions defined in <xspecref spec="XP40" ref="id-recursive-record-tests"/>.
+            This allows types to be declared that match recursive data structures such as linked lists
+            and trees.</p><p><error spec="XT" type="static" class="SE" code="4035"><p>It is a <termref def="dt-static-error">static error</termref> for an item type named
+                  <var>N</var> to contain in its <code>as</code> attribute a reference to <var>N</var>,
+                  or to an item type that references <var>N</var> directly or indirectly, unless it satisfies
+                  the conditions defined in <xspecref spec="XP40" ref="id-recursive-record-tests"/>.</p></error></p><p>TODO: add named item types to xsl:accept and xsl:expose. Clarify that when a function or variable
             is exported to a different package, its declared type/signature uses the expanded form of any named
             item type; there is no requirement for the using package to know the named item types. But it becomes
             easier to use the exposed variables and functions if the names of the types are exposed too.</p></div2><div2 id="defining-decimal-format"><head>Defining a Decimal Format</head><p>The definition of the <xfunction>format-number</xfunction> function
@@ -10030,7 +10045,7 @@
                         variables satisfying this rule have the same name and are both in scope, the
                         one that appears most recently in stylesheet tree order is used; as a
                         consequence of rules defined elsewhere this will always be consistent with
-                        the declaration having highest import precedence.</td></tr><tr><td rowspan="1" colspan="1" align="left" valign="top">Context item static type</td><td rowspan="1" colspan="1" align="left" valign="top"><termref def="dt-absent">Absent</termref></td></tr><tr><td rowspan="1" colspan="1" align="left" valign="top">Item type aliases</td><td rowspan="1" colspan="1" align="left" valign="top">None</td></tr><tr><td rowspan="1" colspan="1" align="left" valign="top">Statically known function
+                        the declaration having highest import precedence.</td></tr><tr><td rowspan="1" colspan="1" align="left" valign="top">Context item static type</td><td rowspan="1" colspan="1" align="left" valign="top"><termref def="dt-absent">Absent</termref></td></tr><tr><td rowspan="1" colspan="1" align="left" valign="top">In-scope named item types</td><td rowspan="1" colspan="1" align="left" valign="top">None</td></tr><tr><td rowspan="1" colspan="1" align="left" valign="top">Statically known function
                         definitions</td><td rowspan="1" colspan="1" align="left" valign="top">The functions defined in <bibref ref="xpath-functions-40"/> in the <code>fn</code>
                         <code>math</code>, <phrase diff="add" at="2022-01-01"><code>map</code>, and <code>array</code></phrase>  namespaces, together with:
                         <olist><item><p>the functions
@@ -13488,19 +13503,14 @@ for $i in 1 to count($V) return
                      required to evaluate any expression solely in order to determine whether it
                      raises an error. For example, if there are several sort key components, then a
                      processor is not required to evaluate or compare minor sort key values unless
-                     the corresponding major sort key values are equal.</p></note><p>In general, comparison of two ordinary values is performed according to the rules
-                  of the XPath <code>lt</code> operator. To ensure a total ordering, the same
-                  implementation of the <code>lt</code> operator <rfc2119>must</rfc2119> be used for
-                  all the comparisons: the one that is chosen is the one appropriate to the most
-                  specific type to which all the values can be converted by subtype substitution
-                  and/or type promotion. For example, if the sequence contains both
-                     <code>xs:decimal</code> and <code>xs:double</code> values, then the values are
-                  compared using <code>xs:double</code> comparison, even when comparing two
-                     <code>xs:decimal</code> values. <code>NaN</code> values, for sorting purposes, are
-                  considered to be equal to each other, and less than any other numeric value.
-                  Special rules also apply to the <code>xs:string</code> and <code>xs:anyURI</code>
-                  types, and types derived by restriction therefrom, as described in the next
-                  section.</p></div3><div3 id="collating-sequences"><head>Sorting Using Collations</head><p>The rules given in this section apply when comparing values whose type is
+                     the corresponding major sort key values are equal.</p></note><p diff="chg" at="2023-12-06">Individual values are compared as follows:</p><olist diff="chg" at="2023-12-06"><item><p>If both values are instances of <code>xs:string</code>, <code>xs:anyURI</code>,
+                  or <code>xs:untypedAtomic</code>, they are compared using the appropriate collation,
+                  as described in the next section.</p></item><item><p>If both values are instances of <code>xs:numeric</code>, they are compared
+                  using the <xfunction>compare</xfunction> function.</p><note><p>This is a change from earlier versions, since <code>xs:decimal</code> values are now compared
+                  as decimals, rather than being first converted to <code>xs:double</code>.</p></note></item><item><p>In all other cases, values are compared according to the rules
+                     of the XPath <code>lt</code> operator. This will raise an error if the values are
+                  not comparable (for example, if one is an <code>xs:integer</code> and the other is
+                  an <code>xs:date</code>).</p></item></olist></div3><div3 id="collating-sequences"><head>Sorting Using Collations</head><p>The rules given in this section apply when comparing values whose type is
                      <code>xs:string</code> or a type derived by restriction from
                      <code>xs:string</code>, or whose type is <code>xs:anyURI</code> or a type
                   derived by restriction from <code>xs:anyURI</code>.</p><p>
@@ -16303,7 +16313,7 @@ for $i in 1 to count($V) return
                until the next time the accumulator is referenced, to give applications the opportunity to catch the error using <elcode>xsl:try</elcode>
                and <elcode>xsl:catch</elcode> in a predictable way.</p></note><note><p>Errors that occur during the evaluation of the pattern in the <code>match</code> attribute of
                <elcode>xsl:accumulator-rule</elcode> are handled as described in <specref ref="pattern-errors"/>:
-               specifically, the pattern does not match the relevant node, and no error is raised.</p></note></div3><div3 id="func-accumulator-before"><head>fn:accumulator-before</head><glist><gitem><label>Summary</label><def><p>Returns the pre-descent value of the selected accumulator at the context node.</p></def></gitem><gitem><label>Signature</label><def><example role="signature"><proto isOp="no" prefix="fn" name="accumulator-before" return-type="item()*" returnEmptyOk="no" returnSeq="no" returnVaries="no" isSchema="no" isDatatype="no" isSpecial="no"><arg name="name" type="union(xs:QName, xs:string)"/></proto></example></def></gitem><gitem><label>Properties</label><def><p>This function is <xtermref spec="FO30" ref="dt-deterministic">deterministic</xtermref>, <xtermref spec="FO30" ref="dt-context-dependent">context-dependent</xtermref>,  and <xtermref spec="FO30" ref="dt-focus-dependent">focus-dependent</xtermref>. </p></def></gitem><gitem><label>Rules</label><def><p>The <code>$name</code> argument specifies the name of the <termref def="dt-accumulator"/>. 
+               specifically, the pattern does not match the relevant node, and no error is raised.</p></note></div3><div3 id="func-accumulator-before"><head>fn:accumulator-before</head><glist><gitem><label>Summary</label><def><p>Returns the pre-descent value of the selected accumulator at the context node.</p></def></gitem><gitem><label>Signature</label><def><example role="signature"><proto isOp="no" prefix="fn" name="accumulator-before" return-type="item()*" returnEmptyOk="no" returnSeq="no" returnVaries="no" isSchema="no" isDatatype="no" isSpecial="no"><arg name="name" type="union(xs:string, xs:QName)"/></proto></example></def></gitem><gitem><label>Properties</label><def><p>This function is <xtermref spec="FO30" ref="dt-deterministic">deterministic</xtermref>, <xtermref spec="FO30" ref="dt-context-dependent">context-dependent</xtermref>,  and <xtermref spec="FO30" ref="dt-focus-dependent">focus-dependent</xtermref>. </p></def></gitem><gitem><label>Rules</label><def><p>The <code>$name</code> argument specifies the name of the <termref def="dt-accumulator"/>. 
             The value of the argument <rfc2119>must</rfc2119> be 
             <phrase diff="add" at="2022-01-01">either an <code>xs:QName</code>, or</phrase>
             a string containing an <termref def="dt-eqname"/>. If it is a 
@@ -16363,7 +16373,7 @@ for $i in 1 to count($V) return
    &lt;xsl:value-of select="accumulator-before('a')"/&gt;
    &lt;xsl:apply-templates/&gt;
 &lt;/xsl:template&gt;</eg></td></tr><tr><td colspan="2" rowspan="1" align="left" valign="top"><p>The stylesheet will precede the output from processing each section with a section
-               number that runs sequentially 1, 2, 3... irrespective of the nesting of sections.</p></td></tr></tbody></table></def></gitem></glist></div3><div3 id="func-accumulator-after"><head>fn:accumulator-after</head><glist><gitem><label>Summary</label><def><p>Returns the post-descent value of the selected accumulator at the context node.</p></def></gitem><gitem><label>Signature</label><def><example role="signature"><proto isOp="no" prefix="fn" name="accumulator-after" return-type="item()*" returnEmptyOk="no" returnSeq="no" returnVaries="no" isSchema="no" isDatatype="no" isSpecial="no"><arg name="name" type="union(xs:QName, xs:string)"/></proto></example></def></gitem><gitem><label>Properties</label><def><p>This function is <xtermref spec="FO30" ref="dt-deterministic">deterministic</xtermref>, <xtermref spec="FO30" ref="dt-context-dependent">context-dependent</xtermref>,  and <xtermref spec="FO30" ref="dt-focus-dependent">focus-dependent</xtermref>. </p></def></gitem><gitem><label>Rules</label><def><p>The <code>$name</code> argument specifies the name of the <termref def="dt-accumulator"/>. 
+               number that runs sequentially 1, 2, 3... irrespective of the nesting of sections.</p></td></tr></tbody></table></def></gitem></glist></div3><div3 id="func-accumulator-after"><head>fn:accumulator-after</head><glist><gitem><label>Summary</label><def><p>Returns the post-descent value of the selected accumulator at the context node.</p></def></gitem><gitem><label>Signature</label><def><example role="signature"><proto isOp="no" prefix="fn" name="accumulator-after" return-type="item()*" returnEmptyOk="no" returnSeq="no" returnVaries="no" isSchema="no" isDatatype="no" isSpecial="no"><arg name="name" type="union(xs:string, xs:QName)"/></proto></example></def></gitem><gitem><label>Properties</label><def><p>This function is <xtermref spec="FO30" ref="dt-deterministic">deterministic</xtermref>, <xtermref spec="FO30" ref="dt-context-dependent">context-dependent</xtermref>,  and <xtermref spec="FO30" ref="dt-focus-dependent">focus-dependent</xtermref>. </p></def></gitem><gitem><label>Rules</label><def><p>The <code>$name</code> argument specifies the name of the <termref def="dt-accumulator"/>. 
             The value of the argument <rfc2119>must</rfc2119> be 
             <phrase diff="add" at="2022-01-01">either an <code>xs:QName</code>, or</phrase>
             a string containing an <termref def="dt-eqname">EQName</termref>. If it is a
@@ -18975,7 +18985,7 @@ for $i in 1 to count($V) return
       </p></item><item><p>
          <code>fn:contains(A, A, A)</code>
       </p></item><item><p>
-         <code>fn:contains-sequence(T, T, A)</code>
+         <code>fn:contains-subsequence(T, T, A)</code>
       </p></item><item><p>
          <code>fn:contains-token(A, A, A)</code>
       </p></item><item><p>
@@ -19027,6 +19037,8 @@ for $i in 1 to count($V) return
       </p></item><item><p>
          <code>fn:distinct-values(A, A)</code>
       </p></item><item><p>
+         <code>fn:do-until(A, A, A)</code>
+      </p></item><item><p>
          <code>fn:doc(A)</code>
       </p></item><item><p>
          <code>fn:doc-available(A)</code>
@@ -19047,7 +19059,7 @@ for $i in 1 to count($V) return
       </p></item><item><p>
          <code>fn:ends-with(A, A, A)</code>
       </p></item><item><p>
-         <code>fn:ends-with-sequence(T, T, A)</code>
+         <code>fn:ends-with-subsequence(T, T, A)</code>
       </p></item><item><p>
          <code>fn:environment-variable(A)</code>
       </p></item><item><p>
@@ -19103,6 +19115,8 @@ for $i in 1 to count($V) return
       </p></item><item><p>
          <code>fn:has-children(I)</code>
       </p></item><item><p>
+         <code>fn:hash(A, A)</code>
+      </p></item><item><p>
          <code>fn:head(T)</code>
       </p></item><item><p>
          <code>fn:highest(N, A, I)</code>
@@ -19141,17 +19155,7 @@ for $i in 1 to count($V) return
       </p></item><item><p>
          <code>fn:is-NaN(A)</code>
       </p></item><item><p>
-         <code>fn:items-after(A, A)</code>
-      </p></item><item><p>
          <code>fn:items-at(T, A)</code>
-      </p></item><item><p>
-         <code>fn:items-before(A, A)</code>
-      </p></item><item><p>
-         <code>fn:items-ending-where(A, A)</code>
-      </p></item><item><p>
-         <code>fn:items-starting-where(A, A)</code>
-      </p></item><item><p>
-         <code>fn:iterate-while(A, A, A)</code>
       </p></item><item><p>
          <code>fn:json(A, I)</code>
       </p></item><item><p>
@@ -19271,6 +19275,10 @@ for $i in 1 to count($V) return
       </p></item><item><p>
          <code>fn:round-half-to-even(A, A)</code>
       </p></item><item><p>
+         <code>fn:scan-left(N, A, I)</code>
+      </p></item><item><p>
+         <code>fn:scan-right(N, A, I)</code>
+      </p></item><item><p>
          <code>fn:seconds-from-dateTime(A)</code>
       </p></item><item><p>
          <code>fn:seconds-from-duration(A)</code>
@@ -19291,7 +19299,7 @@ for $i in 1 to count($V) return
       </p></item><item><p>
          <code>fn:starts-with(A, A, A)</code>
       </p></item><item><p>
-         <code>fn:starts-with-sequence(T, T, A)</code>
+         <code>fn:starts-with-subsequence(T, T, A)</code>
       </p></item><item><p>
          <code>fn:static-base-uri()</code>
       </p></item><item><p>
@@ -19306,6 +19314,14 @@ for $i in 1 to count($V) return
          <code>fn:string-to-codepoints(A)</code>
       </p></item><item><p>
          <code>fn:subsequence(T, A, A)</code>
+      </p></item><item><p>
+         <code>fn:subsequence-after(A, A)</code>
+      </p></item><item><p>
+         <code>fn:subsequence-before(A, A)</code>
+      </p></item><item><p>
+         <code>fn:subsequence-ending-where(A, A)</code>
+      </p></item><item><p>
+         <code>fn:subsequence-starting-where(A, A)</code>
       </p></item><item><p>
          <code>fn:substring(A, A, A)</code>
       </p></item><item><p>
@@ -19358,6 +19374,8 @@ for $i in 1 to count($V) return
          <code>fn:uri-collection(A)</code>
       </p></item><item><p>
          <code>fn:void(A)</code>
+      </p></item><item><p>
+         <code>fn:while-do(A, A, A)</code>
       </p></item><item><p>
          <code>fn:xml-to-json(A, I)</code>
       </p></item><item><p>
@@ -20465,7 +20483,7 @@ for $i in 1 to count($V) return
                   <xerrorref spec="XP40" class="TY" code="0004"/>.</p></item></ulist></def></gitem><gitem><label>Notes</label><def><p role="note">XML permits more than one unparsed entity declaration with the same name to appear,
             and says that the first declaration is the one that should be used. This rule <rfc2119>should</rfc2119> be 
             respected during construction of the data model; the data model instance should not contain more than one
-            unparsed entity with the same name.</p></def></gitem></glist></div3><div3 id="func-system-property"><head>fn:system-property</head><glist><gitem><label>Summary</label><def><p>Returns the value of a system property</p></def></gitem><gitem><label>Signature</label><def><example role="signature"><proto isOp="no" prefix="fn" name="system-property" return-type="xs:string" returnEmptyOk="no" returnSeq="no" returnVaries="no" isSchema="no" isDatatype="no" isSpecial="no"><arg name="name" type="union(xs:QName, xs:string)"/></proto></example></def></gitem><gitem><label>Properties</label><def><p>This function is <xtermref spec="FO30" ref="dt-deterministic">deterministic</xtermref>, <xtermref spec="FO30" ref="dt-focus-independent">focus-independent</xtermref>,  and <xtermref spec="FO30" ref="dt-context-dependent">context-dependent</xtermref>.  It depends on 
+            unparsed entity with the same name.</p></def></gitem></glist></div3><div3 id="func-system-property"><head>fn:system-property</head><glist><gitem><label>Summary</label><def><p>Returns the value of a system property</p></def></gitem><gitem><label>Signature</label><def><example role="signature"><proto isOp="no" prefix="fn" name="system-property" return-type="xs:string" returnEmptyOk="no" returnSeq="no" returnVaries="no" isSchema="no" isDatatype="no" isSpecial="no"><arg name="name" type="union(xs:string, xs:QName)"/></proto></example></def></gitem><gitem><label>Properties</label><def><p>This function is <xtermref spec="FO30" ref="dt-deterministic">deterministic</xtermref>, <xtermref spec="FO30" ref="dt-focus-independent">focus-independent</xtermref>,  and <xtermref spec="FO30" ref="dt-context-dependent">context-dependent</xtermref>.  It depends on 
 		namespaces.
 	</p></def></gitem><gitem><label>Rules</label><def><p>The value of the <code>$name</code> argument 
             <rfc2119>must</rfc2119> be <phrase diff="add" at="2022-01-01">either an <code>xs:QName</code>, or </phrase>
@@ -21428,7 +21446,7 @@ return ($m?price - $m?discount)</eg><p>Analysis:</p><olist><item><p>Because the 
             by their nature implementation-defined, they may however share some of the characteristics of
             extension functions.</p></note><div3 id="func-function-available"><head>fn:function-available</head><glist><gitem><label>Summary</label><def><p>Determines whether a particular function is or is not available for use. The function is
             particularly useful for calling within an <code>[xsl:]use-when</code> attribute (see
-               <specref ref="conditional-inclusion"/>) to test whether a particular <termref def="dt-extension-function"/> is available.</p></def></gitem><gitem><label>Signature</label><def><example role="signature"><proto isOp="no" prefix="fn" name="function-available" return-type="xs:boolean" returnEmptyOk="no" returnSeq="no" returnVaries="no" isSchema="no" isDatatype="no" isSpecial="no"><arg name="name" type="union(xs:QName, xs:string)"/><arg name="arity" type="xs:integer?" default="()"/></proto></example></def></gitem><gitem><label>Properties</label><def><p>This function is <xtermref spec="FO30" ref="dt-deterministic">deterministic</xtermref>, <xtermref spec="FO30" ref="dt-context-dependent">context-dependent</xtermref>,  and <xtermref spec="FO30" ref="dt-focus-independent">focus-independent</xtermref>.  It depends on 
+               <specref ref="conditional-inclusion"/>) to test whether a particular <termref def="dt-extension-function"/> is available.</p></def></gitem><gitem><label>Signature</label><def><example role="signature"><proto isOp="no" prefix="fn" name="function-available" return-type="xs:boolean" returnEmptyOk="no" returnSeq="no" returnVaries="no" isSchema="no" isDatatype="no" isSpecial="no"><arg name="name" type="union(xs:string, xs:QName)"/><arg name="arity" type="xs:integer?" default="()"/></proto></example></def></gitem><gitem><label>Properties</label><def><p>This function is <xtermref spec="FO30" ref="dt-deterministic">deterministic</xtermref>, <xtermref spec="FO30" ref="dt-context-dependent">context-dependent</xtermref>,  and <xtermref spec="FO30" ref="dt-focus-independent">focus-independent</xtermref>.  It depends on 
 		namespaces, and known function signatures.
 	</p></def></gitem><gitem><label>Rules</label><def><p>A function is said to be available within an XPath expression if it is present in the
                <xtermref spec="XP40" ref="dt-statically-known-function-definitions">statically known function
@@ -21577,7 +21595,7 @@ return ($m?price - $m?discount)</eg><p>Analysis:</p><olist><item><p>Because the 
                   datatypes such as <code>integer</code>, <code>string</code>, or
                      <code>anyURI</code>.</p><imp-def-feature id="idf-ext-externalobjects">The way in which external objects are
                   represented in the type system is implementation-defined.</imp-def-feature></div3><div3 id="func-type-available"><head>fn:type-available</head><glist><gitem><label>Summary</label><def><p>Used to control how a stylesheet behaves if a particular schema type is or is not
-            available in the static context.</p></def></gitem><gitem><label>Signature</label><def><example role="signature"><proto isOp="no" prefix="fn" name="type-available" return-type="xs:boolean" returnEmptyOk="no" returnSeq="no" returnVaries="no" isSchema="no" isDatatype="no" isSpecial="no"><arg name="name" type="union(xs:QName, xs:string)"/></proto></example></def></gitem><gitem><label>Properties</label><def><p>This function is <xtermref spec="FO30" ref="dt-deterministic">deterministic</xtermref>, <xtermref spec="FO30" ref="dt-context-dependent">context-dependent</xtermref>,  and <xtermref spec="FO30" ref="dt-focus-independent">focus-independent</xtermref>.  It depends on 
+            available in the static context.</p></def></gitem><gitem><label>Signature</label><def><example role="signature"><proto isOp="no" prefix="fn" name="type-available" return-type="xs:boolean" returnEmptyOk="no" returnSeq="no" returnVaries="no" isSchema="no" isDatatype="no" isSpecial="no"><arg name="name" type="union(xs:string, xs:QName)"/></proto></example></def></gitem><gitem><label>Properties</label><def><p>This function is <xtermref spec="FO30" ref="dt-deterministic">deterministic</xtermref>, <xtermref spec="FO30" ref="dt-context-dependent">context-dependent</xtermref>,  and <xtermref spec="FO30" ref="dt-focus-independent">focus-independent</xtermref>.  It depends on 
 		namespaces, and schema definitions.
 	</p></def></gitem><gitem><label>Rules</label><def><p>A schema type (that is, a simple type or a complex type) is said to be available within
             an XPath expression if it is a type definition that is present in the 
@@ -21634,7 +21652,7 @@ return ($m?price - $m?discount)</eg><p>Analysis:</p><olist><item><p>Because the 
                   for all descendants of that element within the same stylesheet module.</p></div3><div3 id="func-element-available"><head>fn:element-available</head><glist><gitem><label>Summary</label><def><p>Determines whether a particular instruction is or is not available for use. The function
             is particularly useful for calling within an <code>[xsl:]use-when</code> attribute (see
                <specref ref="conditional-inclusion"/>) to test whether a particular
-            <termref def="dt-extension-instruction"/> is available.</p></def></gitem><gitem><label>Signature</label><def><example role="signature"><proto isOp="no" prefix="fn" name="element-available" return-type="xs:boolean" returnEmptyOk="no" returnSeq="no" returnVaries="no" isSchema="no" isDatatype="no" isSpecial="no"><arg name="name" type="union(xs:QName, xs:string)"/></proto></example></def></gitem><gitem><label>Properties</label><def><p>This function is <xtermref spec="FO30" ref="dt-deterministic">deterministic</xtermref>, <xtermref spec="FO30" ref="dt-context-dependent">context-dependent</xtermref>,  and <xtermref spec="FO30" ref="dt-focus-independent">focus-independent</xtermref>.  It depends on 
+            <termref def="dt-extension-instruction"/> is available.</p></def></gitem><gitem><label>Signature</label><def><example role="signature"><proto isOp="no" prefix="fn" name="element-available" return-type="xs:boolean" returnEmptyOk="no" returnSeq="no" returnVaries="no" isSchema="no" isDatatype="no" isSpecial="no"><arg name="name" type="union(xs:string, xs:QName)"/></proto></example></def></gitem><gitem><label>Properties</label><def><p>This function is <xtermref spec="FO30" ref="dt-deterministic">deterministic</xtermref>, <xtermref spec="FO30" ref="dt-context-dependent">context-dependent</xtermref>,  and <xtermref spec="FO30" ref="dt-focus-independent">focus-independent</xtermref>.  It depends on 
 		namespaces.
 	</p></def></gitem><gitem><label>Rules</label><def><p>The value of the <code>$name</code> argument
                <rfc2119>must</rfc2119> be <phrase diff="add" at="2022-01-01">either an <code>xs:QName</code>,
@@ -22006,7 +22024,7 @@ return ($m?price - $m?discount)</eg><p>Analysis:</p><olist><item><p>Because the 
                <rfc2119>must</rfc2119> be rejected as invalid, and the attributes
                   <code>allow-duplicate-names</code> and <code>json-node-output-method</code>
                <rfc2119>must</rfc2119> be ignored. The meaning of these output methods and
-               serialization parameters is defined in <bibref ref="xslt-xquery-serialization-31"/>.</p><p>The <code>output-version</code> attribute on the <elcode>xsl:result-document</elcode>
+               serialization parameters is defined in <bibref ref="xslt-xquery-serialization-40"/>.</p><p>The <code>output-version</code> attribute on the <elcode>xsl:result-document</elcode>
                instruction overrides the <code>version</code> attribute on
                   <elcode>xsl:output</elcode> (it has been renamed because <code>version</code> is
                available with a different meaning as a standard attribute: see <specref ref="standard-attributes"/>). In all other cases, attributes correspond if they
@@ -22803,7 +22821,7 @@ return ($m?price - $m?discount)</eg><p>Analysis:</p><olist><item><p>Because the 
             <rfc2119>must</rfc2119> be rejected as invalid, and the attributes
                <code>allow-duplicate-names</code> and <code>json-node-output-method</code>
             <rfc2119>must</rfc2119> be ignored. The meaning of these output methods and
-            serialization parameters is defined in <bibref ref="xslt-xquery-serialization-31"/>.</p><p>If none of the <elcode>xsl:output</elcode> declarations within an <termref def="dt-output-definition">output definition</termref> specifies a value for a
+            serialization parameters is defined in <bibref ref="xslt-xquery-serialization-40"/>.</p><p>If none of the <elcode>xsl:output</elcode> declarations within an <termref def="dt-output-definition">output definition</termref> specifies a value for a
             particular attribute, then the corresponding serialization parameter takes a default
             value. The default value depends on the chosen output method.</p><p>There are some serialization parameters that apply to some output methods but not to
             others. For example, the <code>indent</code> attribute has no effect on the
@@ -23423,7 +23441,7 @@ return ($m?price - $m?discount)</eg><p>Analysis:</p><olist><item><p>Because the 
                      representation of names of scripts</emph> ISO 15924:2004, January 2004. See <loc href="https://www.iso.org/obp/ui/#!iso:std:iso:15924:ed-1:v1:en" xlink:type="simple" xlink:show="replace" xlink:actuate="onRequest"/>.</bibl><bibl xmlns:xlink="http://www.w3.org/1999/xlink" id="ISO15924_register" key="ISO 15924 Register" xlink:type="simple" xlink:show="replace" xlink:actuate="onRequest">Unicode Consortium. <emph>Codes
                      for the representation of names of scripts — Alphabetical list of
                      four-letter script codes.</emph> See <loc href="http://www.unicode.org/iso15924/iso15924-codes.html" xlink:type="simple" xlink:show="replace" xlink:actuate="onRequest"/>. Retrieved
-                  February 2013; continually updated.</bibl><bibl xmlns:xlink="http://www.w3.org/1999/xlink" id="xslt-xquery-serialization-30" key="XSLT and XQuery Serialization" xlink:type="simple" xlink:show="replace" xlink:actuate="onRequest"/><bibl xmlns:xlink="http://www.w3.org/1999/xlink" id="xslt-xquery-serialization-31" key="XSLT and XQuery Serialization 3.1" xlink:type="simple" xlink:show="replace" xlink:actuate="onRequest"/><bibl xmlns:xlink="http://www.w3.org/1999/xlink" id="rfc7159" key="RFC 7159" xlink:type="simple" xlink:show="replace" xlink:actuate="onRequest">IETF. <emph>The JavaScript Object Notation (JSON)
+                  February 2013; continually updated.</bibl><bibl xmlns:xlink="http://www.w3.org/1999/xlink" id="xslt-xquery-serialization-30" key="XSLT and XQuery Serialization" xlink:type="simple" xlink:show="replace" xlink:actuate="onRequest"/><bibl xmlns:xlink="http://www.w3.org/1999/xlink" id="xslt-xquery-serialization-31" key="XSLT and XQuery Serialization 3.1" xlink:type="simple" xlink:show="replace" xlink:actuate="onRequest"/><bibl xmlns:xlink="http://www.w3.org/1999/xlink" id="xslt-xquery-serialization-40" key="XSLT and XQuery Serialization 4.0" xlink:type="simple" xlink:show="replace" xlink:actuate="onRequest"/><bibl xmlns:xlink="http://www.w3.org/1999/xlink" id="rfc7159" key="RFC 7159" xlink:type="simple" xlink:show="replace" xlink:actuate="onRequest">IETF. <emph>The JavaScript Object Notation (JSON)
                      Data Interchange Format.</emph>
                   March 2014. See <loc href="http://www.ietf.org/rfc/rfc7159.txt" xlink:type="simple" xlink:show="replace" xlink:actuate="onRequest">http://www.ietf.org/rfc/rfc7159.txt</loc>
                </bibl><bibl xmlns:xlink="http://www.w3.org/1999/xlink" id="UNICODE" key="UNICODE" xlink:type="simple" xlink:show="replace" xlink:actuate="onRequest">Unicode Consortium. <emph>The Unicode
@@ -23931,8 +23949,7 @@ return ($m?price - $m?discount)</eg><p>Analysis:</p><olist><item><p>Because the 
                means that support for XDM arrays is now required.</p></item><item><p>The <elcode>xsl:if</elcode> instruction acquires attributes <code>then</code> and <code>else</code>.</p></item><item><p>The <elcode>xsl:when</elcode> and <elcode>xsl:otherwise</elcode> elements can be evaluated using a
                <code>select</code> expression rather than a contained sequence constructor.</p></item><item><p>A new <elcode>xsl:switch</elcode> instruction is introduced.</p></item><item><p>The <elcode>xsl:item-type</elcode> declaration allows names to be given to item types,
                which can then be referenced by name. This is particularly useful with record types, introduced
-               in XPath 4.0.</p></item><item><p>A new <elcode>xsl:function-library</elcode> declaration is introduced, allowing
-               functions from multiple different namespaces to be called without using a namespace prefix.</p></item><item><p>The default namespace for element names and the default namespace for types can now be
+               in XPath 4.0.</p></item><item><p>The default namespace for element names and the default namespace for types can now be
                different, allowing built-in types to be referenced in unprefixed form (<code>as="integer"</code>).</p></item><item><p>The new instruction <elcode>xsl:array</elcode> allows
                the construction of arrays.</p></item><item><p>New pattern syntax ( <code>type(T)</code>, <code>record(N, M, N)</code>) 
                   allows matching of items by item type.</p></item><item><p>The <elcode>xsl:mode</elcode> declaration acquires an attribute <code>as="sequence-type"</code> which
@@ -23988,10 +24005,24 @@ return ($m?price - $m?discount)</eg><p>Analysis:</p><olist><item><p>Because the 
                <phrase diff="chg" at="2023-01-25">to be compatible with <function>fn:atomic-equal</function></phrase>. This change eliminates the intransitivity
                in the previous specification, which meant that in edge cases involving rounding of numeric values
                of different types, two items in different groups could compare equal. Any change in behavior
-               is confined to this edge case.</p></item></olist><p>This specification also corrects a number of errors and omissions in XSLT 3.0, in a way that
+               is confined to this edge case.</p></item><item diff="add" at="issue780"><p>The functions <function>key</function>,
+                  <function>accumulator-before</function>,
+                  <function>accumulator-after</function>,
+                  <function>element-available</function>,
+                  <function>function-available</function>,
+                  <function>type-available</function>, and
+                  <function>system-property</function> have an argument whose type has changed
+                  from <code>xs:string</code> to <code>union(xs:string, xs:QName)</code>.
+                  This change means that certain non-string values are no longer accepted:
+                  for example <code>xs:anyURI</code> values or 
+                  (with <termref def="dt-backwards-compatible-behavior"/> enabled) 
+                  <code>xs:boolean</code> or <code>xs:duration</code> values. This is highly
+                  unlikely to arise in practical code.</p></item></olist><p>This specification also corrects a number of errors and omissions in XSLT 3.0, in a way that
          might create incompatibilities for some processors, depending on how they interpreted the XSLT 3.0
          specification:</p><olist><item><p>XSLT 3.0 (and earlier releases) did not fully define the evaluation context for the
             default values of template parameters. For example, if the default value of a parameter of a 
             template rule invoked <elcode>xsl:next-match</elcode>, it was not specified whether the
             current template rule should be the calling template or the called template. This omission has
-            been corrected.</p></item></olist></inform-div1></back></spec>
+            been corrected.</p></item></olist><p>See also <bibref ref="xpath-40"/>, <bibref ref="xpath-functions-40"/>, and
+            <bibref ref="xslt-xquery-serialization-40"/> for incompatibilities in other related
+            specifications that may affect XSLT stylesheets.</p></inform-div1></back></spec>
