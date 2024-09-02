@@ -4280,7 +4280,7 @@ path with an explicit <code nobreak="false">file:</code> scheme.</p></td></tr><t
         special escaping rules apply. These rules protect delimiters
         without encoding additional characters unnecessarily.
         The rules for <code nobreak="false">path-segments</code>,
-        <code nobreak="false">query-parameters</code>, and <code nobreak="false">fragment</code>s are
+        <code nobreak="false">query-parameters</code>, and <code nobreak="false">fragment</code> are
         slightly different because the URI encoding conventions are
         slightly different in each case.</p><p>An application with more stringent requirements can
         construct a <code nobreak="false">path</code> or <code nobreak="false">query</code> that
@@ -4306,7 +4306,7 @@ path with an explicit <code nobreak="false">file:</code> scheme.</p></td></tr><t
         <code nobreak="false">[</code> (left square bracket), <code nobreak="false">]</code> (right
         square bracket), <code nobreak="false">=</code> (equal sign), <code nobreak="false">&amp;</code> (ampersand),
         and the <emph>query-separator</emph> character.
-        (this differs from the path encoding in that it includes
+        (This differs from the path encoding in that it includes
         <code nobreak="false">=</code> (equal sign), <code nobreak="false">&amp;</code> (ampersand), and the
         <emph>query-separator</emph> and excludes
         <code nobreak="false">/</code> (solidus) and <code nobreak="false">?</code> (question mark).
@@ -4329,7 +4329,7 @@ path with an explicit <code nobreak="false">file:</code> scheme.</p></td></tr><t
         <code nobreak="false">#</code> (number sign), <code nobreak="false">+</code> (plus sign),
         <code nobreak="false">[</code> (left square bracket), and <code nobreak="false">]</code> (right
         square bracket).
-        (this differs from the path encoding in that it excludes
+        (This differs from the path encoding in that it excludes
         <code nobreak="false">/</code> (solidus) and <code nobreak="false">?</code> (question mark).</p><p>The resulting URI is returned.</p></def></gitem><gitem><label>Examples</label><def role="example"><table role="medium"><tbody><tr class="testdiv"><th valign="top" rowspan="1" colspan="1">Expression:</th><td valign="top" rowspan="1" colspan="1"><eg xml:space="preserve">build-uri({
   "scheme": "https",
   "host": "qt4cg.org",

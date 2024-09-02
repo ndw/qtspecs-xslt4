@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?><html lang="EN"><head><title>XPath and XQuery Functions and Operators 4.0 </title><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="stylesheet" type="text/css" href="css/w3c-base.css"/><link rel="stylesheet" href="css/qtspecs.css"/><link rel="stylesheet" href="css/xpath-functions-40.css"/></head><body><div class="head"><p><a href="https://www.w3.org/"><img src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" alt="W3C" height="48" width="72"/></a></p>
 <h1><a id="title"/>XPath and XQuery Functions and Operators 4.0 </h1>
-<h2><a id="w3c-doctype"/>W3C Editor's Draft 14 August 2024</h2><dl><dt>This version:</dt><dd><a href="https://qt4cg.org/branch/iss-1387/xpath-functions-40//">https://qt4cg.org/branch/iss-1387/xpath-functions-40/</a></dd><dt>Latest version of XPath and XQuery Functions and Operators 4.0:</dt><dd>
+<h2><a id="w3c-doctype"/>W3C Editor's Draft 2 September 2024</h2><dl><dt>This version:</dt><dd><a href="https://qt4cg.org/branch/iss-1387/xpath-functions-40//">https://qt4cg.org/branch/iss-1387/xpath-functions-40/</a></dd><dt>Latest version of XPath and XQuery Functions and Operators 4.0:</dt><dd>
             <a href="https://qt4cg.org/specifications/xpath-functions-40/">https://qt4cg.org/specifications/xpath-functions-40/</a>
         </dd><dt>Most recent Recommendation of XPath and XQuery Functions and Operators:</dt><dd>
     <a href="https://www.w3.org/TR/2017/REC-xpath-functions-31-20170321/">https://www.w3.org/TR/2017/REC-xpath-functions-31-20170321/</a>
@@ -4432,7 +4432,7 @@ path with an explicit <code>file:</code> scheme.</p></td></tr><tr class="testdiv
         special escaping rules apply. These rules protect delimiters
         without encoding additional characters unnecessarily.
         The rules for <code>path-segments</code>,
-        <code>query-parameters</code>, and <code>fragment</code>s are
+        <code>query-parameters</code>, and <code>fragment</code> are
         slightly different because the URI encoding conventions are
         slightly different in each case.</p><p>An application with more stringent requirements can
         construct a <code>path</code> or <code>query</code> that
@@ -4458,7 +4458,7 @@ path with an explicit <code>file:</code> scheme.</p></td></tr><tr class="testdiv
         <code>[</code> (left square bracket), <code>]</code> (right
         square bracket), <code>=</code> (equal sign), <code>&amp;</code> (ampersand),
         and the <em>query-separator</em> character.
-        (this differs from the path encoding in that it includes
+        (This differs from the path encoding in that it includes
         <code>=</code> (equal sign), <code>&amp;</code> (ampersand), and the
         <em>query-separator</em> and excludes
         <code>/</code> (solidus) and <code>?</code> (question mark).
@@ -4481,7 +4481,7 @@ path with an explicit <code>file:</code> scheme.</p></td></tr><tr class="testdiv
         <code>#</code> (number sign), <code>+</code> (plus sign),
         <code>[</code> (left square bracket), and <code>]</code> (right
         square bracket).
-        (this differs from the path encoding in that it excludes
+        (This differs from the path encoding in that it excludes
         <code>/</code> (solidus) and <code>?</code> (question mark).</p><p>The resulting URI is returned.</p></dd><dt class="label">Examples</dt><dd><div class="example"><table class="medium"><tbody><tr class="testdiv"><th style="vertical-align:top">Expression:</th><td style="vertical-align:top"><div class="exampleInner"><pre class="small">build-uri({
   "scheme": "https",
   "host": "qt4cg.org",
