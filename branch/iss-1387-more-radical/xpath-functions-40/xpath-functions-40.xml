@@ -3496,7 +3496,7 @@ It is recommended that implementers consult <bibref ref="UNICODE-TR18"/> for inf
             string is considered to match the pattern if any substring matches the pattern. But if
             anchors are used, the anchors must match the start/end of the string (in string mode),
             or the start/end of a line (in multi-line mode). </p><p role="note">This is different from the behavior of patterns in <bibref ref="xmlschema-2"/>, where
-            regular expressions are <emph>implicitly</emph> anchored.</p><p role="note">Regular expression matching is defined on the basis of Unicode code points; it takes no
+            regular expressions are <emph>implicitly</emph> anchored.</p><p role="note">Regular expression matching is defined on the basis of Unicode codepoints; it takes no
             account of collations.</p></def></gitem><gitem><label>Examples</label><def role="example"><table role="medium"><thead><tr><th rowspan="1" colspan="1">Variables</th></tr></thead><tbody><tr><td colspan="2" rowspan="1"><eg xml:space="preserve">let $poem := &lt;poem author="Wilhelm Busch"&gt;
 Kaum hat dies der Hahn gesehen,
 Fängt er auch schon an zu krähen:
@@ -4326,7 +4326,7 @@ path with an explicit <code nobreak="false">file:</code> scheme.</p></td></tr><t
            then the path is constructed from the segments.</p><p>To construct the path, each
            segment is encoded, then they are joined together, separated by <code nobreak="false">/</code> (solidus)
            characters, to form the path.
-           The encoding performed replaces any control characters (code points less than 0x20)
+           The encoding performed replaces any control characters (codepoints less than 0x20)
            and exclusively the following characters with their
            percent-escaped forms: <code nobreak="false"> </code> (space) <code nobreak="false">%</code> (percent
            sign), <code nobreak="false">/</code> (solidus), <code nobreak="false">?</code> (question mark),
@@ -4335,7 +4335,7 @@ path with an explicit <code nobreak="false">file:</code> scheme.</p></td></tr><t
            square bracket). That is “<code nobreak="false">[#0-#20%/\?\#\+\[\]]</code>”.</p></item><item><p>Otherwise the value of the <code nobreak="false">path</code> key is used.</p></item><item><p>If neither are present, the empty string is used for the path.</p></item></ulist><p>The path is added to the URI.</p><p>If the <code nobreak="false">query-parameters</code> key exists in the map, its value
         must be a map. A sequence of strings is constructed from the values in the map.</p><p>To construct the string, each <emph>key</emph> and <emph>value</emph>
         is encoded.
-        The encoding performed replaces any control characters (code points less than 0x20)
+        The encoding performed replaces any control characters (codepoints less than 0x20)
         and exclusively the following characters with their
         percent-escaped forms: <code nobreak="false"> </code> (space) <code nobreak="false">%</code> (percent
         sign), <code nobreak="false">=</code> (equals sign), <code nobreak="false">&amp;</code> (ampersand),
@@ -4357,7 +4357,7 @@ path with an explicit <code nobreak="false">file:</code> scheme.</p></td></tr><t
         the value of that key is encoded and added to the URI with a
         preceding hash mark (<code nobreak="false">#</code>).
 
-        The encoding performed replaces any control characters (code points less than 0x20)
+        The encoding performed replaces any control characters (codepoints less than 0x20)
         and exclusively the following characters with their
         percent-escaped forms: <code nobreak="false"> </code> (space) <code nobreak="false">%</code> (percent
         sign),

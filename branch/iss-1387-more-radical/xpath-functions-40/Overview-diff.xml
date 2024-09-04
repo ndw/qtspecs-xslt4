@@ -3696,7 +3696,7 @@ It is recommended that implementers consult <a href="#UNICODE-TR18">[UTS #18]</a
             string is considered to match the pattern if any substring matches the pattern. But if
             anchors are used, the anchors must match the start/end of the string (in string mode),
             or the start/end of a line (in multi-line mode). </p><p class="note">This is different from the behavior of patterns in <a href="#xmlschema-2">[XML Schema Part 2: Datatypes Second Edition]</a>, where
-            regular expressions are <em>implicitly</em> anchored.</p><p class="note">Regular expression matching is defined on the basis of Unicode code points; it takes no
+            regular expressions are <em>implicitly</em> anchored.</p><p class="note">Regular expression matching is defined on the basis of Unicode codepoints; it takes no
             account of collations.</p></dd><dt class="label">Examples</dt><dd><div class="example"><table class="medium"><thead><tr><th>Variables</th></tr></thead><tbody><tr><td colspan="2"><div class="exampleInner"><pre class="small">let $poem := &lt;poem author="Wilhelm Busch"&gt;
 Kaum hat dies der Hahn gesehen,
 Fängt er auch schon an zu krähen:
@@ -4538,7 +4538,7 @@ path with an explicit <code>file:</code> scheme.</p></td></tr><tr class="testdiv
            then the path is constructed from the segments.</p><p>To construct the path, each
            segment is encoded, then they are joined together, separated by <code>/</code> (solidus)
            characters, to form the path.
-           The encoding performed replaces any control characters (code points less than 0x20)
+           The encoding performed replaces any control characters (codepoints less than 0x20)
            and exclusively the following characters with their
            percent-escaped forms: <code> </code> (space) <code>%</code> (percent
            sign), <code>/</code> (solidus), <code>?</code> (question mark),
@@ -4547,7 +4547,7 @@ path with an explicit <code>file:</code> scheme.</p></td></tr><tr class="testdiv
            square bracket). That is “<code>[#0-#20%/\?\#\+\[\]]</code>”.</p></li><li><p>Otherwise the value of the <code>path</code> key is used.</p></li><li><p>If neither are present, the empty string is used for the path.</p></li></ul><p>The path is added to the URI.</p><p>If the <code>query-parameters</code> key exists in the map, its value
         must be a map. A sequence of strings is constructed from the values in the map.</p><p>To construct the string, each <em>key</em> and <em>value</em>
         is encoded.
-        The encoding performed replaces any control characters (code points less than 0x20)
+        The encoding performed replaces any control characters (codepoints less than 0x20)
         and exclusively the following characters with their
         percent-escaped forms: <code> </code> (space) <code>%</code> (percent
         sign), <code>=</code> (equals sign), <code>&amp;</code> (ampersand),
@@ -4569,7 +4569,7 @@ path with an explicit <code>file:</code> scheme.</p></td></tr><tr class="testdiv
         the value of that key is encoded and added to the URI with a
         preceding hash mark (<code>#</code>).
 
-        The encoding performed replaces any control characters (code points less than 0x20)
+        The encoding performed replaces any control characters (codepoints less than 0x20)
         and exclusively the following characters with their
         percent-escaped forms: <code> </code> (space) <code>%</code> (percent
         sign),
