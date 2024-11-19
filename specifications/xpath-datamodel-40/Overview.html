@@ -70,7 +70,7 @@
          
          <h1><a id="title"></a>XQuery and XPath Data Model 4.0 </h1>
          
-         <h2><a id="w3c-doctype"></a>W3C Editor's Draft 17&nbsp;October&nbsp;2024</h2>
+         <h2><a id="w3c-doctype"></a>W3C Editor's Draft 19&nbsp;November&nbsp;2024</h2>
          <dl>
             <dt>This version:</dt>
             <dd>
@@ -184,7 +184,7 @@ the Web.</p>
          
          <h2><a id="contents"></a>Table of Contents</h2>
          <ol class="toc">
-            <li><a href="#intro"><span class="secno">1 </span><span class="content"><span class="tocDelta"> Δ </span>Introduction</span></a>
+            <li><a href="#intro"><span class="secno">1 </span><span class="content toc-chg">Introduction</span></a>
                
                <ol class="toc"></ol>
             </li>
@@ -192,7 +192,7 @@ the Web.</p>
                
                <ol class="toc">
                   <li><a href="#terminology"><span class="secno">2.1 </span><span class="content">Terminology</span></a></li>
-                  <li><a href="#basic-concepts"><span class="secno">2.2 </span><span class="content"><span class="tocDelta"> Δ </span>Basic Concepts</span></a><ol class="toc">
+                  <li><a href="#basic-concepts"><span class="secno">2.2 </span><span class="content toc-chg">Basic Concepts</span></a><ol class="toc">
                         <li><a href="#xs-types"><span class="secno">2.2.1 </span><span class="content">Types adopted from XML Schema</span></a></li>
                      </ol>
                   </li>
@@ -211,25 +211,25 @@ the Web.</p>
                         <li><a href="#schema-consistency"><span class="secno">2.8.1 </span><span class="content">Schema Consistency</span></a></li>
                         <li><a href="#types-representation"><span class="secno">2.8.2 </span><span class="content">Representation of Types</span></a></li>
                         <li><a href="#types-predefined"><span class="secno">2.8.3 </span><span class="content">Predefined Types</span></a></li>
-                        <li><a href="#xml-and-xsd-versions"><span class="secno">2.8.4 </span><span class="content"><span class="tocDelta"> Δ </span>XML and XSD Versions</span></a></li>
+                        <li><a href="#xml-and-xsd-versions"><span class="secno">2.8.4 </span><span class="content toc-chg">XML and XSD Versions</span></a></li>
                      </ol>
                   </li>
                   <li><a href="#types-hierarchy"><span class="secno">2.9 </span><span class="content">Type System</span></a><ol class="toc">
-                        <li><a href="#AtomicValue"><span class="secno">2.9.1 </span><span class="content"><span class="tocDelta"> Δ </span>Atomic Items</span></a></li>
+                        <li><a href="#AtomicValue"><span class="secno">2.9.1 </span><span class="content toc-chg">Atomic Items</span></a></li>
                         <li><a href="#StringValue"><span class="secno">2.9.2 </span><span class="content">String Values</span></a></li>
                         <li><a href="#NegativeZero"><span class="secno">2.9.3 </span><span class="content">Negative Zero</span></a></li>
-                        <li><a href="#function-items"><span class="secno">2.9.4 </span><span class="content"><span class="tocDelta"> Δ </span>Function Items</span></a></li>
-                        <li><a href="#map-items"><span class="secno">2.9.5 </span><span class="content"><span class="tocDelta"> Δ </span>Map Items</span></a><a href="#dm-empty-map"><span class="secno">2.9.5.1 </span><span class="content">empty-map Constructor</span></a>
+                        <li><a href="#function-items"><span class="secno">2.9.4 </span><span class="content toc-chg">Function Items</span></a></li>
+                        <li><a href="#map-items"><span class="secno">2.9.5 </span><span class="content toc-chg">Map Items</span></a><a href="#dm-empty-map"><span class="secno">2.9.5.1 </span><span class="content">empty-map Constructor</span></a>
                            <a href="#dm-map-put"><span class="secno">2.9.5.2 </span><span class="content">map-put Constructor</span></a>
                            <a href="#dm-iterate-map"><span class="secno">2.9.5.3 </span><span class="content">iterate-map Accessor</span></a>
                            </li>
-                        <li><a href="#array-items"><span class="secno">2.9.6 </span><span class="content"><span class="tocDelta"> Δ </span>Array Items</span></a><a href="#dm-empty-array"><span class="secno">2.9.6.1 </span><span class="content">empty-array Constructor</span></a>
+                        <li><a href="#array-items"><span class="secno">2.9.6 </span><span class="content toc-chg">Array Items</span></a><a href="#dm-empty-array"><span class="secno">2.9.6.1 </span><span class="content">empty-array Constructor</span></a>
                            <a href="#dm-array-append"><span class="secno">2.9.6.2 </span><span class="content">array-append Constructor</span></a>
                            <a href="#dm-iterate-array"><span class="secno">2.9.6.3 </span><span class="content">iterate-array Accessor</span></a>
                            </li>
                      </ol>
                   </li>
-                  <li><a href="#id-LabeledItems"><span class="secno">2.10 </span><span class="content"><span class="tocDelta"> Δ </span>Labeled Items</span></a></li>
+                  <li><a href="#id-LabeledItems"><span class="secno">2.10 </span><span class="content toc-chg">Labeled Items</span></a></li>
                </ol>
             </li>
             <li><a href="#construction"><span class="secno">3 </span><span class="content">Data Model Construction</span></a>
@@ -540,10 +540,9 @@ from exactly one root node.
 </p>
                <div class="note">
                   <p class="prefix"><b>Note:</b></p>
-                  <p>The term “root node” is merely a designator, based on
-position, for one of the nodes in the tree without implying what kind
-of a node it is. In the XPath 1.0 datamodel the root node was a kind
-of node.</p>
+                  <p>The term “root node” means any node that has no parent. 
+  It may be any kind of node. In the XPath 1.0 datamodel the term “root node” was
+  used to refer to a document node.</p>
                </div>
                <div class="note">
                   <p class="prefix"><b>Note:</b></p>
@@ -1924,8 +1923,8 @@ If the
 string does not represent a valid value of the type, an error is
 raised. When <code>xs:untypedAtomic</code> is specified as the type,
 no validation takes place. The details of the construction are
-described in <a href="https://qt4cg.org/specifications/xpath-functions-40/#constructor-functions">Section 19 Constructor functions</a><sup><small>FO40</small></sup>
-and the related <a href="https://qt4cg.org/specifications/xpath-functions-40/#casting">Section 20 Casting</a><sup><small>FO40</small></sup>
+described in <a href="https://qt4cg.org/specifications/xpath-functions-40/#constructor-functions">Section 20 Constructor functions</a><sup><small>FO40</small></sup>
+and the related <a href="https://qt4cg.org/specifications/xpath-functions-40/#casting">Section 21 Casting</a><sup><small>FO40</small></sup>
 section of <a href="#xpath-functions-40">[XQuery and XPath Functions and Operators 4.0]</a>.
 </p>
                </div>
@@ -1935,7 +1934,7 @@ section of <a href="#xpath-functions-40">[XQuery and XPath Functions and Operato
                   <p>A string value can be constructed from an <a title="atomic item" class="termref" href="#dt-atomic-item">atomic item</a>.
 Such a value is constructed by
 converting the atomic item to its string representation as described
-in <a href="https://qt4cg.org/specifications/xpath-functions-40/#casting">Section 20 Casting</a><sup><small>FO40</small></sup>.
+in <a href="https://qt4cg.org/specifications/xpath-functions-40/#casting">Section 21 Casting</a><sup><small>FO40</small></sup>.
 </p>
                </div>
                <div class="div3">
@@ -2169,7 +2168,7 @@ values. The semantics of equality are described in
                      </div>
                      <p>The <code>dm:empty-map</code> constructor returns a map containing no key/value pairs.</p>
                      <p>The function is exposed in XPath as an empty map constructor, which may be written <code>{}</code>
-    or <code>map{}</code>.</p>
+    or <code>map {}</code>.</p>
                   </div>
                   <div class="div4">
                      
@@ -2252,7 +2251,7 @@ position, in the range 1 to the size of the array.</p>
                      </div>
                      <p>The <code>dm:empty-array</code> constructor returns an array containing no members.</p>
                      <p>The function is exposed in XPath as an empty array constructor, written <code>[]</code>
-    or <code>array{}</code>.</p>
+    or <code>array {}</code>.</p>
                   </div>
                   <div class="div4">
                      
