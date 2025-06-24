@@ -14,7 +14,7 @@
          
          <h1><a id="title"></a>XML Path Language (XPath) 4.0 WG Review Draft</h1>
          
-         <h2><a id="w3c-doctype"></a>W3C Editor's Draft 25&nbsp;April&nbsp;2025</h2>
+         <h2><a id="w3c-doctype"></a>W3C Editor's Draft 24&nbsp;June&nbsp;2025</h2>
          <dl>
             <dt>This version:</dt>
             <dd>
@@ -100,6 +100,11 @@ have lost a brilliant thinker, a patient teacher, and a loyal friend.</p>
                               <li>
                                  <details>
                                     <summary><a href="#id-namespaces-and-qnames"><span class="secno">2.1.3 </span><span class="content">Namespaces and QNames</span></a></summary>
+                                 </details>
+                              </li>
+                              <li>
+                                 <details>
+                                    <summary><a href="#id-expanding-unprefixed-qnames"><span class="secno">2.1.4 </span><span class="content">Expanding Lexical QNames</span></a></summary>
                                  </details>
                               </li>
                            </ol>
@@ -555,7 +560,12 @@ have lost a brilliant thinker, a patient teacher, and a loyal friend.</p>
                                        </li>
                                        <li>
                                           <details>
-                                             <summary><a href="#id-constants-other-types"><span class="secno">4.2.1.3 </span><span class="content">Constants of Other Types</span></a></summary>
+                                             <summary><a href="#id-qname-literals"><span class="secno">4.2.1.3 </span><span class="content toc-chg">QName Literals</span></a></summary>
+                                          </details>
+                                       </li>
+                                       <li>
+                                          <details>
+                                             <summary><a href="#id-constants-other-types"><span class="secno">4.2.1.4 </span><span class="content">Constants of Other Types</span></a></summary>
                                           </details>
                                        </li>
                                     </ol>
@@ -626,7 +636,7 @@ have lost a brilliant thinker, a patient teacher, and a loyal friend.</p>
                                     <ol class="toc">
                                        <li>
                                           <details>
-                                             <summary><a href="#id-eval-dynamic-function-call"><span class="secno">4.5.3.1 </span><span class="content">Evaluating Dynamic Function Calls</span></a></summary>
+                                             <summary><a href="#id-eval-dynamic-function-call"><span class="secno">4.5.3.1 </span><span class="content toc-chg">Evaluating Dynamic Function Calls</span></a></summary>
                                           </details>
                                        </li>
                                     </ol>
@@ -1562,14 +1572,26 @@ Each node has a unique <b>node identity</b>, a <b>typed value</b>, and a <b>stri
     synonymously with the term <a title="value" class="termref" href="#dt-value">value</a>, to denote an unconstrained
     <a title="sequence" class="termref" href="#dt-sequence">sequence</a> of <a title="item" class="termref" href="#dt-item">items</a>.]
                </p>
-                  <p>Element nodes have a property called <b>in-scope namespaces</b>. [<a id="dt-in-scope-namespaces" title="in-scope namespaces">Definition</a>: The <b>in-scope namespaces</b> property of an element node is a set of namespace bindings, each of which associates a namespace prefix with a URI.]
-For a given element, one namespace binding may have an empty prefix; the URI of this namespace binding is the default namespace within the scope of the element.</p>
-                  <p class="xpath">In <a href="#xpath">[XML Path Language (XPath) Version 1.0]</a>, the in-scope namespaces of an element node are represented by a collection of <b>namespace nodes</b> arranged on a <b>namespace axis</b>. 
-As of XPath 2.0, the namespace axis is deprecated and need not be supported by a host language. A host language that does not support the namespace axis need not represent namespace bindings in the form of nodes.</p>
                </div>
                <div class="div3">
                   
                   <h4><a id="id-namespaces-and-qnames"></a>2.1.3 <a href="#id-namespaces-and-qnames" style="text-decoration: none">Namespaces and QNames</a></h4>
+                  <p>
+                  [<a id="dt-namespace-binding" title="namespace binding">Definition</a>: A <b>namespace binding</b>
+         is a pair comprising a namespace prefix (which is either an <code>xs:NCName</code> or empty),
+         and a namespace URI.]
+               </p>
+                  <p>Element nodes have a property called <b>in-scope namespaces</b>. [<a id="dt-in-scope-namespaces" title="in-scope namespaces">Definition</a>: The <b>in-scope namespaces</b> property of an element node is a set of 
+         <a title="namespace binding" class="termref" href="#dt-namespace-binding">namespace bindings</a>, each of which associates a namespace prefix with a URI.]
+For a given element, one namespace binding may have an empty prefix; the URI of this namespace binding is 
+referred to as the <a title="default in-scope namespace" class="termref" href="#dt-default-in-scope-namespace">default in-scope namespace</a> for the element.</p>
+                  <p class="xpath">In <a href="#xpath">[XML Path Language (XPath) Version 1.0]</a>, the in-scope namespaces of an element node are represented by a collection of <b>namespace nodes</b> arranged on a <b>namespace axis</b>. 
+As of XPath 2.0, the namespace axis is deprecated and need not be supported by a host language. A host language that does not support the namespace axis need not represent namespace bindings in the form of nodes.</p>
+                  <p>
+                  [<a id="dt-default-in-scope-namespace" title="default in-scope namespace">Definition</a>: The <b>default in-scope namespace</b>
+         of an element node] is the namespace URI to which the empty prefix is bound in the element’s 
+         <a title="in-scope namespaces" class="termref" href="#dt-in-scope-namespaces">in-scope namespaces</a>. In the absence of an explicit binding for the empty prefix, the
+         default in-scope namespace is <a href="https://qt4cg.org/specifications/xpath-datamodel-40/#dt-absent">absent</a><sup><small>DM</small></sup>.</p>
                   <p>
                   [<a id="dt-expanded-qname" title="expanded QName">Definition</a>: An <b>expanded QName</b> is a
       triple: its components are a prefix, a local name, and a
@@ -1582,6 +1604,15 @@ As of XPath 2.0, the namespace axis is deprecated and need not be supported by a
       and the namespace URI parts must either both be
       absent, or must be equal under the Unicode codepoint
       collation.</p>
+                  <div class="note">
+                     <p class="prefix"><b>Note:</b></p>
+                     <p>The <a href="https://qt4cg.org/specifications/xpath-datamodel-40/#dt-datum">datum</a><sup><small>DM</small></sup> of 
+            an <a title="atomic item" class="termref" href="#dt-atomic-item">atomic item</a> of type <code>xs:QName</code>
+            is an <a title="expanded QName" class="termref" href="#dt-expanded-qname">expanded QName</a>. However, the
+            term <a title="expanded QName" class="termref" href="#dt-expanded-qname">expanded QName</a> is also used for
+            the names of constructs such as functions, variables, and types
+            that are not themselves atomic items.</p>
+                  </div>
                   <p>In the XPath 4.0
       grammar, QNames representing the names of
       elements, attributes, functions, variables, types, or other such
@@ -1623,13 +1654,15 @@ As of XPath 2.0, the namespace axis is deprecated and need not be supported by a
                         <p>local-name only (for example, <code>invoice</code>).</p>
                         <p>A name written in this form has no prefix, and the rules
         for determining the namespace depend on the context in which
-        the name appears. This form is a <a title="lexical QName" class="termref" href="#dt-qname">lexical QName</a>.</p>
+        the name appears: the various rules used are summarized
+        in <a href="#id-expanding-unprefixed-qnames"><b>2.1.4 Expanding Lexical QNames</b></a>.
+                  This form is a <a title="lexical QName" class="termref" href="#dt-qname">lexical QName</a>.</p>
                      </li>
                      <li>
                         <p>prefix plus local-name (for example, <code>my:invoice</code>).</p>
                         <p>In this case the prefix and local name of the QName are as
         written, and the namespace URI is inferred from the prefix by
-        examining the in-scope namespaces in the static context where
+        examining the <a title="statically known namespaces" class="termref" href="#dt-static-namespaces">statically known namespaces</a> in the static context where
         the QName appears; the context must include a binding for the
         prefix. This form is a <a title="lexical QName" class="termref" href="#dt-qname">lexical
         QName</a>.</p>
@@ -1734,6 +1767,68 @@ The term URI has been retained in preference to IRI to avoid introducing new nam
              for details.</p>
                   </div>
                </div>
+               <div class="div3">
+                  
+                  <h4><a id="id-expanding-unprefixed-qnames"></a>2.1.4 <a href="#id-expanding-unprefixed-qnames" style="text-decoration: none">Expanding Lexical QNames</a></h4>
+                  <p>When a <a title="lexical QName" class="termref" href="#dt-qname">lexical QName</a> appearing in an XPath 4.0 expression is expanded, the rules are as follows.</p>
+                  <p>If the name contains a colon, then the prefix (the substring before the colon) is used to establish the 
+               corresponding URI by reference to the <a title="statically known namespaces" class="termref" href="#dt-static-namespaces">statically known namespaces</a>
+            in the <a title="static context" class="termref" href="#dt-static-context">static context</a>. If there
+                  is no binding for the prefix in the <a title="statically known namespaces" class="termref" href="#dt-static-namespaces">statically known namespaces</a> then
+                  a static error is raised [<a href="#ERRXPST0081" title="err:XPST0081">err:XPST0081</a>].
+            </p>
+                  <p>If the <a title="lexical QName" class="termref" href="#dt-qname">lexical QName</a> contains no colon (and therefore no prefix),
+            the namespace URI part of the QName is inferred in one of a number of ways, depending on the syntactic context
+            in which the name appears. The various rules are defined below, and are referred to throughout the specification.</p>
+                  <ul>
+                     <li>
+                        <p>
+                        [<a id="dt-no-namespace-rule" title="no-namespace rule">Definition</a>: When an unprefixed lexical QName
+               is expanded using the <b>no-namespace rule</b>, it is interpreted as having an absent namespace URI.]
+                     </p>
+                     </li>
+                     <li>
+                        <p>
+                        [<a id="dt-default-function-namespace-rule" title="default function namespace rule">Definition</a>: When 
+                  an unprefixed lexical QName
+               is expanded using the <b>default function namespace rule</b>, it uses the <a title="default function namespace" class="termref" href="#dt-default-function-namespace">default function namespace</a>
+                  from the <a title="static context" class="termref" href="#dt-static-context">static context</a>.]
+                     </p>
+                     </li>
+                     <li>
+                        <p>
+                        [<a id="dt-default-type-namespace-rule" title="default type namespace rule">Definition</a>: When 
+                  an unprefixed lexical QName
+               is expanded using the <b>default type namespace rule</b>, it uses the 
+                  <a title="default namespace for elements and types" class="termref" href="#dt-default-namespace-elements-and-types">default namespace for elements and types</a>. If this is absent, the <a title="no-namespace rule" class="termref" href="#dt-no-namespace-rule">no-namespace rule</a>
+                  is used. If the <a title="default namespace for elements and types" class="termref" href="#dt-default-namespace-elements-and-types">default namespace for elements and types</a> has the special value <code>##any</code>,
+                  then the lexical QName refers to a name in the namespace <code>http://www.w3.org/2001/XMLSchema</code>.]
+                     </p>
+                     </li>
+                     <li>
+                        <p>
+                        [<a id="dt-default-element-namespace-rule" title="default element namespace rule">Definition</a>: When 
+                  an unprefixed lexical QName
+               is expanded using the <b>default element namespace rule</b>, then it uses the 
+                  <a title="default namespace for elements and types" class="termref" href="#dt-default-namespace-elements-and-types">default namespace for elements and types</a>. If this is absent, or if it takes
+                  the special value <code>##any</code>, then the <a title="no-namespace rule" class="termref" href="#dt-no-namespace-rule">no-namespace rule</a>
+                  is used.]
+                     </p>
+                     </li>
+                     <li>
+                        <p>
+                        [<a id="dt-element-name-matching-rule" title="element name matching rule">Definition</a>: When 
+                  an unprefixed lexical QName
+               is expanded using the <b>element name matching rule</b> rule, then it uses the 
+                  <a title="default namespace for elements and types" class="termref" href="#dt-default-namespace-elements-and-types">default namespace for elements and types</a>. If this is absent, then 
+                  it uses the <a title="no-namespace rule" class="termref" href="#dt-no-namespace-rule">no-namespace rule</a>. But if it takes the special value <code>##any</code>,
+                  then the name is taken as matching any <a title="expanded QName" class="termref" href="#dt-expanded-qname">expanded QName</a> with the corresponding local part,
+                  regardless of namespace: that is, the  unprefixed name <code>local</code> is interpreted
+                  as <code>*:local</code>.]
+                     </p>
+                     </li>
+                  </ul>
+               </div>
             </div>
             <div class="div2">
                
@@ -1771,6 +1866,12 @@ The term URI has been retained in preference to IRI to avoid introducing new nam
                            <p>
                   The context value static type, which was there purely to assist in static typing, has been dropped.
                <i>&nbsp;&nbsp;[Issue <a href="https://github.com/qt4cg/qtspecs/issues/1495">1495</a>&nbsp;PR <a href="https://github.com/qt4cg/qtspecs/pull/1496">1496</a>&nbsp;29 October 2024]</i></p>
+                        </li>
+                        <li>
+                           <p>
+                  Named record types used in the signatures of built-in functions are now available as standard
+                  in the static context.
+               <i>&nbsp;&nbsp;[Issue <a href="https://github.com/qt4cg/qtspecs/issues/835">835</a>&nbsp;PR <a href="https://github.com/qt4cg/qtspecs/pull/1991">1991</a>&nbsp;11 May 2025]</i></p>
                         </li>
                      </ol>
                   </div>
@@ -1821,9 +1922,6 @@ The term URI has been retained in preference to IRI to avoid introducing new nam
                
                   3.3.17 anyURI
             </a><sup><small>XS11-2</small></sup>.</p>
-                        <p>The statically known namespaces may include a binding for the zero-length prefix;
-                  however, this is used only in limited circumstances because the rules for resolving
-                  unprefixed QNames depend on how such a name is used.</p>
                         <p>Note the difference between <a title="in-scope namespaces" class="termref" href="#dt-in-scope-namespaces">in-scope namespaces</a>, which is a dynamic property of an element node, and <a title="statically known namespaces" class="termref" href="#dt-static-namespaces">statically known namespaces</a>, which is a static property of an expression.</p>
                      </li>
                      <li>
@@ -1954,11 +2052,11 @@ declaration).
                         <p>
                         [<a id="dt-in-scope-variables" title="in-scope variables">Definition</a>: 
                            <b>In-scope variables.</b> 
-This is a mapping from <a title="expanded QName" class="termref" href="#dt-expanded-qname">expanded QName</a> to type. It defines the
-set of variables that are available for reference within an
-expression. The <a title="expanded QName" class="termref" href="#dt-expanded-qname">expanded QName</a> is the name of the variable, and the type is the
-<a title="static type" class="termref" href="#dt-static-type">static type</a> of the
-variable.]
+                           This is a mapping from <a title="expanded QName" class="termref" href="#dt-expanded-qname">expanded QNames</a> to sequence types. It defines the
+                           set of variables that are available for reference within an
+                           expression. The <a title="expanded QName" class="termref" href="#dt-expanded-qname">expanded QName</a> is the name of the variable, and the type is the
+                           <a title="static type" class="termref" href="#dt-static-type">static type</a> of the
+                           variable.]
                      </p>
                         <p>
                      
@@ -1973,7 +2071,7 @@ parameters</b>.</p>
                         <p>
                         [<a id="dt-in-scope-named-item-types" title="in-scope named item types">Definition</a>: 
                            <b>In-scope named item types.</b> This is a mapping from 
-                        <a title="expanded QName" class="termref" href="#dt-expanded-qname">expanded QName</a> to 
+                        <a title="expanded QName" class="termref" href="#dt-expanded-qname">expanded QNames</a> to 
                         <a title="named item type" class="termref" href="#dt-named-item-type">named item types</a>.]
                      </p>
                         <p>
@@ -1993,6 +2091,8 @@ parameters</b>.</p>
                      <a href="#id-recursive-record-tests"><b>3.2.8.3.1 Recursive Record Types</b></a>. </p>
                            </li>
                         </ul>
+                        <p>Certain named item types (typically item types used in the signatures of built-in functions)
+                  are always available in the static context. These are defined in <a href="https://qt4cg.org/specifications/xpath-functions-40/#id-built-in-named-record-types">Section C Built-in named record types</a><sup><small>FO</small></sup>.</p>
                         <div class="note">
                            <p class="prefix"><b>Note:</b></p>
                            <p class="xpath">Named item types can be defined in a <a title="host language" class="termref" href="#dt-host-language">host language</a> 
@@ -2528,7 +2628,7 @@ the number of items in the sequence obtained by evaluating <var>E<sub>1</sub></v
                         <p>
                         [<a id="dt-variable-values" title="variable values">Definition</a>: 
                            <b>Variable values</b>. 
-        This is a mapping from <a title="expanded QName" class="termref" href="#dt-expanded-qname">expanded QName</a> to value. 
+        This is a mapping from <a title="expanded QName" class="termref" href="#dt-expanded-qname">expanded QNames</a> to values. 
         It contains the
 				same <a title="expanded QName" class="termref" href="#dt-expanded-qname">expanded QNames</a> as the <a title="in-scope variables" class="termref" href="#dt-in-scope-variables">in-scope variables</a> in the
 				<a title="static context" class="termref" href="#dt-static-context">static context</a> for the expression. The <a title="expanded QName" class="termref" href="#dt-expanded-qname">expanded QName</a> is the name of the variable and the value is the dynamic value of the variable, which includes its <a title="dynamic type" class="termref" href="#dt-dynamic-type">dynamic type</a>.]
@@ -2692,6 +2792,15 @@ comparison or arithmetic operation. The implicit timezone is an  <a title="imple
   represents the absolute URI of a resource. The resource is returned
   by the <a href="https://qt4cg.org/specifications/xpath-functions-40/Overview.html#func-unparsed-text"><code>fn:unparsed-text</code></a> function when applied to that
   URI.] The set of available text resources may be empty.</p>
+                     </li>
+                     <li>
+                        <p>
+                        [<a id="dt-available-binary-resources" title="available binary resources">Definition</a>: 
+                           <b>Available binary resources</b>. 
+  This is a mapping of strings to binary resources. Each string
+  represents the absolute URI of a resource. The resource is returned
+  by the <code>fn:unparsed-binary</code> function when applied to that
+  URI.] The set of available binary resources may be empty.</p>
                      </li>
                      <li>
                         <p>
@@ -3398,16 +3507,20 @@ subsequent versions, the rules for static type inferencing are entirely implemen
 operands. For example, with the expression <code>substring($a, $b, $c)</code>, <code>$a</code> must be
 of type <code>xs:string</code> (or something that can be converted to <code>xs:string</code> by the
 function calling rules), while <code>$b</code> and <code>$c</code> must be numeric.</p>
-                     <p>A processor may raise a type
+                     <p>A processor <span class="verb">may</span> raise a type
                   error during static analysis if the inferred static type of an
                      expression has no overlap (intersection) with the required type, and cannot be converted
                      to the required type using the <a title="coercion rules" class="termref" href="#dt-coercion-rules">coercion rules</a>. For example,
-                     given the call <code>fn:upper-case($s)</code>, the processor may raise an error if the
+                     given the call <code>fn:upper-case($s)</code>, the processor <span class="verb">may</span> raise an error if the
                      declared or inferred type of <code>$s</code> is <code>xs:integer</code>, 
                      but not if it is <code>xs:anyAtomicType</code>.
                   </p>
-                     <p>In addition, type analysis may conclude that an expression is <code>implausible</code>.
+                     <p>In addition, type analysis <span class="verb">may</span> conclude that an expression is <a title="implausible" class="termref" href="#dt-implausible">implausible</a>.
                Implausible expressions may be considered erroneous unless such checks have been disabled.
+               For example, the expression <code>round(tokenize($input))</code> is implausible because 
+                  the required type for <a href="https://qt4cg.org/specifications/xpath-functions-40/Overview.html#func-round"><code>fn:round</code></a> is <code>xs:numeric?</code>,
+                  while the static type of <code>tokenize($input)</code> is <code>xs:string*</code>,
+                  and these two sequence types are <a title="substantively disjoint" class="termref" href="#dt-substantively-disjoint">substantively disjoint</a>.
                This topic is described further in <a href="#id-implausible-expressions"><b>2.4.6 Implausible Expressions</b></a>.</p>
                      <p>Alternatively, the processor
                   <span class="verb">may</span> defer all type checking until the dynamic evaluation phase.</p>
@@ -3649,24 +3762,6 @@ change from one version of
                   <span class="xpath">XPath</span> to another. However, the contents of this
 namespace may be extended to include additional error definitions.</p>
                   </div>
-                  <p>The method by which an XPath 4.0 processor reports error information to the external environment is <a title="implementation defined" class="termref" href="#dt-implementation-defined">implementation-defined</a>.</p>
-                  <p>An error can be represented by a URI reference that is derived from the error QName as follows: an error with namespace URI <em>
-                     <code>NS</code>
-                  </em> and local part <em>
-                     <code>LP</code>
-                  </em> can be represented as the URI reference <em>
-                     <code>NS</code>
-                  </em>
-                  <code>#</code>
-                  <em>
-                     <code>LP</code>
-                  </em>. For example, an error whose QName is <code>err:XPST0017</code> could be represented as <code>http://www.w3.org/2005/xqt-errors#XPST0017</code>.</p>
-                  <div class="note">
-                     <p class="prefix"><b>Note:</b></p>
-                     <p>Along with a code identifying an error, implementations may wish to return additional information, such
-as the location of the error or the processing phase in which it was detected. If an implementation chooses to do so, then the mechanism that
-it uses to return this information is <a title="implementation defined" class="termref" href="#dt-implementation-defined">implementation-defined</a>.</p>
-                  </div>
                </div>
                <div class="div3">
                   
@@ -3712,7 +3807,7 @@ returns a value.  This function is defined in <a href="https://qt4cg.org/specifi
 function call raises a dynamic
 error, providing a QName that identifies the error, a descriptive string, and a diagnostic value (assuming that the prefix <code>app</code> is bound to a namespace containing application-defined error codes):</p>
                   <div class="exampleInner">
-                     <pre>error(xs:QName("app:err057"), "Unexpected value", string($v))</pre>
+                     <pre>error( #app:err057, "Unexpected value", string($v) )</pre>
                   </div>
                </div>
                <div class="div3">
@@ -4710,10 +4805,8 @@ types</b> (such as <code>xs:integer</code>) and function types
       as are <code>attribute(A)</code> and <code>attribute(A, xs:anySimpleType)</code>.</p>
                </div>
                <p>
-               <a title="lexical QName" class="termref" href="#dt-qname">Lexical QNames</a> appearing in an <a title="item type designator" class="termref" href="#dt-item-type-designator">item type designator</a>  have their
-		  prefixes expanded to namespace URIs by means of the
-		  <a title="statically known namespaces" class="termref" href="#dt-static-namespaces">statically known namespaces</a> and (where applicable) the
-		    <a title="default namespace for elements and types" class="termref" href="#dt-default-namespace-elements-and-types">default namespace for elements and types</a>.
+               <a title="lexical QName" class="termref" href="#dt-qname">Lexical QNames</a> appearing in an <a title="item type designator" class="termref" href="#dt-item-type-designator">item type designator</a>  are expanded using the 
+                  <a title="default type namespace rule" class="termref" href="#dt-default-type-namespace-rule">default type namespace rule</a>.
       Equality of QNames is defined by the <code>eq</code> operator.</p>
                <table class="scrap">
                   <tbody>
@@ -4949,12 +5042,10 @@ types</b> (such as <code>xs:integer</code>) and function types
                <ol class="enumar">
                   <li>
                      <p>If the name is written as a lexical QName, then it is expanded using the
-               <a title="in-scope namespaces" class="termref" href="#dt-in-scope-namespaces">in-scope namespaces</a> in the <a title="static context" class="termref" href="#dt-static-context">static context</a>. If the
-               name is an unprefixed <code>NCName</code>, then it is expanded according to the
-                  <a title="default namespace for elements and types" class="termref" href="#dt-default-namespace-elements-and-types">default namespace for elements and types</a>.</p>
+               <a title="default type namespace rule" class="termref" href="#dt-default-type-namespace-rule">default type namespace rule</a>.</p>
                   </li>
                   <li>
-                     <p>If the name matches a <a title="named item type" class="termref" href="#dt-named-item-type">named item type</a> in the <a title="static context" class="termref" href="#dt-static-context">static context</a>,
+                     <p>If the expanded name matches a <a title="named item type" class="termref" href="#dt-named-item-type">named item type</a> in the <a title="static context" class="termref" href="#dt-static-context">static context</a>,
                   then it is taken as a reference to the corresponding item type. The rules that
                apply are the rules for the expanded item type definition.</p>
                   </li>
@@ -5144,7 +5235,9 @@ types</b> (such as <code>xs:integer</code>) and function types
                      item type, and union types with a namespace-sensitive type in their
                      transitive membership.]
                </p>
-                  <p>It is not possible to preserve the type of a <a title="namespace-sensitive" class="termref" href="#dt-namespace-sensitive">namespace-sensitive</a> value without also preserving the namespace binding that defines the meaning of each namespace prefix used in the value. Therefore, XPath 4.0 defines some error conditions that occur only with <a title="namespace-sensitive" class="termref" href="#dt-namespace-sensitive">namespace-sensitive</a> values. For instance, casting to a <a title="namespace-sensitive" class="termref" href="#dt-namespace-sensitive">namespace-sensitive</a> type raises 
+                  <p>It is not possible to preserve the type of a <a title="namespace-sensitive" class="termref" href="#dt-namespace-sensitive">namespace-sensitive</a> value without also preserving the <a title="namespace binding" class="termref" href="#dt-namespace-binding">namespace binding</a> 
+                  that defines the meaning of each namespace prefix used in the value. Therefore, XPath 4.0 defines 
+                  some error conditions that occur only with <a title="namespace-sensitive" class="termref" href="#dt-namespace-sensitive">namespace-sensitive</a> values. For instance, casting to a <a title="namespace-sensitive" class="termref" href="#dt-namespace-sensitive">namespace-sensitive</a> type raises 
                   a <a title="type error" class="termref" href="#dt-type-error">type error</a>
                   [<a href="https://qt4cg.org/specifications/xpath-functions-40/#ERRFONS0004" title="err:FONS0004">err:FONS0004</a>]<sup><small>FO40</small></sup> if the namespace bindings for the result cannot be determined. </p>
                </div>
@@ -5253,11 +5346,13 @@ types</b> (such as <code>xs:integer</code>) and function types
                   <p>Technically, enumeration types are defined as follows:</p>
                   <ul>
                      <li>
-                        <p>An enumeration type with a single enumerated value (such as
+                        <p>
+                        [<a id="dt-singleton-enumeration-type" title="singleton enumeration type">Definition</a>: An 
+                     enumeration type with a single enumerated value (such as
                      <code>enum("red")</code>) is an anonymous <a title="atomic type" class="termref" href="#dt-atomic-type">atomic type</a>
                      derived from <code>xs:string</code> by restriction using an enumeration facet
                      that permits only the value <code>"red"</code>. This is referred to
-                     as a <b>singleton enumeration type</b>. It is equivalent to the XSD-defined type:</p>
+                     as a <b>singleton enumeration type</b>.] It is equivalent to the XSD-defined type:</p>
                         <div class="exampleInner">
                            <pre>
 &lt;xs:simpleType&gt;
@@ -5268,13 +5363,14 @@ types</b> (such as <code>xs:integer</code>) and function types
                         </div>
                      </li>
                      <li>
-                        <p>Two singleton enumeration types are the same type if and only
+                        <p>Two <a title="singleton enumeration type" class="termref" href="#dt-singleton-enumeration-type">singleton enumeration types</a> 
+                     are the same type if and only
                   if they have the same (single) enumerated value, as determined using the Unicode
                   codepoint collation.</p>
                      </li>
                      <li>
                         <p>An enumeration type with multiple
-                     enumerated values is a union of singleton enumeration types, 
+                     enumerated values is a union of <a title="singleton enumeration type" class="termref" href="#dt-singleton-enumeration-type">singleton enumeration types</a>, 
                      so <code>enum("red", "green", "blue")</code>
                      is equivalent to <code>(enum("red") | enum("green") | enum("blue"))</code>.</p>
                      </li>
@@ -5287,9 +5383,10 @@ types</b> (such as <code>xs:integer</code>) and function types
                   </ul>
                   <p>An enumeration type is thus a <a title="generalized atomic type" class="termref" href="#dt-generalized-atomic-type">generalized atomic type</a>.</p>
                   <p>It follows from these rules that an atomic item will only satisfy an <code>instance of</code>
-               test if it has the correct type annotation, and this can only be achieved using an explicit cast or
-               constructor function. So the expression <code>"red" instance of enum("red", "green", "blue")</code>
-               returns <code>false</code>. 
+               test if it has the correct type annotation, and this typically requires an explicit cast. 
+               So the expression <code>"red" instance of enum("red", "green", "blue")</code>
+               returns <code>false</code>, while <code>"red" cast as enum("red") instance of enum("red", "green", "blue")</code>
+                  returns <code>true</code>.
                   However, the <a title="coercion rules" class="termref" href="#dt-coercion-rules">coercion rules</a> ensure that where a variable
                or function declaration specifies an enumeration type as the required type, a string 
                (or indeed an <code>xs:untypedAtomic</code> or <code>xs:anyURI</code> value) equal
@@ -5384,10 +5481,8 @@ declare variable $orange-fruit as my:fruit := "orange";</pre>
                      </p>
                      </li>
                   </ul>
-                  <p>Like other lexical QNames, the type name <var>T</var> is expanded using the <a title="in-scope namespaces" class="termref" href="#dt-in-scope-namespaces">in-scope namespaces</a>
-                  in the <a title="static context" class="termref" href="#dt-static-context">static context</a>, using the <a title="default namespace for elements and types" class="termref" href="#dt-default-namespace-elements-and-types">default namespace for elements and types</a> 
-                  if it is unprefixed. The resulting
-               QName must identify a type in the <a title="in-scope schema definitions" class="termref" href="#dt-issd">in-scope schema definitions</a>. This can be any <a title="schema type" class="termref" href="#dt-schema-type">schema type</a>: either a simple type,
+                  <p>The type name <var>T</var> is expanded using the <a title="default type namespace rule" class="termref" href="#dt-default-type-namespace-rule">default type namespace rule</a>. The resulting
+               <a title="expanded QName" class="termref" href="#dt-expanded-qname">expanded QName</a> must identify a type in the <a title="in-scope schema definitions" class="termref" href="#dt-issd">in-scope schema definitions</a>. This can be any <a title="schema type" class="termref" href="#dt-schema-type">schema type</a>: either a simple type,
                or (except in the case of attributes) a complex type. If it is a simple type then it can be an atomic, union, or
                list type. It can be a built-in type (such as <code>xs:integer</code>) or a user-defined type. It must however
                be the name of a type defined in a schema; it cannot be a <a title="named item type" class="termref" href="#dt-named-item-type">named item type</a>.</p>
@@ -5565,27 +5660,34 @@ declare variable $orange-fruit as my:fruit := "orange";</pre>
     element node by its name and/or <a title="type annotation" class="termref" href="#dt-type-annotation">type annotation</a>.
   </p>
                      <p>An unprefixed <a href="#doc-xpath40-EQName">EQName</a>
-                  within the <code>NameTestUnion</code> is interpreted according to the
-                  <a title="default namespace for elements and types" class="termref" href="#dt-default-namespace-elements-and-types">default namespace for elements and types</a>.
+                  within the <code>NameTestUnion</code> is expanded using the
+                  <a title="element name matching rule" class="termref" href="#dt-element-name-matching-rule">element name matching rule</a>.
                   The name need not be present in the <a title="in-scope attribute declarations" class="termref" href="#dt-is-attrs">in-scope element declarations</a>.
                </p>
-                     <p>If the <a title="default namespace for elements and types" class="termref" href="#dt-default-namespace-elements-and-types">default namespace for elements and types</a>
-               has the special value <code>##any</code>, then an unprefixed name
+                     <div class="note">
+                        <p class="prefix"><b>Note:</b></p>
+                        <p>This means that when the 
+                  <a title="default namespace for elements and types" class="termref" href="#dt-default-namespace-elements-and-types">default namespace for elements and types</a>
+               has the special value <code>##any</code>, an unprefixed name
                <var>N</var> is interpreted as a wildcard <code>*:<var>N</var>
-                     </code>.</p>
-                     <p>It is always possible to match no-namespace names explicitly
+                        </code>.</p>
+                        <p>It is always possible to match no-namespace names explicitly
                by using the form <code>Q{}<var>N</var>
-                     </code>
-                  </p>
-                     <p>An unprefixed <a href="#prod-xpath40-TypeName">TypeName</a> is interpreted according to the
-                  <a title="default namespace for elements and types" class="termref" href="#dt-default-namespace-elements-and-types">default namespace for elements and types</a>.
+                        </code>
+                     </p>
+                     </div>
+                     <p>An unprefixed <a href="#prod-xpath40-TypeName">TypeName</a> is expanded using the
+                  <a title="default type namespace rule" class="termref" href="#dt-default-type-namespace-rule">default type namespace rule</a>.
                   The <a href="#prod-xpath40-TypeName">TypeName</a> must be present in the <a title="in-scope schema type" class="termref" href="#dt-is-types">in-scope schema types</a>
                      [<a href="#ERRXPST0008" title="err:XPST0008">err:XPST0008</a>]
                   </p>
-                     <p>If the <a title="default namespace for elements and types" class="termref" href="#dt-default-namespace-elements-and-types">default namespace for elements and types</a>
+                     <div class="note">
+                        <p class="prefix"><b>Note:</b></p>
+                        <p>If the <a title="default namespace for elements and types" class="termref" href="#dt-default-namespace-elements-and-types">default namespace for elements and types</a>
                   has the special value <code>##any</code>, then an unprefixed type name
                   <var>T</var> is interpreted as <code>Q{http://www.w3.org/2001/XMLSchema}<var>T</var>
-                     </code>.</p>
+                        </code>.</p>
+                     </div>
                      <div class="note">
                         <p class="prefix"><b>Note:</b></p>
                         <p>
@@ -5953,10 +6055,10 @@ in the following two situations:
     attribute node by its name and/or <a title="type annotation" class="termref" href="#dt-type-annotation">type annotation</a>.
   </p>
                      <p>An unprefixed <a href="#doc-xpath40-EQName">EQName</a>
-               within the <code>NameTestUnion</code> refers to a name in no namespace.
+               within the <code>NameTestUnion</code> is expanded using the
+                  <a title="no-namespace rule" class="termref" href="#dt-no-namespace-rule">no-namespace rule</a>.
                   The name need not be present in the <a title="in-scope attribute declarations" class="termref" href="#dt-is-attrs">in-scope attribute declarations</a>.</p>
-                     <p>An unprefixed <a href="#prod-xpath40-TypeName">TypeName</a> is interpreted according to the
-                  <a title="default namespace for elements and types" class="termref" href="#dt-default-namespace-elements-and-types">default namespace for elements and types</a>.
+                     <p>An unprefixed <a href="#prod-xpath40-TypeName">TypeName</a> is expanded using the <a title="default type namespace rule" class="termref" href="#dt-default-type-namespace-rule">default type namespace rule</a>.
                   The <a href="#prod-xpath40-TypeName">TypeName</a> must be present in the <a title="in-scope schema type" class="termref" href="#dt-is-types">in-scope schema types</a>
                      [<a href="#ERRXPST0008" title="err:XPST0008">err:XPST0008</a>]
                   </p>
@@ -6337,7 +6439,7 @@ name.</p>
                      <p>A <a href="#doc-xpath40-MapType">MapType</a> designates an item type that
                either matches any map, or that matches maps whose keys and values
                are constrained to specific types.</p>
-                     <a id="d3e8329"></a><table class="scrap">
+                     <a id="d3e8476"></a><table class="scrap">
                         <tbody>
                            <tr style="vertical-align:baseline;">
                               <td><a id="doc-xpath40-MapType"></a><code><a href="#prod-xpath40-MapType">MapType</a></code></td>
@@ -6891,7 +6993,7 @@ declare record Particle (
                      <ul>
                         <li>
                            <p>
-                           <code>[ 1, 2 ] instance array(*)</code> returns <code>true()</code>
+                           <code>[ 1, 2 ] instance of array(*)</code> returns <code>true()</code>
                         </p>
                         </li>
                         <li>
@@ -7356,7 +7458,7 @@ declare record Particle (
                            <var>B</var>.</p>
                            <div class="example">
                               
-                              <div class="exampleHeader"><a id="d3e10175"></a>Examples:</div>
+                              <div class="exampleHeader"><a id="d3e10322"></a>Examples:</div>
                               <ul>
                                  <li>
                                     <p>
@@ -7392,7 +7494,7 @@ declare record Particle (
                            </code>.</p>
                            <div class="example">
                               
-                              <div class="exampleHeader"><a id="d3e10244"></a>Examples:</div>
+                              <div class="exampleHeader"><a id="d3e10391"></a>Examples:</div>
                               <ul>
                                  <li>
                                     <p>
@@ -7444,7 +7546,7 @@ declare record Particle (
                               <var>A</var> is a <a href="#prod-xpath40-KindTest">KindTest</a> and <var>B</var> is <code>node()</code>.</p>
                               <div class="example">
                                  
-                                 <div class="exampleHeader"><a id="d3e10344"></a>Example:</div>
+                                 <div class="exampleHeader"><a id="d3e10491"></a>Example:</div>
                                  <p>
                                  <code>comment() ⊆ node()</code>
                               </p>
@@ -7456,7 +7558,7 @@ declare record Particle (
                               and <var>B</var> is <code>processing-instruction()</code>.</p>
                               <div class="example">
                                  
-                                 <div class="exampleHeader"><a id="d3e10368"></a>Example:</div>
+                                 <div class="exampleHeader"><a id="d3e10515"></a>Example:</div>
                                  <p>
                                  <code>processing-instruction('pi') ⊆ processing-instruction()</code>
                               </p>
@@ -7489,7 +7591,7 @@ declare record Particle (
                               and <var>B</var> is <code>document-node()</code>.</p>
                               <div class="example">
                                  
-                                 <div class="exampleHeader"><a id="d3e10431"></a>Examples:</div>
+                                 <div class="exampleHeader"><a id="d3e10578"></a>Examples:</div>
                                  <p>
                                  <code>document-node(element(chap)) ⊆ document-node()</code>
                               </p>
@@ -7521,7 +7623,7 @@ declare record Particle (
                               </ol>
                               <div class="example">
                                  
-                                 <div class="exampleHeader"><a id="d3e10476"></a>Examples:</div>
+                                 <div class="exampleHeader"><a id="d3e10623"></a>Examples:</div>
                                  <p>
                                  <code>document-node(element(title)) ⊆ document-node(element(*))</code>.</p>
                                  <p>
@@ -7536,7 +7638,7 @@ declare record Particle (
                               </code>.</p>
                               <div class="example">
                                  
-                                 <div class="exampleHeader"><a id="d3e10515"></a>Examples:</div>
+                                 <div class="exampleHeader"><a id="d3e10662"></a>Examples:</div>
                                  <ul>
                                     <li>
                                        <p>
@@ -7620,7 +7722,7 @@ declare record Particle (
                               </ol>
                               <div class="example">
                                  
-                                 <div class="exampleHeader"><a id="d3e10698"></a>Examples:</div>
+                                 <div class="exampleHeader"><a id="d3e10845"></a>Examples:</div>
                                  <ul>
                                     <li>
                                        <p>
@@ -7706,7 +7808,7 @@ declare record Particle (
                               </ol>
                               <div class="example">
                                  
-                                 <div class="exampleHeader"><a id="d3e10812"></a>Examples:</div>
+                                 <div class="exampleHeader"><a id="d3e10959"></a>Examples:</div>
                                  <ul>
                                     <li>
                                        <p>
@@ -7766,7 +7868,7 @@ declare record Particle (
                               </ol>
                               <div class="example">
                                  
-                                 <div class="exampleHeader"><a id="d3e10897"></a>Examples:</div>
+                                 <div class="exampleHeader"><a id="d3e11044"></a>Examples:</div>
                                  <ul>
                                     <li>
                                        <p>
@@ -7825,7 +7927,7 @@ declare record Particle (
                               </code>.</p>
                               <div class="example">
                                  
-                                 <div class="exampleHeader"><a id="d3e10997"></a>Examples:</div>
+                                 <div class="exampleHeader"><a id="d3e11144"></a>Examples:</div>
                                  <ul>
                                     <li>
                                        <p>
@@ -7880,7 +7982,7 @@ declare record Particle (
                               </ol>
                               <div class="example">
                                  
-                                 <div class="exampleHeader"><a id="d3e11089"></a>Examples:</div>
+                                 <div class="exampleHeader"><a id="d3e11236"></a>Examples:</div>
                                  <ul>
                                     <li>
                                        <p>
@@ -7944,7 +8046,7 @@ declare record Particle (
                               </ol>
                               <div class="example">
                                  
-                                 <div class="exampleHeader"><a id="d3e11173"></a>Examples:</div>
+                                 <div class="exampleHeader"><a id="d3e11320"></a>Examples:</div>
                                  <ul>
                                     <li>
                                        <p>
@@ -8005,7 +8107,7 @@ declare record Particle (
                               </code>.</p>
                               <div class="example">
                                  
-                                 <div class="exampleHeader"><a id="d3e11275"></a>Examples:</div>
+                                 <div class="exampleHeader"><a id="d3e11422"></a>Examples:</div>
                                  <ul>
                                     <li>
                                        <p>
@@ -8047,7 +8149,7 @@ declare record Particle (
                            </ol>
                            <div class="example">
                               
-                              <div class="exampleHeader"><a id="d3e11326"></a>Example:</div>
+                              <div class="exampleHeader"><a id="d3e11473"></a>Example:</div>
                               <p>
                               <code>function(xs:integer) as xs:string ⊆ function(*)</code>
                            </p>
@@ -8091,7 +8193,7 @@ declare record Particle (
                            </ol>
                            <div class="example">
                               
-                              <div class="exampleHeader"><a id="d3e11403"></a>Examples:</div>
+                              <div class="exampleHeader"><a id="d3e11550"></a>Examples:</div>
                               <ul>
                                  <li>
                                     <p>
@@ -8146,7 +8248,7 @@ declare record Particle (
                            </ol>
                            <div class="example">
                               
-                              <div class="exampleHeader"><a id="d3e11484"></a>Example:</div>
+                              <div class="exampleHeader"><a id="d3e11631"></a>Example:</div>
                               <p>
                               <code>map(xs:integer, item()*) ⊆ map(*)</code>
                            </p>
@@ -8182,7 +8284,7 @@ declare record Particle (
                            </ol>
                            <div class="example">
                               
-                              <div class="exampleHeader"><a id="d3e11538"></a>Example:</div>
+                              <div class="exampleHeader"><a id="d3e11685"></a>Example:</div>
                               <p>
                               <code>map(xs:long, item()) ⊆ map(xs:integer, item()+)</code>
                            </p>
@@ -8204,7 +8306,7 @@ declare record Particle (
                            </ol>
                            <div class="example">
                               
-                              <div class="exampleHeader"><a id="d3e11564"></a>Example:</div>
+                              <div class="exampleHeader"><a id="d3e11711"></a>Example:</div>
                               <p>
                               <code>map(xs:long, xs:string?) ⊆ function(*)</code>
                            </p>
@@ -8227,7 +8329,7 @@ declare record Particle (
                            </ol>
                            <div class="example">
                               
-                              <div class="exampleHeader"><a id="d3e11590"></a>Example:</div>
+                              <div class="exampleHeader"><a id="d3e11737"></a>Example:</div>
                               <p>
                               <code>map(xs:long, xs:string?) ⊆ function(xs:anyAtomicType) as item()*</code>
                            </p>
@@ -8260,7 +8362,7 @@ declare record Particle (
                            </ol>
                            <div class="example">
                               
-                              <div class="exampleHeader"><a id="d3e11637"></a>Examples:</div>
+                              <div class="exampleHeader"><a id="d3e11784"></a>Examples:</div>
                               <ul>
                                  <li>
                                     <p>
@@ -8306,7 +8408,7 @@ declare record Particle (
                            </ol>
                            <div class="example">
                               
-                              <div class="exampleHeader"><a id="d3e11712"></a>Example:</div>
+                              <div class="exampleHeader"><a id="d3e11859"></a>Example:</div>
                               <p>
                               <code>array(xs:integer) ⊆ array(*)</code>
                            </p>
@@ -8335,7 +8437,7 @@ declare record Particle (
                            </ol>
                            <div class="example">
                               
-                              <div class="exampleHeader"><a id="d3e11752"></a>Example:</div>
+                              <div class="exampleHeader"><a id="d3e11899"></a>Example:</div>
                               <p>
                               <code>array(xs:integer) ⊆ array(xs:decimal+)</code>
                            </p>
@@ -8357,7 +8459,7 @@ declare record Particle (
                            </ol>
                            <div class="example">
                               
-                              <div class="exampleHeader"><a id="d3e11778"></a>Example:</div>
+                              <div class="exampleHeader"><a id="d3e11925"></a>Example:</div>
                               <p>
                               <code>array(xs:integer) ⊆ function(*)</code>
                            </p>
@@ -8379,7 +8481,7 @@ declare record Particle (
                            </ol>
                            <div class="example">
                               
-                              <div class="exampleHeader"><a id="d3e11804"></a>Example:</div>
+                              <div class="exampleHeader"><a id="d3e11951"></a>Example:</div>
                               <p>
                               <code>array(*) ⊆ function(xs:integer) as item()*</code>
                            </p>
@@ -8402,7 +8504,7 @@ declare record Particle (
                            </ol>
                            <div class="example">
                               
-                              <div class="exampleHeader"><a id="d3e11834"></a>Example:</div>
+                              <div class="exampleHeader"><a id="d3e11981"></a>Example:</div>
                               <p>
                               <code>array(xs:string) ⊆ function(xs:integer) as xs:string</code>
                            </p>
@@ -8435,7 +8537,7 @@ declare record Particle (
                            </ol>
                            <div class="example">
                               
-                              <div class="exampleHeader"><a id="d3e11889"></a>Examples:</div>
+                              <div class="exampleHeader"><a id="d3e12036"></a>Examples:</div>
                               <p>
                               <code>record(longitude, latitude)</code> ⊆ <code>map(*)</code>
                            </p>
@@ -8474,7 +8576,7 @@ declare record Particle (
                            </ol>
                            <div class="example">
                               
-                              <div class="exampleHeader"><a id="d3e11968"></a>Examples:</div>
+                              <div class="exampleHeader"><a id="d3e12115"></a>Examples:</div>
                               <ul>
                                  <li>
                                     <p>
@@ -8516,7 +8618,7 @@ declare record Particle (
                            </ol>
                            <div class="example">
                               
-                              <div class="exampleHeader"><a id="d3e12039"></a>Examples:</div>
+                              <div class="exampleHeader"><a id="d3e12186"></a>Examples:</div>
                               <ul>
                                  <li>
                                     <p>
@@ -8559,7 +8661,7 @@ declare record Particle (
                            </ol>
                            <div class="example">
                               
-                              <div class="exampleHeader"><a id="d3e12109"></a>Examples:</div>
+                              <div class="exampleHeader"><a id="d3e12256"></a>Examples:</div>
                               <ul>
                                  <li>
                                     <p>
@@ -8608,7 +8710,7 @@ declare record Particle (
                            </ol>
                            <div class="example">
                               
-                              <div class="exampleHeader"><a id="d3e12180"></a>Examples:</div>
+                              <div class="exampleHeader"><a id="d3e12327"></a>Examples:</div>
                               <ul>
                                  <li>
                                     <p>
@@ -8938,33 +9040,28 @@ declare record Particle (
                         <ol class="enumla">
                            <li>
                               <p>If <var>J</var> is an instance of 
-                                 <var>R</var> then it is used unchanged.</p>
+                           <var>R</var> then it is used unchanged.</p>
                            </li>
                            <li>
                               <p>If <var>J</var> is an instance of type <code>xs:untypedAtomic</code>
-                              then:</p>
+                        then:</p>
                               <ol class="enumlr">
                                  <li>
-                                    <p>If <var>R</var> is an 
-                                       <a title="enumeration type" class="termref" href="#dt-enumeration-type">enumeration type</a> then
-                                       <var>A</var> is cast to <code>xs:string</code>.</p>
-                                 </li>
-                                 <li>
                                     <p>If <var>R</var> is <a title="namespace-sensitive" class="termref" href="#dt-namespace-sensitive">namespace-sensitive</a> then 
-                                          a <a title="type error" class="termref" href="#dt-type-error">type error</a>
+                                    a <a title="type error" class="termref" href="#dt-type-error">type error</a>
                                     [<a href="#ERRXPTY0117" title="err:XPTY0117">err:XPTY0117</a>] is raised.</p>
                                  </li>
+                                 <li>
+                                    <p>Otherwise,  <var>J</var> is cast to type <var>R</var>.</p>
+                                 </li>
                               </ol>
-                           </li>
-                           <li>
-                              <p>Otherwise,  <var>J</var> is cast to type <var>R</var>.</p>
                            </li>
                         </ol>
                      </li>
                      <li>
                         <p>If there is an entry (<var>from</var>, <var>to</var>)
-                                 in the following table such that <var>J</var> is an instance of <var>from</var>,
-                                 and <var>to</var> is <var>R</var>, then <var>J</var> is cast to type <var>R</var>.</p>
+                     in the following table such that <var>J</var> is an instance of <var>from</var>,
+                     and <var>to</var> is <var>R</var>, then <var>J</var> is cast to type <var>R</var>.</p>
                         <table style="border:1px solid" class="medium">
                            <caption>Implicit Casting</caption>
                            <thead>
@@ -9059,18 +9156,18 @@ declare record Particle (
                         <div class="note">
                            <p class="prefix"><b>Note:</b></p>
                            <p>The item type in the <var>to</var> column must match <var>R</var>
-                                    exactly; however, <var>J</var> may belong to a subtype of the type in the <var>from</var>
-                                    column.</p>
+                        exactly; however, <var>J</var> may belong to a subtype of the type in the <var>from</var>
+                        column.</p>
                            <p>For example, an <code>xs:NCName</code> will be cast to type <code>xs:anyURI</code>,
-                                    but an <code>xs:anyURI</code> will not be cast to type <code>xs:NCName</code>.</p>
+                        but an <code>xs:anyURI</code> will not be cast to type <code>xs:NCName</code>.</p>
                            <p>Similarly, an <code>xs:integer</code> will be cast to type <code>xs:double</code>,
-                                    but an <code>xs:double</code> will not be cast to type <code>xs:integer</code>.</p>
+                        but an <code>xs:double</code> will not be cast to type <code>xs:integer</code>.</p>
                         </div>
                      </li>
                      <li>
                         <p>If <var>R</var> is derived from some primitive atomic type <var>P</var>, 
-                                 then <var>J</var> is <b>relabeled</b> as an instance of <var>R</var> if it satisfies
-                                 all the following conditions:</p>
+                     then <var>J</var> is <b>relabeled</b> as an instance of <var>R</var> if it satisfies
+                     all the following conditions:</p>
                         <ul>
                            <li>
                               <p>
@@ -9082,56 +9179,56 @@ declare record Particle (
                            </li>
                            <li>
                               <p>The <a href="https://qt4cg.org/specifications/xpath-datamodel-40/#dt-datum">datum</a><sup><small>DM</small></sup> of <var>J</var> is 
-                                       within the value space of <var>R</var>.</p>
+                           within the value space of <var>R</var>.</p>
                            </li>
                         </ul>
                         <p>Relabeling an atomic item changes the <a title="type annotation" class="termref" href="#dt-type-annotation">type annotation</a> but not the 
-                                    <a href="https://qt4cg.org/specifications/xpath-datamodel-40/#dt-datum">datum</a><sup><small>DM</small></sup>. For example, the
-                                    <code>xs:integer</code> value 3 can be relabeled as an instance of <code>xs:unsignedByte</code>, because
-                                    the datum is within the value space of <code>xs:unsignedByte</code>.</p>
+                        <a href="https://qt4cg.org/specifications/xpath-datamodel-40/#dt-datum">datum</a><sup><small>DM</small></sup>. For example, the
+                        <code>xs:integer</code> value 3 can be relabeled as an instance of <code>xs:unsignedByte</code>, because
+                        the datum is within the value space of <code>xs:unsignedByte</code>.</p>
                         <div class="note">
                            <p class="prefix"><b>Note:</b></p>
                            <p>Relabeling is not the same as casting. For example, the <code>xs:decimal</code> value 10.1
-                                    can be cast to <code>xs:integer</code>, but it cannot be relabeled as <code>xs:integer</code>,
-                                    because its datum not within the value space of <code>xs:integer</code>.</p>
+                        can be cast to <code>xs:integer</code>, but it cannot be relabeled as <code>xs:integer</code>,
+                        because its datum not within the value space of <code>xs:integer</code>.</p>
                         </div>
                         <div class="note">
                            <p class="prefix"><b>Note:</b></p>
                            <p>The effect of this rule is that if, for example, a function parameter is declared
-                                    with an expected type of <code>xs:positiveInteger</code>, then a call that supplies the literal
-                                    value 3 will succeed, whereas a call that supplies -3 will fail.</p>
+                        with an expected type of <code>xs:positiveInteger</code>, then a call that supplies the literal
+                        value 3 will succeed, whereas a call that supplies -3 will fail.</p>
                            <p>This differs from previous versions of this specification, where both these calls would fail.</p>
                            <p>This change allows the arguments of existing functions to be defined with a
-                                       
-                                       more precise type. For example, the <code>$position</code> argument of <a href="https://qt4cg.org/specifications/xpath-functions-40/Overview.html#func-array-get"><code>array:get</code></a>
-                                       
-                                       could be defined as <code>xs:positiveInteger</code> 
-                                       rather than <code>xs:integer</code>.</p>
+                           
+                           more precise type. For example, the <code>$position</code> argument of <a href="https://qt4cg.org/specifications/xpath-functions-40/Overview.html#func-array-get"><code>array:get</code></a>
+                           
+                           could be defined as <code>xs:positiveInteger</code> 
+                           rather than <code>xs:integer</code>.</p>
                         </div>
                         <div class="note">
                            <p class="prefix"><b>Note:</b></p>
                            <p>If <var>T</var>
-                                       is a union type with members <code>xs:negativeInteger</code> and 
-                                       <code>xs:positiveInteger)*</code> and the supplied value is the
-                                       sequence <code>(20, -20)</code>, then the effect of these rules 
-                                       is that the first item <code>20</code> is relabeled as type
-                                       <code>xs:positiveInteger</code> and the second item <code>-20</code>is relabeled as type 
-                                       <code>xs:negativeInteger</code>.</p>
+                           is a union type with members <code>xs:negativeInteger</code> and 
+                           <code>xs:positiveInteger</code> and the supplied value is the
+                           sequence <code>(20, -20)</code>, then the effect of these rules 
+                           is that the first item <code>20</code> is relabeled as type
+                           <code>xs:positiveInteger</code> and the second item <code>-20</code>is relabeled as type 
+                           <code>xs:negativeInteger</code>.</p>
                         </div>
                         <div class="note">
                            <p class="prefix"><b>Note:</b></p>
                            <p>Promotion (for example of <code>xs:float</code> to <code>xs:double</code>)
-                                    occurs only when <var>T</var> is a primitive type.
-                                    Relabeling occurs only when <var>T</var> is a derived type. Promotion and relabeling are therefore
-                                    never combined.</p>
+                        occurs only when <var>T</var> is a primitive type.
+                        Relabeling occurs only when <var>T</var> is a derived type. Promotion and relabeling are therefore
+                        never combined.</p>
                         </div>
                         <div class="note">
                            <p class="prefix"><b>Note:</b></p>
-                           <p>A singleton enumeration type such as <code>enum("green")</code> is treated
-                                 as an atomic type derived by restriction from <code>xs:string</code>; so if the
-                                 <code>xs:string</code> value <code>"green"</code> is supplied in a context where
-                                 the required type is <code>enum("red", "green", "blue")</code>, the value will be
-                                    accepted and will be relabeled as an instance of <code>enum("green")</code>.</p>
+                           <p>A <a title="singleton enumeration type" class="termref" href="#dt-singleton-enumeration-type">singleton enumeration type</a> such as <code>enum("green")</code> is treated
+                     as an atomic type derived by restriction from <code>xs:string</code>; so if the
+                     <code>xs:string</code> value <code>"green"</code> is supplied in a context where
+                     the required type is <code>enum("red", "green", "blue")</code>, the value will be
+                        accepted and will be relabeled as an instance of <code>enum("green")</code>.</p>
                         </div>
                      </li>
                      <li>
@@ -10369,7 +10466,7 @@ and <a href="#doc-xpath40-OrExpr">OrExpr</a>. Each of these expressions is descr
                         <td><a id="doc-xpath40-PrimaryExpr-Literal"></a><code><a href="#prod-xpath40-Literal">Literal</a></code></td>
                         <td>::=</td>
                         <td><code>
-                              <a href="#doc-xpath40-NumericLiteral">NumericLiteral</a>  |  <a href="#doc-xpath40-StringLiteral">StringLiteral</a>
+                              <a href="#doc-xpath40-NumericLiteral">NumericLiteral</a>  |  <a href="#doc-xpath40-StringLiteral">StringLiteral</a>  |  <a href="#doc-xpath40-QNameLiteral">QNameLiteral</a>
                               </code></td>
                      </tr>
                   </tbody>
@@ -10502,7 +10599,7 @@ and <a href="#doc-xpath40-OrExpr">OrExpr</a>. Each of these expressions is descr
                            <td><a id="doc-xpath40-Literal"></a><code><a href="#prod-xpath40-Literal">Literal</a></code></td>
                            <td>::=</td>
                            <td><code>
-                                 <a href="#doc-xpath40-Literal-NumericLiteral">NumericLiteral</a>  |  <a href="#doc-xpath40-Literal-StringLiteral">StringLiteral</a>
+                                 <a href="#doc-xpath40-Literal-NumericLiteral">NumericLiteral</a>  |  <a href="#doc-xpath40-Literal-StringLiteral">StringLiteral</a>  |  <a href="#doc-xpath40-Literal-QNameLiteral">QNameLiteral</a>
                                  </code></td>
                         </tr>
                      </tbody>
@@ -10531,16 +10628,31 @@ and <a href="#doc-xpath40-OrExpr">OrExpr</a>. Each of these expressions is descr
                               */</td>
                         </tr>
                      </tbody>
+                     <tbody>
+                        <tr style="vertical-align:baseline;">
+                           <td><a id="doc-xpath40-Literal-QNameLiteral"></a><code><a href="#prod-xpath40-QNameLiteral">QNameLiteral</a></code></td>
+                           <td>::=</td>
+                           <td><code>"#"  <a href="#doc-xpath40-EQName">EQName</a>
+                                 </code></td>
+                        </tr>
+                        <tr>
+                           <td></td>
+                           <td></td>
+                           <td style="text-align: right;" class="prodComment">/* 
+                              <a href="#ws-explicit">ws: explicit</a>
+                              */</td>
+                        </tr>
+                     </tbody>
                   </table>
                   <p>
                   [<a id="dt-literal" title="literal">Definition</a>: A <b>literal</b> is a direct syntactic representation of an
-		atomic item.] XPath 4.0 supports two kinds of literals: numeric literals and
-		string literals.</p>
+		atomic item.] XPath 4.0 supports three kinds of literals: numeric literals,
+		string literals, and QName literals.</p>
                   <div class="div4">
                      
                      <h5><a id="id-numeric-literals"></a>4.2.1.1 <a href="#id-numeric-literals" style="text-decoration: none">Numeric Literals</a></h5>
                      <div class="changes">
-                        <p class="changesHeading">Changes in 4.0&nbsp;<a href="#id-filter-expression">⬇</a>&nbsp;<a href="#id-function-coercion">⬆</a></p>
+                        <p class="changesHeading">Changes in 4.0&nbsp;<a href="#id-qname-literals">⬇</a>&nbsp;<a href="#id-function-coercion">⬆</a></p>
                         <ol>
                            <li>
                               <p>
@@ -10950,7 +11062,79 @@ and <a href="#doc-xpath40-OrExpr">OrExpr</a>. Each of these expressions is descr
                   </div>
                   <div class="div4">
                      
-                     <h5><a id="id-constants-other-types"></a>4.2.1.3 <a href="#id-constants-other-types" style="text-decoration: none">Constants of Other Types</a></h5>
+                     <h5><a id="id-qname-literals"></a>4.2.1.3 <a href="#id-qname-literals" style="text-decoration: none">QName Literals</a></h5>
+                     <div class="changes">
+                        <p class="changesHeading">Changes in 4.0&nbsp;<a href="#id-filter-expression">⬇</a>&nbsp;<a href="#id-numeric-literals">⬆</a></p>
+                        <ol>
+                           <li>
+                              <p>QName literals are new in 4.0.<i>&nbsp;&nbsp;[Issue <a href="https://github.com/qt4cg/qtspecs/issues/1661">1661</a>&nbsp;]</i></p>
+                           </li>
+                        </ol>
+                     </div>
+                     <p>A QName literal represents a value of type <code>xs:QName</code>.</p>
+                     <table class="scrap">
+                        <tbody>
+                           <tr style="vertical-align:baseline;">
+                              <td><a id="doc-xpath40-QNameLiteral"></a><code><a href="#prod-xpath40-QNameLiteral">QNameLiteral</a></code></td>
+                              <td>::=</td>
+                              <td><code>"#"  <a href="#doc-xpath40-QNameLiteral-EQName">EQName</a>
+                                    </code></td>
+                           </tr>
+                           <tr>
+                              <td></td>
+                              <td></td>
+                              <td style="text-align: right;" class="prodComment">/* 
+                                 <a href="#ws-explicit">ws: explicit</a>
+                                 */</td>
+                           </tr>
+                        </tbody>
+                        <tbody>
+                           <tr style="vertical-align:baseline;">
+                              <td><a id="doc-xpath40-QNameLiteral-EQName"></a><code><a href="#prod-xpath40-EQName">EQName</a></code></td>
+                              <td>::=</td>
+                              <td><code>
+                                    <a href="#prod-xpath40-QName">QName</a>  |  <a href="#prod-xpath40-URIQualifiedName">URIQualifiedName</a>
+                                    </code></td>
+                           </tr>
+                        </tbody>
+                     </table>
+                     <p>For example, the expression <code>node-name($node) = #xml:space</code>
+               returns true if the name of the node <code>$node</code> is the QName with local part <code>space</code>
+                  and namespace URI <code>http://www.w3.org/XML/1998/namespace</code>.</p>
+                     <p>If the <code>EQName</code> is an unprefixed <code>NCName</code>, then it is expanded using
+                  the <a title="no-namespace rule" class="termref" href="#dt-no-namespace-rule">no-namespace rule</a>. If there
+                  is no binding for the prefix in the <a title="statically known namespaces" class="termref" href="#dt-static-namespaces">statically known namespaces</a> then
+                  a static error is raised [<a href="#ERRXPST0081" title="err:XPST0081">err:XPST0081</a>].
+               </p>
+                     <div class="note">
+                        <p class="prefix"><b>Note:</b></p>
+                        <p>No whitespace or comment is permitted between the <code>#</code> character
+                  and the <code>EQName</code>.</p>
+                        <p>In XQuery, the character pair <code>(#</code> is recognized as the start of
+                     a pragma. In order to ensure that an expression such as <code>error(#err:XPTY0004)</code>
+                     is correctly parsed, the rules for pragmas have changed to require whitespace
+                     after the opening <code>(#</code> and before the <code>EQName</code>.</p>
+                     </div>
+                     <div class="note">
+                        <p class="prefix"><b>Note:</b></p>
+                        <p>A <code>QNameLiteral</code> is an expression that evaluates to a single
+                  item of type <code>xs:QName</code>; it is thus an alternative to calling the
+                  <code>xs:QName</code> constructor function with a literal string argument.
+                  This should not be confused with QNames that are used directly in XPath 4.0 to refer to constructs such as
+               functions, variables, and elements.</p>
+                        <p>A <code>QName</code> appearing on its own as an expression,
+               for example <code>my:invoice</code>, is an abbreviation for the axis step <code>child::my:step</code>,
+               which selects a child element of the context node having this particular element name. A different
+               construct is therefore needed to represent an atomic value of type <code>xs:QName</code>.
+               For example, the function <code>fn:error</code> expects an <code>xs:QName</code> value
+               as its first argument, so (provided that the prefix <code>err</code> is defined in the static
+               context) it is possible to use a call such as <code>error( #err:XPTY0004 )</code> to raise an
+               error with this error code.</p>
+                     </div>
+                  </div>
+                  <div class="div4">
+                     
+                     <h5><a id="id-constants-other-types"></a>4.2.1.4 <a href="#id-constants-other-types" style="text-decoration: none">Constants of Other Types</a></h5>
                      <p>
                
       The <code>xs:boolean</code> values <code>true</code> and <code>false</code> can be constructed by calls to the
@@ -11027,8 +11211,9 @@ string in its lexical space.</p>
                      </tbody>
                   </table>
                   <p>
-                  [<a id="dt-variable-reference" title="variable reference">Definition</a>: A <b>variable reference</b> is an EQName preceded by a $-sign.] 
-An unprefixed variable reference is in no namespace. Two variable references are equivalent if their  <a title="expanded QName" class="termref" href="#dt-expanded-qname">expanded QNames</a>  are equal (as defined by the <code>eq</code> operator). The scope of a variable binding is defined separately for each kind of
+                  [<a id="dt-variable-reference" title="variable reference">Definition</a>: A <b>variable reference</b> is an EQName preceded by a $-sign.]
+                The variable name is expanded using the <a title="no-namespace rule" class="termref" href="#dt-no-namespace-rule">no-namespace rule</a>.
+                Two variable references are equivalent if their  <a title="expanded QName" class="termref" href="#dt-expanded-qname">expanded QNames</a>  are equal (as defined by the <code>eq</code> operator). The scope of a variable binding is defined separately for each kind of
 expression that can bind variables.</p>
                   <p>Every variable reference must match a name in the <a title="in-scope variables" class="termref" href="#dt-in-scope-variables">in-scope variables</a>. </p>
                   <p>Every variable binding has a static scope. The scope defines where
@@ -11148,7 +11333,7 @@ At evaluation time, the value of a variable reference is the value to which the 
             <div class="div2">
                
                <h3><a id="id-postfix-expression"></a>4.3 <a href="#id-postfix-expression" style="text-decoration: none">Postfix Expressions</a></h3>
-               <a id="d3e16099"></a><table class="scrap">
+               <a id="d3e16384"></a><table class="scrap">
                   <tbody>
                      <tr style="vertical-align:baseline;">
                         <td><a id="doc-xpath40-PostfixExpr"></a><code><a href="#prod-xpath40-PostfixExpr">PostfixExpr</a></code></td>
@@ -11274,7 +11459,7 @@ At evaluation time, the value of a variable reference is the value to which the 
                
                <h3><a id="id-filter-expression"></a>4.4 <a href="#id-filter-expression" style="text-decoration: none">Filter Expressions</a></h3>
                <div class="changes">
-                  <p class="changesHeading">Changes in 4.0&nbsp;<a href="#id-function-calls">⬇</a>&nbsp;<a href="#id-numeric-literals">⬆</a></p>
+                  <p class="changesHeading">Changes in 4.0&nbsp;<a href="#id-function-calls">⬇</a>&nbsp;<a href="#id-qname-literals">⬆</a></p>
                   <ol>
                      <li>
                         <p>
@@ -11528,7 +11713,7 @@ At evaluation time, the value of a variable reference is the value to which the 
                      
                      <h5><a id="id-function-calls"></a>4.5.1.1 <a href="#id-function-calls" style="text-decoration: none">Static Function Call Syntax</a></h5>
                      <div class="changes">
-                        <p class="changesHeading">Changes in 4.0&nbsp;<a href="#id-inline-func">⬇</a>&nbsp;<a href="#id-filter-expression">⬆</a></p>
+                        <p class="changesHeading">Changes in 4.0&nbsp;<a href="#id-eval-dynamic-function-call">⬇</a>&nbsp;<a href="#id-filter-expression">⬆</a></p>
                         <ol>
                            <li>
                               <p>
@@ -11633,8 +11818,8 @@ At evaluation time, the value of a variable reference is the value to which the 
                      </table>
                      <p>
                      [<a id="dt-static-function-call" title="static function call">Definition</a>: A <b>static function call</b> 
-               consists of an EQName followed by a parenthesized list of zero or more arguments.]
-                  </p>
+               consists of an EQName followed by a parenthesized list of zero or more arguments.].</p>
+                     <p>The EQName is expanded using the <a title="default function namespace rule" class="termref" href="#dt-default-function-namespace-rule">default function namespace rule</a>.</p>
                      <p>The argument list consists of zero or more positional arguments,
                followed by zero or more keyword arguments.</p>
                      <p>
@@ -11647,11 +11832,7 @@ At evaluation time, the value of a variable reference is the value to which the 
                <a href="#prod-xpath40-ArgumentPlaceholder">ArgumentPlaceholders</a>. 
                Calls using one or more <a href="#prod-xpath40-ArgumentPlaceholder">ArgumentPlaceholders</a> are covered in the 
                section <a href="#id-partial-function-application"><b>4.5.4 Partial Function Application</b></a>.</p>
-                     <p>If the function name supplied in a static function call is an unprefixed <a title="lexical QName" class="termref" href="#dt-qname">lexical QName</a>, it is expanded using the <a title="default function namespace" class="termref" href="#dt-default-function-namespace">default function namespace</a> 
-               in the <a title="static context" class="termref" href="#dt-static-context">static context</a>.
-            </p>
-                     <p>
-                     The <a title="expanded QName" class="termref" href="#dt-expanded-qname">expanded QName</a> used as the function name and the number of arguments used in the static function call 
+                     <p>The <a title="expanded QName" class="termref" href="#dt-expanded-qname">expanded QName</a> used as the function name and the number of arguments used in the static function call 
                (the required arity) must match the name and arity range of a <a title="function definition" class="termref" href="#dt-function-definition">function definition</a> 
                in the <a title="static context" class="termref" href="#dt-static-context">static context</a>
                      <span> using the rules defined in the previous section</span>; if there is no match, a
@@ -11723,9 +11904,9 @@ At evaluation time, the value of a variable reference is the value to which the 
                   </p>
                         </li>
                      </ul>
-                     <p>An <code>EQName</code> in a <code>KeywordArgument</code> is expanded to a QName value; if there
-            is no prefix, then the name is in no namespace (otherwise the prefix is resolved in the usual way).
-            The keywords used in a function call (after expansion to QNames) must be distinct 
+                     <p>An <code>EQName</code> in a <code>KeywordArgument</code> is expanded 
+               using the <a title="no-namespace rule" class="termref" href="#dt-no-namespace-rule">no-namespace rule</a>.
+            The keywords used in a function call (after expansion) must be distinct 
                [<a href="#ERRXPST0017" title="err:XPST0017">err:XPST0017</a>]; [<a href="#ERRXPST0017" title="err:XPST0017">err:XPST0017</a>].</p>
                   </div>
                   <div class="div4">
@@ -11753,7 +11934,7 @@ At evaluation time, the value of a variable reference is the value to which the 
                               There can be at most one <a title="function definition" class="termref" href="#dt-function-definition">function definition</a>
                            <var>FD</var> in the 
                               <a title="statically known function definitions" class="termref" href="#dt-statically-known-function-definitions">statically known function definitions</a> component of <var>SC</var> whose function name
-                              matches the expanded QName in <var>FC</var> and whose <a title="arity range" class="termref" href="#dt-arity-range">arity range</a>
+                              matches the <a title="expanded QName" class="termref" href="#dt-expanded-qname">expanded QName</a> in <var>FC</var> and whose <a title="arity range" class="termref" href="#dt-arity-range">arity range</a>
                               includes the arity of <var>FC</var>’s <code>ArgumentList</code>.
                            </p>
                            <p>If there is no such <a title="function definition" class="termref" href="#dt-function-definition">function definition</a>, a static error [<a href="#ERRXPST0017" title="err:XPST0017">err:XPST0017</a>] is raised.</p>
@@ -11871,7 +12052,7 @@ At evaluation time, the value of a variable reference is the value to which the 
                            </ul>
                            <div class="example">
                               
-                              <div class="exampleHeader"><a id="d3e17281"></a>Example: A System Function</div>
+                              <div class="exampleHeader"><a id="d3e17560"></a>Example: A System Function</div>
                               <p>The following function call uses the function 
                                   <a href="https://qt4cg.org/specifications/xpath-functions-40/#func-base-uri">Section 2.1.5 fn:base-uri</a><sup><small>FO</small></sup>.  Use of <code>SC</code> and <code>DC</code> and errors raised by this function are all defined in 
                                   <a href="#xpath-functions-40">[XQuery and XPath Functions and Operators 4.0]</a>.</p>
@@ -12042,6 +12223,15 @@ At evaluation time, the value of a variable reference is the value to which the 
                   <div class="div4">
                      
                      <h5><a id="id-eval-dynamic-function-call"></a>4.5.3.1 <a href="#id-eval-dynamic-function-call" style="text-decoration: none">Evaluating Dynamic Function Calls</a></h5>
+                     <div class="changes">
+                        <p class="changesHeading">Changes in 4.0&nbsp;<a href="#id-inline-func">⬇</a>&nbsp;<a href="#id-function-calls">⬆</a></p>
+                        <ol>
+                           <li>
+                              <p>A dynamic function call can now be applied to a sequence of functions, and in particular
+               to an empty sequence. This makes it easier to chain a sequence of calls.<i>&nbsp;&nbsp;[Issue <a href="https://github.com/qt4cg/qtspecs/issues/1240">1240</a>&nbsp;]</i></p>
+                           </li>
+                        </ol>
+                     </div>
                      <p>This section applies to dynamic function calls whose arguments do not include
             an <code>ArgumentPlaceholder</code>. For function calls that include a placeholder,
             see <a href="#id-partial-function-application"><b>4.5.4 Partial Function Application</b></a>.</p>
@@ -12057,19 +12247,28 @@ At evaluation time, the value of a variable reference is the value to which the 
                      <ol class="enumar">
                         <li>
                            <p>
-                          The <a title="function item" class="termref" href="#dt-function-item">function item</a>
-                           <var>FI</var> to be called
-                          is obtained by evaluating the base expression of the function call.
-                              If this yields a sequence consisting of a single function item
-                              whose arity matches the number of arguments in the <code>ArgumentList</code>,
-                              let <var>FI</var> denote that function item.
-                              Otherwise, a type error is raised
+                          The base expression of the function call is evaluated.
+                          If this is not of type <code>function(*)*</code> (a sequence
+                        of zero or more function items) then a type error is raised [<a href="#ERRXPTY0004" title="err:XPTY0004">err:XPTY0004</a>].
+                     </p>
+                        </li>
+                        <li>
+                           <p>The result of the dynamic function call is the <a title="sequence concatenation" class="termref" href="#dt-sequence-concatenation">sequence concatenation</a>
+                        of the results of applying each function item individually, retaining order. That is, the
+                        result of <code>
+                              <var>F</var>(<var>X</var>, <var>Y</var>, ...)</code> is 
+                        <code>for $FI in <var>F</var> return <var>$FI</var>(<var>X</var>, <var>Y</var>, ...)</code>.
+                        The result of a dynamic function call applied to a single function item <var>FI</var> is defined
+                        by the rules that follow.
+                     </p>
+                        </li>
+                        <li>
+                           <p>
+                           [<a href="#ERRXPTY0004" title="err:XPTY0004">err:XPTY0004</a>].
+                              If the arity of <var>FI</var> does not match the number of arguments in the <code>ArgumentList</code>,
+                              a type error is raised
                               [<a href="#ERRXPTY0004" title="err:XPTY0004">err:XPTY0004</a>].
                             </p>
-                           <div class="note">
-                              <p class="prefix"><b>Note:</b></p>
-                              <p>Keyword arguments are not allowed in a dynamic function call.</p>
-                           </div>
                         </li>
                         <li>
                            <p>
@@ -12182,59 +12381,14 @@ At evaluation time, the value of a variable reference is the value to which the 
                                     </p>
                               </li>
                            </ol>
-                           <div class="example">
-                              
-                              <div class="exampleHeader"><a id="d3e17726"></a>Example: Derived Types and Nonlocal Variable Bindings</div>
-                              <p>
-                              <code>$incr</code> is a nonlocal variable that is available within the function because its variable binding has been added to the variable values of the function..  Even though the parameter and return type of this function are both <code>xs:decimal</code>,
-                                  the more specific type <code>xs:integer</code> is preserved in both cases.</p>
-                              <div class="exampleInner">
-                                 <pre>
-let $incr := 1
-let $f := function($i as xs:decimal) as xs:decimal { $i + $incr }
-return $f(5)</pre>
-                              </div>
-                           </div>
-                           <p>&nbsp;</p>
-                           <div class="example">
-                              
-                              <div class="exampleHeader"><a id="d3e17741"></a>Example: Using the Context Value in an Anonymous Function</div>
-                              <p>The following example will raise a <a title="type error" class="termref" href="#dt-type-error">type error</a>
-                              [<a href="#ERRXPDY0002" title="err:XPDY0002">err:XPDY0002</a>]:</p>
-                              <div class="exampleInner">
-                                 <pre>
-let $vat := function() { @vat + @price }
-return doc('wares.xml')/shop/article/$vat()</pre>
-                              </div>
-                              <p>Instead, the context value can be used as an argument to the anonymous function:</p>
-                              <div class="exampleInner">
-                                 <pre>
-let $vat := function($art) { $art/@vat + $art/@price }
-return doc('wares.xml')/shop/article/$vat(.)</pre>
-                              </div>
-                              <p>Alternatively, the value can be referenced as a nonlocal variable binding:</p>
-                              <div class="exampleInner">
-                                 <pre>
-let $ctx := doc('wares.xml')/shop/article
-let $vat := function() { for $a in $ctx return $a/@vat + $a/@price }
-return $vat()</pre>
-                              </div>
-                              <p>Finally, a <a title="focus function" class="termref" href="#dt-focus-function">focus function</a> can be used.
-                                       This binds the value of the argument to the context value within the function body:</p>
-                              <div class="exampleInner">
-                                 <pre>
-let $vat := function { @vat + @price }
-return $vat(doc('wares.xml')/shop/article)</pre>
-                              </div>
-                           </div>
                         </li>
                         <li>
                            <p>                                  
                                   If the implementation of <var>FI</var> is
                                   not an XPath 4.0 expression
-                                  (for example, <var>FI</var> is
+                                  (for example, if <var>FI</var> is
                                   a <a title="system function" class="termref" href="#dt-system-function">system function</a>
-                                    
+                                    ), 
                                     the <span>body</span> of the function is
                                        evaluated, and the result is converted
                                        to the declared return type, in the same way as for a 
@@ -12242,6 +12396,77 @@ return $vat(doc('wares.xml')/shop/article)</pre>
                            <p>Errors may be raised in the same way.</p>
                         </li>
                      </ol>
+                     <div class="example">
+                        
+                        <div class="exampleHeader"><a id="d3e18057"></a>Example: Derived Types and Nonlocal Variable Bindings</div>
+                        <p>
+                        <code>$incr</code> is a nonlocal variable that is available within the function because its variable binding has been added to the variable values of the function..  Even though the parameter and return type of this function are both <code>xs:decimal</code>,
+                                  the more specific type <code>xs:integer</code> is preserved in both cases.</p>
+                        <div class="exampleInner">
+                           <pre>
+let $incr := 1
+let $f := function($i as xs:decimal) as xs:decimal { $i + $incr }
+return $f(5)</pre>
+                        </div>
+                     </div>
+                     <p>&nbsp;</p>
+                     <div class="example">
+                        
+                        <div class="exampleHeader"><a id="d3e18072"></a>Example: Using the Context Value in an Anonymous Function</div>
+                        <p>The following example will raise a <a title="type error" class="termref" href="#dt-type-error">type error</a>
+                        [<a href="#ERRXPDY0002" title="err:XPDY0002">err:XPDY0002</a>]:</p>
+                        <div class="exampleInner">
+                           <pre>
+let $vat := function() { @vat + @price }
+return doc('wares.xml')/shop/article/$vat()</pre>
+                        </div>
+                        <p>Instead, the context value can be used as an argument to the anonymous function:</p>
+                        <div class="exampleInner">
+                           <pre>
+let $vat := function($art) { $art/@vat + $art/@price }
+return doc('wares.xml')/shop/article/$vat(.)</pre>
+                        </div>
+                        <p>Alternatively, the value can be referenced as a nonlocal variable binding:</p>
+                        <div class="exampleInner">
+                           <pre>
+let $ctx := doc('wares.xml')/shop/article
+let $vat := function() { for $a in $ctx return $a/@vat + $a/@price }
+return $vat()</pre>
+                        </div>
+                        <p>Finally, a <a title="focus function" class="termref" href="#dt-focus-function">focus function</a> can be used.
+                                       This binds the value of the argument to the context value within the function body:</p>
+                        <div class="exampleInner">
+                           <pre>
+let $vat := function { @vat + @price }
+return $vat(doc('wares.xml')/shop/article)</pre>
+                        </div>
+                     </div>
+                     <p>&nbsp;</p>
+                     <div class="example">
+                        
+                        <div class="exampleHeader"><a id="d3e18094"></a>Example: Chaining method calls</div>
+                        <p>Methods are described in <a href="#id-methods"><b>4.5.6.1 Methods</b></a>, and are commonly used in 
+                  dynamic function calls such as <code>$rectangle?area()</code>. In this example <code>$rectangle</code>
+               is typically a map, and <code>area</code> is the key of one of the entries in the map, the value
+               of the entry being a <a title="method" class="termref" href="#dt-method">method</a>. The lookup expression
+                  <code>$rectangle?area</code> returns a function item whose captured context includes the containing
+               map, and the dynamic function call then evaluates the body of this method, which is
+               able to access the containing map as the context item.</p>
+                        <p>Such calls can be chained. For example if <code>$rectangle?resize(2)</code> returns a rectangle that
+               is twice the size of the original, then <code>$rectangle?resize(2)?area()</code> returns the area of the
+               enlarged rectangle.</p>
+                        <p>This kind of chaining extends to the case where a method returns zero or more maps. For example, suppose
+               that rectangles are nested, and that <code>$rectangle?contents()</code> delivers a sequence of zero or more 
+               rectangles. Then the expression <code>$rectangle?area() - sum($rectangle?contents()?area())</code> returns
+               the difference between the area of the containing rectangle and the total area of the contained
+               rectangles. This works because the dynamic function call <code>$rectangle?contents()?area()</code>
+               applies the function <code>area</code> to each of the function items in the sequence returned
+               by the expression <code>$rectangle?contents()</code>.</p>
+                     </div>
+                     <div class="note">
+                        <p class="prefix"><b>Note:</b></p>
+                        <p>Keyword arguments are not allowed in a dynamic function call.</p>
+                     </div>
                   </div>
                </div>
                <div class="div3">
@@ -12255,10 +12480,13 @@ return $vat(doc('wares.xml')/shop/article)</pre>
                </p>
                   <p>The rules for partial function application in static function calls and dynamic function
                calls have a great deal in common, but they are stated separately below for clarity.</p>
-                  <p>In each case, the result of a partial function application is a 
-                  <a title="function item" class="termref" href="#dt-function-item">function item</a>, whose
+                  <p>Partial function application delivers
+                  <a title="function item" class="termref" href="#dt-function-item">function items</a>, whose
                   arity is equal to the number of placeholders in the call.</p>
-                  <p>More specifically, the result of the partial function application is 
+                  <p>A static partial function application always delivers one <a title="function item" class="termref" href="#dt-function-item">function item</a>.
+               A dynamic partial function application delivers one <a title="function item" class="termref" href="#dt-function-item">function item</a> for each
+               <a title="function item" class="termref" href="#dt-function-item">function item</a> in the input.</p>
+                  <p>More specifically, each function item in the result of the partial function application is 
                   a <a title="partially applied function" class="termref" href="#dt-partially-applied-function">partially applied function</a>.
                   [<a id="dt-partially-applied-function" title="partially applied function">Definition</a>: A <b>partially applied function</b>
                   is a function created by  <a title="partial function application" class="termref" href="#dt-partial-function-application">partial function application</a>.]
@@ -12389,7 +12617,7 @@ return $vat(doc('wares.xml')/shop/article)</pre>
                         </div>
                         <div class="example">
                            
-                           <div class="exampleHeader"><a id="d3e17954"></a>Example: Partial Application of a System Function</div>
+                           <div class="exampleHeader"><a id="d3e18324"></a>Example: Partial Application of a System Function</div>
                            <p>The following partial function application creates a function 
                            item that computes the sum of squares of a sequence.</p>
                            <div class="exampleInner">
@@ -12404,11 +12632,24 @@ return $sum-of-squares(1 to 3)</pre>
                   <p>For dynamic function calls,  the result is obtained as follows:</p>
                   <ol class="enumar">
                      <li>
-                        <p>The <a title="function item" class="termref" href="#dt-function-item">function item</a>
-                        <var>FI</var> to be partially applied is 
-                        determined in the same way as for a 
-                        dynamic function call without placeholders, as described in <a href="#id-dynamic-function-invocation"><b>4.5.3 Dynamic Function Calls</b></a>.
-                        For this purpose an <code>ArgumentPlaceholder</code> contributes to the count of
+                        <p>
+                          The base expression of the function call is evaluated.
+                          If this is not of type <code>function(*)*</code> (a sequence
+                        of zero or more function items) then a type error is raised.
+                     </p>
+                     </li>
+                     <li>
+                        <p>The result of the dynamic function call is the <a title="sequence concatenation" class="termref" href="#dt-sequence-concatenation">sequence concatenation</a>
+                        of the results of partial applying each function item, retaining order. That is, the
+                        result of <code>
+                           <var>F</var>(<var>X</var>, <var>Y</var>, ...)</code> is 
+                        <code>for $FI in <var>F</var> return <var>$FI</var>(<var>X</var>, <var>Y</var>, ...)</code>.
+                        The result of a dynamic function call applied to a single function item <var>FI</var> is defined
+                        by the rules that follow.
+                     </p>
+                     </li>
+                     <li>
+                        <p>An <code>ArgumentPlaceholder</code> contributes to the count of
                         arguments.</p>
                      </li>
                      <li>
@@ -12500,7 +12741,7 @@ return $sum-of-squares(1 to 3)</pre>
                         </div>
                         <div class="example">
                            
-                           <div class="exampleHeader"><a id="d3e18076"></a>Example: Partial Application of an Anonymous Function</div>
+                           <div class="exampleHeader"><a id="d3e18473"></a>Example: Partial Application of an Anonymous Function</div>
                            <p>In the following example, <code>$f</code> is an anonymous function, and <code>$paf</code> is a partially applied function created from <code>$f</code>.</p>
                            <div class="exampleInner">
                               <pre>
@@ -12518,7 +12759,7 @@ return $paf(1 to 5)</pre>
                   a partial function application that returns a function, but the function it returns is neither a map nor an array.</p>
                   <div class="example">
                      
-                     <div class="exampleHeader"><a id="d3e18135"></a>Example: Partial Application of a Map</div>
+                     <div class="exampleHeader"><a id="d3e18533"></a>Example: Partial Application of a Map</div>
                      <p>The following partial function application converts a map to an equivalent function that is not a map.</p>
                      <div class="exampleInner">
                         <pre>let $a := { "A": 1, "B": 2 }(?)
@@ -12610,9 +12851,8 @@ return $a("A")</pre>
                      </span>.]
                </p>
                   <p>The name and arity of the required function are known statically.</p>
-                  <p>If the EQName is a <a title="lexical QName" class="termref" href="#dt-qname">lexical QName</a>, it is expanded using the 
-               <a title="default function namespace" class="termref" href="#dt-default-function-namespace">default function namespace</a> in the <a title="static context" class="termref" href="#dt-static-context">static context</a>.</p>
-                  <p>The expanded QName and arity must correspond to a <a title="function definition" class="termref" href="#dt-function-definition">function definition</a>
+                  <p>The EQName is expanded using the <a title="default function namespace rule" class="termref" href="#dt-default-function-namespace-rule">default function namespace rule</a>.</p>
+                  <p>The <a title="expanded QName" class="termref" href="#dt-expanded-qname">expanded QName</a> and arity must correspond to a <a title="function definition" class="termref" href="#dt-function-definition">function definition</a>
                present in the <a title="static context" class="termref" href="#dt-static-context">static context</a>.
             <span>More specifically, for a named function reference <code>F#N</code>,
                there must be a <a title="function definition" class="termref" href="#dt-function-definition">function definition</a> in the <a title="statically known function definitions" class="termref" href="#dt-statically-known-function-definitions">statically known function definitions</a>
@@ -12634,7 +12874,7 @@ return $a("A")</pre>
                   </div>
                   <div class="example">
                      
-                     <div class="exampleHeader"><a id="d3e18284"></a>Example: A Context-Dependent Named Function Reference</div>
+                     <div class="exampleHeader"><a id="d3e18679"></a>Example: A Context-Dependent Named Function Reference</div>
                      <p>Consider:</p>
                      <div class="exampleInner">
                         <pre>let $f := &lt;foo/&gt;/fn:name#0 return &lt;bar/&gt;/$f()</pre>
@@ -12775,7 +13015,7 @@ return $a("A")</pre>
                   
                   <h4><a id="id-inline-func"></a>4.5.6 <a href="#id-inline-func" style="text-decoration: none">Inline Function Expressions</a></h4>
                   <div class="changes">
-                     <p class="changesHeading">Changes in 4.0&nbsp;<a href="#id-methods">⬇</a>&nbsp;<a href="#id-function-calls">⬆</a></p>
+                     <p class="changesHeading">Changes in 4.0&nbsp;<a href="#id-methods">⬇</a>&nbsp;<a href="#id-eval-dynamic-function-call">⬆</a></p>
                      <ol>
                         <li>
                            <p>
@@ -13555,7 +13795,7 @@ return if (every $r in $R satisfies $r instance of node())
                <div class="div3">
                   
                   <h4><a id="id-steps"></a>4.6.4 <a href="#id-steps" style="text-decoration: none">Steps</a></h4>
-                  <a id="d3e19679"></a><table class="scrap">
+                  <a id="d3e20074"></a><table class="scrap">
                      <tbody>
                         <tr style="vertical-align:baseline;">
                            <td><a id="doc-xpath40-StepExpr"></a><code><a href="#prod-xpath40-StepExpr">StepExpr</a></code></td>
@@ -13861,10 +14101,7 @@ return if (every $r in $R satisfies $r instance of node())
                            [<a href="#ERRXPST0010" title="err:XPST0010">err:XPST0010</a>] if it is
 				used. Applications needing information
 				about the <a title="in-scope namespaces" class="termref" href="#dt-in-scope-namespaces">in-scope namespaces</a> of an element
-				should use the functions
-				<a href="https://qt4cg.org/specifications/xpath-functions-40/#func-in-scope-prefixes">Section 11.2.7 fn:in-scope-prefixes</a><sup><small>FO</small></sup>, 
-				and
-				<a href="https://qt4cg.org/specifications/xpath-functions-40/#func-namespace-uri-for-prefix">Section 11.2.8 fn:namespace-uri-for-prefix</a><sup><small>FO</small></sup>.
+				should use the function <a href="https://qt4cg.org/specifications/xpath-functions-40/Overview.html#func-in-scope-namespaces"><code>fn:in-scope-namespaces</code></a>.
                                 </p>
                         </li>
                      </ul>
@@ -14095,11 +14332,30 @@ return if (every $r in $R satisfies $r instance of node())
                   </p>
                      <p>
                      [<a id="dt-name-test" title="name test">Definition</a>: A node test that consists only of an EQName or a
-		  Wildcard is called a <b>name test</b>.] A name
-                  test that consists of an EQName matches a node <var>N</var> if and only if the <b>kind</b> of
+		  Wildcard is called a <b>name test</b>.]
+                  </p>
+                     <p>A node test written as an EQName is expanded as follows:</p>
+                     <ul>
+                        <li>
+                           <p>If the principal node kind of the axis step is <code>element</code>, 
+                  using the <a title="element name matching rule" class="termref" href="#dt-element-name-matching-rule">element name matching rule</a>.</p>
+                           <div class="note">
+                              <p class="prefix"><b>Note:</b></p>
+                              <p>If the <a title="default namespace for elements and types" class="termref" href="#dt-default-namespace-elements-and-types">default namespace for elements and types</a> has the
+                     special value <code>"##any</code>, the result of the expanding an unprefixed name
+                  <var>NN</var> is the wildcard <code>*:<var>NN</var>
+                              </code>.</p>
+                           </div>
+                        </li>
+                        <li>
+                           <p>Otherwise, using the <a title="no-namespace rule" class="termref" href="#dt-no-namespace-rule">no-namespace rule</a>.</p>
+                        </li>
+                     </ul>
+                     <p>If the expanded node test is an <a title="expanded QName" class="termref" href="#dt-expanded-qname">expanded QName</a>
+                     <var>Q</var>, then it
+               matches a node <var>N</var> if and only if the <b>kind</b> of
                   node <var>N</var> is the <a title="principal node kind" class="termref" href="#dt-principal-node-kind">principal node kind</a> for the step axis and the
-		  <a title="expanded QName" class="termref" href="#dt-expanded-qname">expanded QName</a> of the node is equal (as defined by the <code>eq</code> operator) to the
-		  <a title="expanded QName" class="termref" href="#dt-expanded-qname">expanded QName</a> specified by the name test. For
+		  <a title="expanded QName" class="termref" href="#dt-expanded-qname">expanded QName</a> of the node is equal (as defined by the <code>eq</code> operator) to <var>Q</var>. For
 		  example, <code>child::para</code>
 		  selects the <code>para</code> element children of
 		  the context node; if the context node has no
@@ -14109,37 +14365,21 @@ return if (every $r in $R satisfies $r instance of node())
 		  <code>abc:href</code>; if the context node has no
 		  such attribute, it selects an empty set of
 		  nodes.</p>
-                     <p>If the EQName is a <a title="lexical QName" class="termref" href="#dt-qname">lexical QName</a>, it is resolved into an <a title="expanded QName" class="termref" href="#dt-expanded-qname">expanded QName</a> using the
-		  <a title="statically known namespaces" class="termref" href="#dt-static-namespaces">statically known namespaces</a> in the expression
-		  context. It is a <a title="static error" class="termref" href="#dt-static-error">static error</a>
-                     [<a href="#ERRXPST0081" title="err:XPST0081">err:XPST0081</a>] if the QName has a prefix that does not
-		  correspond to any statically known namespace.
-
-          An unprefixed QName, when used as a
-		  name test on an axis whose <a title="principal node kind" class="termref" href="#dt-principal-node-kind">principal node kind</a> is <code>element</code>, is interpreted as follows:</p>
+                     <div class="note">
+                        <p class="prefix"><b>Note:</b></p>
+                        <p>A name test is not satisfied by an element node whose name does not match the <a title="expanded QName" class="termref" href="#dt-expanded-qname">expanded QName</a> of the name test, even if it is in a <a title="substitution group" class="termref" href="#dt-substitution-group">substitution group</a> whose head is the named element.</p>
+                     </div>
+                     <p>Wildcard node tests are interpreted as follows:</p>
                      <ul>
                         <li>
-                           <p>If the <a title="default namespace for elements and types" class="termref" href="#dt-default-namespace-elements-and-types">default namespace for elements and types</a> is a namespace URI,
-                  then the name is interpreted as having that namespace URI.</p>
-                        </li>
-                        <li>
-                           <p>If the <a title="default namespace for elements and types" class="termref" href="#dt-default-namespace-elements-and-types">default namespace for elements and types</a> is the
-                     special value <code>"##any</code>,
-                     then the name is interpreted as a wildcard that matches any element with
-                     the specified local name, in any namespace or none.</p>
-                        </li>
-                        <li>
-                           <p>If the <a title="default namespace for elements and types" class="termref" href="#dt-default-namespace-elements-and-types">default namespace for elements and types</a> is absent,
-                     then the name is interpreted as being in no namespace.</p>
-                        </li>
-                     </ul>
-                     <p>A name test is not satisfied by an element node whose name does not match the <a title="expanded QName" class="termref" href="#dt-expanded-qname">expanded QName</a> of the name test, even if it is in a <a title="substitution group" class="termref" href="#dt-substitution-group">substitution group</a> whose head is the named element.</p>
-                     <p>A node test <code>*</code> is true for any node of the
+                           <p>The node test <code>*</code> is true for any node of the
 		  <a title="principal node kind" class="termref" href="#dt-principal-node-kind">principal node
 		  kind</a> of the step axis. For example, <code>child::*</code> will select all element
 		  children of the context node, and <code>attribute::*</code> will select all
 		  attributes of the context node.</p>
-                     <p>A node test can have the form
+                        </li>
+                        <li>
+                           <p>A node test can have the form
 		  <code>NCName:*</code>. In this case, the prefix is
 		  expanded in the same way as with a <a title="lexical QName" class="termref" href="#dt-qname">lexical QName</a>, using the
 		  <a title="statically known namespaces" class="termref" href="#dt-static-namespaces">statically known
@@ -14151,15 +14391,21 @@ return if (every $r in $R satisfies $r instance of node())
 		  node kind</a> of the step axis whose <a title="expanded QName" class="termref" href="#dt-expanded-qname">expanded QName</a> has the namespace URI
 		  to which the prefix is bound, regardless of the
 		  local part of the name.</p>
-                     <p>A node test can contain a <a href="#prod-xpath40-BracedURILiteral">BracedURILiteral</a>, for example
+                        </li>
+                        <li>
+                           <p>A node test can contain a <a href="#prod-xpath40-BracedURILiteral">BracedURILiteral</a>, for example
 		  <code>Q{http://example.com/msg}*</code>. Such a node test is true for any node of the principal 
-                  node kind of the step axis whose expanded QName has the namespace URI specified in 
+                  node kind of the step axis whose <a title="expanded QName" class="termref" href="#dt-expanded-qname">expanded QName</a> has the namespace URI specified in 
                   the <a href="#prod-xpath40-BracedURILiteral">BracedURILiteral</a>, regardless of the local part of the name.</p>
-                     <p>A node test can also
+                        </li>
+                        <li>
+                           <p>A node test can also
 		  have the form <code>*:NCName</code>. In this case,
 		  the node test is true for any node of the <a title="principal node kind" class="termref" href="#dt-principal-node-kind">principal
 		  node kind</a> of the step axis whose local name matches the given NCName,
 		  regardless of its namespace or lack of a namespace.</p>
+                        </li>
+                     </ul>
                      <p>
                      [<a id="dt-kind-test" title="kind test">Definition</a>: An alternative
 		  form of a node test called a
@@ -17346,9 +17592,18 @@ encountered in finding the effective boolean value of its operand,
                   the <code>for</code>expression is first expanded to a set of nested <code>for</code> 
                   expressions, each of which contains a single <a href="#prod-xpath40-ForBinding">ForBinding</a>.
                More specifically, every separating comma is replaced by <code>for</code>.</p>
-                        <p>For example, the expression
-               <code>for $x in X, $y in Y return $x + $y</code> is expanded to
-               <code>for $x in X for $y in Y return $x + $y</code>.</p>
+                        <div class="example">
+                           
+                           <div class="exampleHeader"><a id="d3e26758"></a>Example:</div>
+                           <p>The expression:</p>
+                           <div class="exampleInner">
+                              <pre>for $x in X, $y in Y return $x + $y</pre>
+                           </div>
+                           <p>is expanded to:</p>
+                           <div class="exampleInner">
+                              <pre>for $x in X for $y in Y return $x + $y</pre>
+                           </div>
+                        </div>
                      </li>
                      <li>
                         <p>Having performed this expansion, 
@@ -17371,7 +17626,7 @@ encountered in finding the effective boolean value of its operand,
                      </li>
                      <li>
                         <p>If a <b>position variable</b> is declared, its type is implicitly
-                  <code>xs:integer</code>. Its name (as a QName) must be
+                  <code>xs:integer</code>. Its name (as an <a title="expanded QName" class="termref" href="#dt-expanded-qname">expanded QName</a>) must be
                different from the name of a <b>range variable</b> declared in the same
                 <a href="#prod-xpath40-ForBinding">ForBinding</a>.  
                   [<a href="#ERRXQST0089" title="err:XQST0089">err:XQST0089</a>].
@@ -17620,6 +17875,12 @@ return $line/value</pre>
                The type of a variable used in a <code>let</code> expression can be declared.
             <i>&nbsp;&nbsp;[Issue <a href="https://github.com/qt4cg/qtspecs/issues/796">796</a>&nbsp;PR <a href="https://github.com/qt4cg/qtspecs/pull/1131">1131</a>&nbsp;1 April 2024]</i></p>
                         </li>
+                        <li>
+                           <p>
+               Sequences, arrays, and maps can be destructured in a <code>let</code> 
+               expression to extract their components into multiple variables. 
+            <i>&nbsp;&nbsp;[Issue <a href="https://github.com/qt4cg/qtspecs/issues/37">37</a>&nbsp;PR <a href="https://github.com/qt4cg/qtspecs/pull/2055">2055</a>&nbsp;17 June 2025]</i></p>
+                        </li>
                      </ol>
                   </div>
                   <p>XPath allows a variable to be declared and bound to a value using a <b>let expression</b>.</p>
@@ -17644,6 +17905,15 @@ return $line/value</pre>
                      <tbody>
                         <tr style="vertical-align:baseline;">
                            <td><a id="doc-xpath40-LetExpr-LetBinding"></a><code><a href="#prod-xpath40-LetBinding">LetBinding</a></code></td>
+                           <td>::=</td>
+                           <td><code>
+                                 <a href="#doc-xpath40-LetExpr-LetValueBinding">LetValueBinding</a>  |  <a href="#doc-xpath40-LetExpr-LetSequenceBinding">LetSequenceBinding</a>  |  <a href="#doc-xpath40-LetExpr-LetArrayBinding">LetArrayBinding</a>  |  <a href="#doc-xpath40-LetExpr-LetMapBinding">LetMapBinding</a>
+                                 </code></td>
+                        </tr>
+                     </tbody>
+                     <tbody>
+                        <tr style="vertical-align:baseline;">
+                           <td><a id="doc-xpath40-LetExpr-LetValueBinding"></a><code><a href="#prod-xpath40-LetValueBinding">LetValueBinding</a></code></td>
                            <td>::=</td>
                            <td><code>
                                  <a href="#doc-xpath40-LetExpr-VarNameAndType">VarNameAndType</a>  ":="  <a href="#doc-xpath40-LetExpr-ExprSingle">ExprSingle</a>
@@ -17677,14 +17947,6 @@ return $line/value</pre>
                      </tbody>
                      <tbody>
                         <tr style="vertical-align:baseline;">
-                           <td><a id="doc-xpath40-LetExpr-SequenceType"></a><code><a href="#prod-xpath40-SequenceType">SequenceType</a></code></td>
-                           <td>::=</td>
-                           <td><code>("empty-sequence"  "("  ")")<br>|  (<a href="#doc-xpath40-ItemType">ItemType</a>
-                                 <a href="#prod-xpath40-OccurrenceIndicator">OccurrenceIndicator</a>?)</code></td>
-                        </tr>
-                     </tbody>
-                     <tbody>
-                        <tr style="vertical-align:baseline;">
                            <td><a id="doc-xpath40-LetExpr-ExprSingle"></a><code><a href="#prod-xpath40-ExprSingle">ExprSingle</a></code></td>
                            <td>::=</td>
                            <td><code>
@@ -17693,6 +17955,38 @@ return $line/value</pre>
                                  <br>|  <a href="#doc-xpath40-QuantifiedExpr">QuantifiedExpr</a>
                                  <br>|  <a href="#doc-xpath40-IfExpr">IfExpr</a>
                                  <br>|  <a href="#doc-xpath40-OrExpr">OrExpr</a>
+                                 </code></td>
+                        </tr>
+                     </tbody>
+                     <tbody>
+                        <tr style="vertical-align:baseline;">
+                           <td><a id="doc-xpath40-LetExpr-LetSequenceBinding"></a><code><a href="#prod-xpath40-LetSequenceBinding">LetSequenceBinding</a></code></td>
+                           <td>::=</td>
+                           <td><code>"$"  "("  (<a href="#doc-xpath40-LetExpr-VarNameAndType">VarNameAndType</a> ++ ",")  ")"  <a href="#doc-xpath40-LetExpr-TypeDeclaration">TypeDeclaration</a>?  ":="  <a href="#doc-xpath40-LetExpr-ExprSingle">ExprSingle</a>
+                                 </code></td>
+                        </tr>
+                     </tbody>
+                     <tbody>
+                        <tr style="vertical-align:baseline;">
+                           <td><a id="doc-xpath40-LetExpr-SequenceType"></a><code><a href="#prod-xpath40-SequenceType">SequenceType</a></code></td>
+                           <td>::=</td>
+                           <td><code>("empty-sequence"  "("  ")")<br>|  (<a href="#doc-xpath40-ItemType">ItemType</a>
+                                 <a href="#prod-xpath40-OccurrenceIndicator">OccurrenceIndicator</a>?)</code></td>
+                        </tr>
+                     </tbody>
+                     <tbody>
+                        <tr style="vertical-align:baseline;">
+                           <td><a id="doc-xpath40-LetExpr-LetArrayBinding"></a><code><a href="#prod-xpath40-LetArrayBinding">LetArrayBinding</a></code></td>
+                           <td>::=</td>
+                           <td><code>"$"  "["  (<a href="#doc-xpath40-LetExpr-VarNameAndType">VarNameAndType</a> ++ ",")  "]"  <a href="#doc-xpath40-LetExpr-TypeDeclaration">TypeDeclaration</a>?  ":="  <a href="#doc-xpath40-LetExpr-ExprSingle">ExprSingle</a>
+                                 </code></td>
+                        </tr>
+                     </tbody>
+                     <tbody>
+                        <tr style="vertical-align:baseline;">
+                           <td><a id="doc-xpath40-LetExpr-LetMapBinding"></a><code><a href="#prod-xpath40-LetMapBinding">LetMapBinding</a></code></td>
+                           <td>::=</td>
+                           <td><code>"$"  "{"  (<a href="#doc-xpath40-LetExpr-VarNameAndType">VarNameAndType</a> ++ ",")  "}"  <a href="#doc-xpath40-LetExpr-TypeDeclaration">TypeDeclaration</a>?  ":="  <a href="#doc-xpath40-LetExpr-ExprSingle">ExprSingle</a>
                                  </code></td>
                         </tr>
                      </tbody>
@@ -17716,30 +18010,253 @@ return $line/value</pre>
                      </tbody>
                   </table>
                   <p>A let expression is evaluated as follows:</p>
-                  <ul>
+                  <ol class="enumar">
                      <li>
                         <p>If the let expression uses multiple variables, it is first expanded to a
 set of nested let expressions, each of which uses only one variable. 
 Specifically, any separating comma is replaced by <code>let</code>.</p>
-                        <p>For example, the expression 
-                  <code>let $x := 4, $y := 3 return $x + $y</code> is expanded to
-                   <code>let $x := 4 let $y := 3 return $x + $y</code>.</p>
+                        <div class="example">
+                           
+                           <div class="exampleHeader"><a id="d3e27417"></a>Example:</div>
+                           <p>The expression:</p>
+                           <div class="exampleInner">
+                              <pre>let $x := 4, $y := 3 return $x + $y</pre>
+                           </div>
+                           <p>is expanded to:</p>
+                           <div class="exampleInner">
+                              <pre>let $x := 4 let $y := 3 return $x + $y</pre>
+                           </div>
+                        </div>
                      </li>
                      <li>
-                        <p>In a single-variable let expression, the variable is called the range
-variable. The expression that follows the <code>:=</code> symbol is evaluated, and
-                  if a <a href="#prod-xpath40-TypeDeclaration">TypeDeclaration</a> is present, its value is converted
-                     to the specified type by applying the <a title="coercion rules" class="termref" href="#dt-coercion-rules">coercion rules</a>.
-                     The resulting value is called
-the binding sequence. The expression in the <a href="#prod-xpath40-ForLetReturn">ForLetReturn</a> part 
+                        <p>In a <a href="#prod-xpath40-LetValueBinding">LetValueBinding</a>
+                  such as <code>let $<var>V</var> as <var>T</var> := <var>EXPR</var>
+                        </code>:</p>
+                        <ol class="enumla">
+                           <li>
+                              <p>The variable <var>V</var> is called the <b>range variable</b>.</p>
+                           </li>
+                           <li>
+                              <p>The sequence type <var>T</var> is called the <b>declared type</b>.
+                     If there is no declared type, then <code>item()*</code> is assumed.</p>
+                           </li>
+                           <li>
+                              <p>The expression <var>EXPR</var> is evaluated, and its value is converted
+                     to the declared type by applying the <a title="coercion rules" class="termref" href="#dt-coercion-rules">coercion rules</a>.
+                     The resulting value is called the <b>binding sequence</b>.</p>
+                           </li>
+                        </ol>
+                     </li>
+                     <li>
+                        <p>In a <a href="#prod-xpath40-LetSequenceBinding">LetSequenceBinding</a>
+                  such as <code>let $( $<var>A<sub>1</sub></var> as <var>T<sub>1</sub></var>, $<var>A<sub>2</sub></var> as <var>T<sub>2</sub></var>, ...
+                     , $<var>A<sub>n</sub></var> as <var>T<sub>n</sub></var> ) as <var>ST</var> := <var>EXPR</var>
+                        </code>:</p>
+                        <ol class="enumla">
+                           <li>
+                              <p>The sequence type <var>ST</var> is called the <b>declared sequence type</b>.
+                     If there is no declared sequence type, then <code>item()*</code> is assumed.</p>
+                           </li>
+                           <li>
+                              <p>The expression <var>EXPR</var> is evaluated, and its value is converted
+                     to the declared sequence type <var>ST</var> by applying the <a title="coercion rules" class="termref" href="#dt-coercion-rules">coercion rules</a>.
+                     Call the resulting (coerced) value <var>V</var>.</p>
+                           </li>
+                           <li>
+                              <p>Each variable <var>A<sub>i</sub></var> (for <var>i</var> in 1 to <var>n</var>)
+                     is effectively replaced by a <a href="#prod-xpath40-LetValueBinding">LetValueBinding</a>
+                        of the form <code>let <var>A<sub>i</sub></var> as <var>T<sub>i</sub></var> := items-at(<var>V</var>, <var>i</var>)</code>.
+                     That is, a <b>range variable</b> named <var>A<sub>i</sub></var> is declared, whose <b>binding sequence</b>
+                     is the item <var>V[ i ]</var>, after coercion to the type <var>T<sub>i</sub></var> if specified.
+                     If <var>T<sub>i</sub></var> is absent, no further coercion takes place (the default is effectively
+                     <code>item()?</code>).</p>
+                              <div class="note">
+                                 <p class="prefix"><b>Note:</b></p>
+                                 <p>If <var>i</var> exceeds the length of the sequence <var>V</var>, then
+                        <var>A<sub>i</sub></var> is bound to an empty sequence. This will cause a type error if
+                        type <var>T<sub>i</sub></var> does not permit an empty sequence.</p>
+                              </div>
+                              <div class="note">
+                                 <p class="prefix"><b>Note:</b></p>
+                                 <p>It is permissible to bind several variables with the same name;
+                        all but the last are occluded. A useful convention is therefore to bind
+                        items in the sequence that are of no interest to the variable <code>$_</code>:
+                        for example <code>let $( $_, $_, $x ) := <var>EXPR</var>
+                                 </code> effectively
+                        binds <code>$x</code> to the third item in the sequence and causes the first two
+                        items to be ignored.</p>
+                              </div>
+                              <div class="example">
+                                 
+                                 <div class="exampleHeader"><a id="d3e27583"></a>Example:</div>
+                                 <p>The expression:</p>
+                                 <div class="exampleInner">
+                                    <pre>let $( $a, $b as xs:integer, $local:c ) := (2, 4, 6)
+return $a + $b + $local:c</pre>
+                                 </div>
+                                 <p>is expanded to:</p>
+                                 <div class="exampleInner">
+                                    <pre>let $temp := (2, 4, 6)
+let $a := fn:items-at($temp, 1)
+let $b as xs:integer := fn:items-at($temp, 2)
+let $local:c := fn:items-at($temp, 3)
+return $a + $b + $local:c</pre>
+                                 </div>
+                                 <p>where <code>$temp</code> is some variable name that is otherwise unused.</p>
+                              </div>
+                              <p>&nbsp;</p>
+                              <div class="example">
+                                 
+                                 <div class="exampleHeader"><a id="d3e27596"></a>Example:</div>
+                                 <p>Consider the element <var>$E</var> := <code>&lt;e A="p q r" B="x y z"/&gt;</code>, where
+                     <var>$E</var> has been validated against a schema that defines both attributes
+                     <code>A</code> and <code>B</code> as being lists of strings.</p>
+                                 <p>Then the expression:</p>
+                                 <div class="exampleInner">
+                                    <pre>let $( $a as xs:string*, $b as xs:string* ) := $E/(@A, @B)</pre>
+                                 </div>
+                                 <p>binds <code>$a</code> to the sequence <code>("p", "q", "r")</code>
+                     and <code>$b</code> to the sequence <code>("x", "y", "z")</code>.
+                     The evaluation of the expression <code>$E/(@A, @B)</code>
+                        returns a sequence of two attribute nodes;
+                     the value of <code>$a</code> is formed by atomizing the first of these
+                     nodes, while <code>$b</code> is formed by atomizing the second.</p>
+                              </div>
+                           </li>
+                        </ol>
+                     </li>
+                     <li>
+                        <p>In a <a href="#prod-xpath40-LetArrayBinding">LetArrayBinding</a>
+                  such as <code>let $[ $<var>A<sub>1</sub></var> as <var>T<sub>1</sub></var>, $<var>A<sub>2</sub></var> as <var>T<sub>2</sub></var>, ...
+                     , $<var>A<sub>n</sub></var> as <var>T<sub>n</sub></var> ] as <var>AT</var> := <var>EXPR</var>
+                        </code>:</p>
+                        <ol class="enumla">
+                           <li>
+                              <p>The sequence type <var>AT</var> is called the <b>declared array type</b>.
+                     If there is no declared array type, then <code>array(*)</code> is assumed.</p>
+                           </li>
+                           <li>
+                              <p>The expression <var>EXPR</var> is evaluated, and its value is converted
+                     to the declared array type <var>AT</var> by applying the <a title="coercion rules" class="termref" href="#dt-coercion-rules">coercion rules</a>.
+                     A type error [<a href="#ERRXPTY0004" title="err:XPTY0004">err:XPTY0004</a>] is raised if the result is not
+                        a <a title="singleton" class="termref" href="#dt-singleton">singleton</a> array.
+                     Call the resulting (coerced) value <var>V</var>.</p>
+                           </li>
+                           <li>
+                              <p>Each variable <var>A<sub>i</sub></var> (for <var>i</var> in 1 to <var>n</var>)
+                     is effectively replaced by a <a href="#prod-xpath40-LetValueBinding">LetValueBinding</a>
+                        of the form <code>let <var>A<sub>i</sub></var> as <var>T<sub>i</sub></var> := array:get(<var>V</var>, <var>i</var>, ())</code>.
+                     That is, a <b>range variable</b> named <var>A<sub>i</sub></var> is declared, whose <b>binding sequence</b>
+                     is the array member <var>V ? i</var>, after coercion to the type <var>T<sub>i</sub></var> if specified.
+                     If <var>T<sub>i</sub></var> is absent, no further coercion takes place (the default is effectively
+                     <code>item()*</code>).</p>
+                              <div class="note">
+                                 <p class="prefix"><b>Note:</b></p>
+                                 <p>If <var>i</var> exceeds the length of the array <var>V</var>, then
+                        <var>A<sub>i</sub></var> is bound to an empty sequence. This will cause a type error if
+                        type <var>T<sub>i</sub></var> does not permit an empty sequence.</p>
+                              </div>
+                              <div class="note">
+                                 <p class="prefix"><b>Note:</b></p>
+                                 <p>It is permissible to bind several variables with the same name;
+                        all but the last are occluded. A useful convention is therefore to bind
+                        items in the sequence that are of no interest to the variable <code>$_</code>:
+                        for example <code>let $( $_, $_, $x ) := <var>EXPR</var>
+                                 </code> effectively
+                        binds <code>$x</code> to the third item in the sequence and causes the first two
+                        items to be ignored.</p>
+                              </div>
+                              <div class="example">
+                                 
+                                 <div class="exampleHeader"><a id="d3e27760"></a>Example:</div>
+                                 <p>The expression:</p>
+                                 <div class="exampleInner">
+                                    <pre>let $[ $a, $b as xs:integer, $local:c ] := [ 2, 4, 6 ]
+return $a + $b + $local:c</pre>
+                                 </div>
+                                 <p>is expanded to:</p>
+                                 <div class="exampleInner">
+                                    <pre>let $temp := [ 2, 4, 6 ]
+let $a := array:get($temp, 1, ())
+let $b as xs:integer := array:get($temp, 2, ())
+let $local:c := array:get($temp, 3, ())
+return $a + $b + $local:c</pre>
+                                 </div>
+                                 <p>where <code>$temp</code> is some variable name that is otherwise unused.</p>
+                              </div>
+                           </li>
+                        </ol>
+                     </li>
+                     <li>
+                        <p>In a <a href="#prod-xpath40-LetMapBinding">LetMapBinding</a>
+                  such as <code>let ${ $<var>A<sub>1</sub></var> as <var>T<sub>1</sub></var>, $<var>A<sub>2</sub></var> as <var>T<sub>2</sub></var>, ...
+                     , $<var>A<sub>n</sub></var> as <var>T<sub>n</sub></var> } as <var>MT</var> := <var>EXPR</var>
+                        </code>:</p>
+                        <ol class="enumla">
+                           <li>
+                              <p>The sequence type <var>MT</var> is called the <b>declared map type</b>.
+                     If there is no declared map type, then <code>map(*)</code> is assumed.</p>
+                           </li>
+                           <li>
+                              <p>The expression <var>EXPR</var> is evaluated, and its value is converted
+                     to the declared map type <var>MT</var> by applying the <a title="coercion rules" class="termref" href="#dt-coercion-rules">coercion rules</a>.
+                     A type error [<a href="#ERRXPTY0004" title="err:XPTY0004">err:XPTY0004</a>] is raised if the result is not
+                        a <a title="singleton" class="termref" href="#dt-singleton">singleton</a> map.
+                     Call the resulting (coerced) value <var>V</var>.</p>
+                           </li>
+                           <li>
+                              <p>Each variable <var>A<sub>i</sub></var> (for <var>i</var> in 1 to <var>n</var>)
+                     is effectively replaced by a <a href="#prod-xpath40-LetValueBinding">LetValueBinding</a>
+                        of the form <code>let <var>A<sub>i</sub></var> as <var>T<sub>i</sub></var> := map:get(<var>V</var>, "<var>N<sub>i</sub></var>", ())</code>,
+                        where <var>N<sub>i</sub></var> is the local part of the name of the variable <var>A<sub>i</sub></var>.
+                     That is, a <b>range variable</b> named <var>A<sub>i</sub></var> is declared, whose <b>binding sequence</b>
+                     is the value of the map entry in <var>V</var> whose key is an <code>xs:string</code> (or <code>xs:anyURI</code> or <code>xs:untypedAtomic</code>)
+                        equal to the local part of the variable name, after coercion to the type <var>T<sub>i</sub></var> if specified.
+                     If <var>T<sub>i</sub></var> is absent, no further coercion takes place (the default is effectively
+                     <code>item()*</code>).</p>
+                              <div class="note">
+                                 <p class="prefix"><b>Note:</b></p>
+                                 <p>If there is no entry in the map with a key corresponding to the variable
+                           name, then the variable
+                        <var>A<sub>i</sub></var> is bound to an empty sequence. This will cause a type error if
+                        type <var>T<sub>i</sub></var> does not permit an empty sequence.</p>
+                              </div>
+                              <div class="note">
+                                 <p class="prefix"><b>Note:</b></p>
+                                 <p>It is not possible to use this mechanism to bind variables to values
+                        in a map unless the keys in the map are strings in the form of <code>NCNames</code>.</p>
+                              </div>
+                              <div class="example">
+                                 
+                                 <div class="exampleHeader"><a id="d3e27894"></a>Example:</div>
+                                 <p>The expression:</p>
+                                 <div class="exampleInner">
+                                    <pre>let ${ $a, $b as xs:integer, $local:c } := { "a": 2, "b": 4, "c": 6, "d": 8 }
+return $a + $b + $local:c</pre>
+                                 </div>
+                                 <p>is expanded to:</p>
+                                 <div class="exampleInner">
+                                    <pre>let $temp := { "a": 2, "b": 4, "c": 6 }
+let $a := map:get($temp, "a", ())
+let $b as xs:integer := map:get($temp, "b", ())
+let $local:c := map:get($temp, "c", ())
+return $a + $b + $local:c</pre>
+                                 </div>
+                                 <p>where <code>$temp</code> is some variable name that is otherwise unused.</p>
+                              </div>
+                           </li>
+                        </ol>
+                     </li>
+                     <li>
+                        <p>The expression in the <a href="#prod-xpath40-ForLetReturn">ForLetReturn</a> part 
                   (that is, the following <a href="#doc-xpath40-LetExpr">LetExpr</a> or
                   <a href="#doc-xpath40-ForExpr">ForExpr</a>, or the <a href="#doc-xpath40-ExprSingle">ExprSingle</a> 
                   that follows the <code>return</code> keyword) is
 called the <b>return expression</b>. The result of the let expression is obtained
-by evaluating the <b>return expression</b> with a dynamic context in which the range variable is bound to the
-binding sequence. </p>
+by evaluating the <b>return expression</b> with a dynamic context in which each range variable is bound to the
+corresponding binding sequence. </p>
                      </li>
-                  </ul>
+                  </ol>
                   <p>The scope of a variable bound in a let expression is the
             <b>return expression</b>.
 The scope does not include the expression to which the variable is bound.
@@ -17987,7 +18504,7 @@ item, and can appear as an item in a sequence.</p>
                   in the input.</p>
                      <div class="example">
                         
-                        <div class="exampleHeader"><a id="d3e27310"></a>Example: Constructing a fixed map</div>
+                        <div class="exampleHeader"><a id="d3e28255"></a>Example: Constructing a fixed map</div>
                         <p>The following expression constructs a map with seven entries:</p>
                         <div class="exampleInner"><a id="map-weekdays"></a><pre>
 {
@@ -18004,7 +18521,7 @@ item, and can appear as an item in a sequence.</p>
                      <p>&nbsp;</p>
                      <div class="example">
                         
-                        <div class="exampleHeader"><a id="d3e27315"></a>Example: Constructing nested maps</div>
+                        <div class="exampleHeader"><a id="d3e28260"></a>Example: Constructing nested maps</div>
                         <p>Maps can nest, and can contain any XDM value. Here is an example of a nested map with values that can be string values, numeric values, or arrays:</p>
                         <div class="exampleInner"><a id="map-book"></a><pre>
 
@@ -18925,6 +19442,13 @@ item, and can appear as an item in a sequence.</p>
                               </li>
                               <li>
                                  <p>If the <a href="#prod-xpath40-KeySpecifier">KeySpecifier</a>
+                                 <var>KS</var> is a <a href="#doc-xpath40-VarRef">VarRef</a>
+                                 <code>$<var>X</var>
+                                 </code>, 
+                        the result is the same as <code>$V?pairs::($<var>X</var>)</code>.</p>
+                              </li>
+                              <li>
+                                 <p>If the <a href="#prod-xpath40-KeySpecifier">KeySpecifier</a>
                                  <var>KS</var> is an <a href="#prod-xpath40-IntegerLiteral">IntegerLiteral</a> with value <code>$i</code>, 
                         the result is the same as <code>$V?pairs::($i)</code>.</p>
                               </li>
@@ -18974,6 +19498,13 @@ item, and can appear as an item in a sequence.</p>
                                     <p>The focus for evaluating the key specifier expression is the 
                                  same as the focus for the <code>Lookup</code> expression itself.</p>
                                  </div>
+                              </li>
+                              <li>
+                                 <p>If the <a href="#prod-xpath40-KeySpecifier">KeySpecifier</a>
+                                 <var>KS</var> is a <a href="#doc-xpath40-VarRef">VarRef</a>
+                                 <code>$<var>X</var>
+                                 </code>, 
+                        the result is the same as <code>$V?pairs::($<var>X</var>)</code>.</p>
                               </li>
                               <li>
                                  <p>If the <a href="#prod-xpath40-KeySpecifier">KeySpecifier</a>
@@ -19374,7 +19905,7 @@ declare function recursive-content($item as item()) as record(key, value)* {
                         <pre>declare function array-or-map($item as item()) {
   typeswitch ($item) {
     case array(*) | map(*) return $item
-    default return error(xs:QName("err:XPTY0004"))
+    default return error( #err:XPTY0004 )
   }
 }</pre>
                      </div>
@@ -19577,7 +20108,7 @@ declare function recursive-content($item as item()) as record(key, value)* {
                      <p>&nbsp;</p>
                      <div class="example">
                         
-                        <div class="exampleHeader"><a id="d3e29562"></a>Example: Comparison with JSONPath</div>
+                        <div class="exampleHeader"><a id="d3e30553"></a>Example: Comparison with JSONPath</div>
                         <p>This example provides XPath equivalents to some examples given in the
                   JSONPath specification. [TODO: add a reference].</p>
                         <p>The examples query the result of parsing the following JSON value, representing
@@ -20656,8 +21187,10 @@ The target type must be a <a title="generalized atomic type" class="termref" hre
                   <p>Otherwise, a static error is raised [<a href="#ERRXPST0080" title="err:XPST0080">err:XPST0080</a>].</p>
                   <p>The optional occurrence indicator <code>?</code> denotes that an empty
 sequence is permitted.</p>
-                  <p>Casting a node to <code>xs:QName</code> can cause surprises because it uses the static context of the cast expression to provide the namespace bindings for this operation. 
-Instead of casting to <code>xs:QName</code>, it is generally preferable to use the <a href="https://qt4cg.org/specifications/xpath-functions-40/Overview.html#func-QName"><code>fn:QName</code></a> function, which allows the namespace context to be taken from the document containing the QName.</p>
+                  <p>Casting a node to <code>xs:QName</code> can cause surprises because it uses the <a title="static context" class="termref" href="#dt-static-context">static context</a>
+               of the cast expression to provide the <a title="namespace binding" class="termref" href="#dt-namespace-binding">namespace bindings</a> for this operation. 
+               Instead of casting to <code>xs:QName</code>, it is generally preferable to use the <a href="https://qt4cg.org/specifications/xpath-functions-40/Overview.html#func-QName"><code>fn:QName</code></a> 
+               function, which allows the namespace context to be taken from the document containing the QName.</p>
                   <p>The semantics of the <code>cast</code> expression
 are as follows:</p>
                   <ol class="enumar">
@@ -21070,7 +21603,7 @@ raised [<a href="#ERRXPDY0050" title="err:XPDY0050">err:XPDY0050</a>].</p>
                      </li>
                   </ol>
                </div>
-               <a id="d3e31980"></a><table class="scrap">
+               <a id="d3e32976"></a><table class="scrap">
                   <tbody>
                      <tr style="vertical-align:baseline;">
                         <td><a id="doc-xpath40-PipelineExpr"></a><code><a href="#prod-xpath40-PipelineExpr">PipelineExpr</a></code></td>
@@ -21689,8 +22222,14 @@ return string-join($chopped, '; ')</pre>
                   </li>
                   <li>
                      <p>
-          The static typing feature has been dropped.
-        <i>&nbsp;&nbsp;[Issue <a href="https://github.com/qt4cg/qtspecs/issues/1343">1343</a>&nbsp;]</i></p>
+          The static typing feature has been dropped. 
+        <i>&nbsp;&nbsp;[Issue <a href="https://github.com/qt4cg/qtspecs/issues/1343">1343</a>&nbsp;PR <a href="https://github.com/qt4cg/qtspecs/pull/1344">1344</a>&nbsp;3 September 2024]</i></p>
+                  </li>
+                  <li>
+                     <p>
+          The module feature is no longer an optional feature; processing of library modules
+          is now required.
+        <i>&nbsp;&nbsp;[Issue <a href="https://github.com/qt4cg/qtspecs/issues/2022">2022</a>&nbsp;PR <a href="https://github.com/qt4cg/qtspecs/pull/2026">2026</a>&nbsp;28 May 2025]</i></p>
                   </li>
                </ol>
             </div>
@@ -22233,10 +22772,16 @@ return string-join($chopped, '; ')</pre>
                               </code></td>
                      </tr>
                      <tr style="vertical-align:baseline;">
+                        <td><a id="prod-xpath40-LetArrayBinding"></a><code>LetArrayBinding</code></td>
+                        <td>::=</td>
+                        <td><code>"$"  "["  (<a href="#prod-xpath40-VarNameAndType">VarNameAndType</a> ++ ",")  "]"  <a href="#prod-xpath40-TypeDeclaration">TypeDeclaration</a>?  ":="  <a href="#prod-xpath40-ExprSingle">ExprSingle</a>
+                              </code></td>
+                     </tr>
+                     <tr style="vertical-align:baseline;">
                         <td><a id="prod-xpath40-LetBinding"></a><code>LetBinding</code></td>
                         <td>::=</td>
                         <td><code>
-                              <a href="#prod-xpath40-VarNameAndType">VarNameAndType</a>  ":="  <a href="#prod-xpath40-ExprSingle">ExprSingle</a>
+                              <a href="#prod-xpath40-LetValueBinding">LetValueBinding</a>  |  <a href="#prod-xpath40-LetSequenceBinding">LetSequenceBinding</a>  |  <a href="#prod-xpath40-LetArrayBinding">LetArrayBinding</a>  |  <a href="#prod-xpath40-LetMapBinding">LetMapBinding</a>
                               </code></td>
                      </tr>
                      <tr style="vertical-align:baseline;">
@@ -22253,10 +22798,29 @@ return string-join($chopped, '; ')</pre>
                               </code></td>
                      </tr>
                      <tr style="vertical-align:baseline;">
+                        <td><a id="prod-xpath40-LetMapBinding"></a><code>LetMapBinding</code></td>
+                        <td>::=</td>
+                        <td><code>"$"  "{"  (<a href="#prod-xpath40-VarNameAndType">VarNameAndType</a> ++ ",")  "}"  <a href="#prod-xpath40-TypeDeclaration">TypeDeclaration</a>?  ":="  <a href="#prod-xpath40-ExprSingle">ExprSingle</a>
+                              </code></td>
+                     </tr>
+                     <tr style="vertical-align:baseline;">
+                        <td><a id="prod-xpath40-LetSequenceBinding"></a><code>LetSequenceBinding</code></td>
+                        <td>::=</td>
+                        <td><code>"$"  "("  (<a href="#prod-xpath40-VarNameAndType">VarNameAndType</a> ++ ",")  ")"  <a href="#prod-xpath40-TypeDeclaration">TypeDeclaration</a>?  ":="  <a href="#prod-xpath40-ExprSingle">ExprSingle</a>
+                              </code></td>
+                     </tr>
+                     <tr style="vertical-align:baseline;">
+                        <td><a id="prod-xpath40-LetValueBinding"></a><code>LetValueBinding</code></td>
+                        <td>::=</td>
+                        <td><code>
+                              <a href="#prod-xpath40-VarNameAndType">VarNameAndType</a>  ":="  <a href="#prod-xpath40-ExprSingle">ExprSingle</a>
+                              </code></td>
+                     </tr>
+                     <tr style="vertical-align:baseline;">
                         <td><a id="prod-xpath40-Literal"></a><code><a href="#doc-xpath40-Literal">Literal</a></code></td>
                         <td>::=</td>
                         <td><code>
-                              <a href="#prod-xpath40-NumericLiteral">NumericLiteral</a>  |  <a href="#doc-xpath40-StringLiteral">StringLiteral</a>
+                              <a href="#prod-xpath40-NumericLiteral">NumericLiteral</a>  |  <a href="#doc-xpath40-StringLiteral">StringLiteral</a>  |  <a href="#prod-xpath40-QNameLiteral">QNameLiteral</a>
                               </code></td>
                      </tr>
                      <tr style="vertical-align:baseline;">
@@ -22484,6 +23048,19 @@ return string-join($chopped, '; ')</pre>
                               <br>|  <a href="#prod-xpath40-StringTemplate">StringTemplate</a>
                               <br>|  <a href="#prod-xpath40-UnaryLookup">UnaryLookup</a>
                               </code></td>
+                     </tr>
+                     <tr style="vertical-align:baseline;">
+                        <td><a id="prod-xpath40-QNameLiteral"></a><code><a href="#doc-xpath40-QNameLiteral">QNameLiteral</a></code></td>
+                        <td>::=</td>
+                        <td><code>"#"  <a href="#prod-xpath40-EQName">EQName</a>
+                              </code></td>
+                     </tr>
+                     <tr>
+                        <td></td>
+                        <td></td>
+                        <td style="text-align: right;" class="prodComment">/* 
+                           <a href="#ws-explicit">ws: explicit</a>
+                           */</td>
                      </tr>
                      <tr style="vertical-align:baseline;">
                         <td><a id="prod-xpath40-QuantifiedExpr"></a><code><a href="#doc-xpath40-QuantifiedExpr">QuantifiedExpr</a></code></td>
@@ -23220,6 +23797,7 @@ return string-join($chopped, '; ')</pre>
                      <a href="#prod-xpath40-IntegerLiteral">IntegerLiteral</a>
                      <code>NCName</code>
                      <a href="#prod-xpath40-QName">QName</a>
+                     <a href="#prod-xpath40-QNameLiteral">QNameLiteral</a>
                      <a href="#prod-xpath40-StringLiteral">StringLiteral</a>
                      <a href="#prod-xpath40-StringTemplate">StringTemplate</a>
                      <a href="#prod-xpath40-URIQualifiedName">URIQualifiedName</a>
@@ -23233,7 +23811,8 @@ return string-join($chopped, '; ')</pre>
         <a title="ordinary production rule" class="termref" href="#dt-ordinary-production-rule">ordinary production rule</a>.]
                   </p>
                      <p>
-          The <a title="complex terminal" class="termref" href="#dt-complex-terminal">complex terminals</a>  in XPath 4.0 are: <a href="#prod-xpath40-StringTemplate">StringTemplate</a>
+          The <a title="complex terminal" class="termref" href="#dt-complex-terminal">complex terminals</a>  in XPath 4.0 are: <a href="#prod-xpath40-QNameLiteral">QNameLiteral</a>
+                     <a href="#prod-xpath40-StringTemplate">StringTemplate</a>
                   </p>
                      <div class="note">
                         <p class="prefix"><b>Note:</b></p>
@@ -23334,7 +23913,7 @@ return string-join($chopped, '; ')</pre>
                <div class="div3">
                   
                   <h4><a id="terminal-symbols"></a>A.3.1 <a href="#terminal-symbols" style="text-decoration: none">Terminal Symbols</a></h4>
-                  <a id="d3e36313"></a><table class="scrap">
+                  <a id="d3e37404"></a><table class="scrap">
                      <tbody>
                         <tr style="vertical-align:baseline;">
                            <td><a id="prod-xpath40-IntegerLiteral"></a><code>IntegerLiteral</code></td>
@@ -23585,7 +24164,7 @@ return string-join($chopped, '; ')</pre>
                   </table>
                   <p>The following symbols are used only in the definition of terminal symbols; they are not
         terminal symbols in the grammar of <a href="#id-grammar"><b>A.1 EBNF</b></a>.</p>
-                  <a id="d3e36547"></a><table class="scrap">
+                  <a id="d3e37638"></a><table class="scrap">
                      <tbody>
                         <tr style="vertical-align:baseline;">
                            <td><a id="prod-xpath40-Digits"></a><code>Digits</code></td>
@@ -24788,7 +25367,7 @@ defined.</p>
                <dd>
                   
                   <p> It is a <a title="static error" class="termref" href="#dt-static-error">static error</a> if an expression refers
-            to an element name, attribute name, schema type name, namespace prefix, or variable name
+            to an element name, attribute name, schema type name, or variable name
             that is not defined in the <a title="static context" class="termref" href="#dt-static-context">static context</a>,
             except for an ElementName in an <a href="#doc-xpath40-ElementTest">ElementTest</a> or an
             AttributeName in an <a href="#doc-xpath40-AttributeTest">AttributeTest</a>.</p>
@@ -24800,6 +25379,7 @@ defined.</p>
                   <p> An implementation that does not support the namespace axis must raise a <a title="static error" class="termref" href="#dt-static-error">static error</a> if it encounters a reference to the
             namespace axis and XPath 1.0 compatibility mode is <code>false</code>. </p>
                   </dd>
+               
                
                
                
@@ -25125,6 +25705,15 @@ defined.</p>
                      <b>Atomization</b> of a sequence
 is defined as the result of invoking the <a href="https://qt4cg.org/specifications/xpath-functions-40/Overview.html#func-data"><code>fn:data</code></a> function, as defined in <a href="https://qt4cg.org/specifications/xpath-functions-40/#func-data">Section 2.1.4 fn:data</a><sup><small>FO</small></sup>.</p>
                </dd>
+               <dt><a href="#dt-available-binary-resources">available binary resources</a></dt>
+               <dd>
+                  <p>
+                           <b>Available binary resources</b>. 
+  This is a mapping of strings to binary resources. Each string
+  represents the absolute URI of a resource. The resource is returned
+  by the <code>fn:unparsed-binary</code> function when applied to that
+  URI.</p>
+               </dd>
                <dt><a href="#dt-available-docs">available documents</a></dt>
                <dd>
                   <p>
@@ -25309,11 +25898,32 @@ is the <a title="value" class="termref" href="#dt-value">value</a> currently bei
     This is the sequence of items  that would result from calling the <a href="https://qt4cg.org/specifications/xpath-functions-40/Overview.html#func-collection"><code>fn:collection</code></a> function
     with no arguments.</p>
                </dd>
+               <dt><a href="#dt-default-element-namespace-rule">default element namespace rule</a></dt>
+               <dd>
+                  <p>When 
+                  an unprefixed lexical QName
+               is expanded using the <b>default element namespace rule</b>, then it uses the 
+                  <a title="default namespace for elements and types" class="termref" href="#dt-default-namespace-elements-and-types">default namespace for elements and types</a>. If this is absent, or if it takes
+                  the special value <code>##any</code>, then the <a title="no-namespace rule" class="termref" href="#dt-no-namespace-rule">no-namespace rule</a>
+                  is used.</p>
+               </dd>
                <dt><a href="#dt-default-function-namespace">default function namespace</a></dt>
                <dd>
                   <p>
                            <b>Default function namespace.</b> This is either a namespace URI, or <a href="https://qt4cg.org/specifications/xpath-datamodel-40/#dt-absent">absent</a><sup><small>DM</small></sup>. The namespace URI, if present, is used for any unprefixed QName appearing
                      in a position where a function name is expected.</p>
+               </dd>
+               <dt><a href="#dt-default-function-namespace-rule">default function namespace rule</a></dt>
+               <dd>
+                  <p>When 
+                  an unprefixed lexical QName
+               is expanded using the <b>default function namespace rule</b>, it uses the <a title="default function namespace" class="termref" href="#dt-default-function-namespace">default function namespace</a>
+                  from the <a title="static context" class="termref" href="#dt-static-context">static context</a>.</p>
+               </dd>
+               <dt><a href="#dt-default-in-scope-namespace">default in-scope namespace</a></dt>
+               <dd>
+                  <p>The <b>default in-scope namespace</b>
+         of an element node</p>
                </dd>
                <dt><a href="#dt-default-language">default language</a></dt>
                <dd>
@@ -25345,6 +25955,15 @@ is the <a title="value" class="termref" href="#dt-value">value</a> currently bei
     information can be derived. The only requirement is that it should uniquely identify a civil timezone,
     which means that country codes for countries with multiple timezones, such as the United States,
     are inadequate.</p>
+               </dd>
+               <dt><a href="#dt-default-type-namespace-rule">default type namespace rule</a></dt>
+               <dd>
+                  <p>When 
+                  an unprefixed lexical QName
+               is expanded using the <b>default type namespace rule</b>, it uses the 
+                  <a title="default namespace for elements and types" class="termref" href="#dt-default-namespace-elements-and-types">default namespace for elements and types</a>. If this is absent, the <a title="no-namespace rule" class="termref" href="#dt-no-namespace-rule">no-namespace rule</a>
+                  is used. If the <a title="default namespace for elements and types" class="termref" href="#dt-default-namespace-elements-and-types">default namespace for elements and types</a> has the special value <code>##any</code>,
+                  then the lexical QName refers to a name in the namespace <code>http://www.w3.org/2001/XMLSchema</code>.</p>
                </dd>
                <dt><a href="#dt-default-uri-collection">default URI collection</a></dt>
                <dd>
@@ -25508,6 +26127,17 @@ during the static analysis phase.</p>
 <b>effective boolean value</b> of a value is defined as the result
 of applying the <a href="https://qt4cg.org/specifications/xpath-functions-40/Overview.html#func-boolean"><code>fn:boolean</code></a> function to the value, as
 defined in <a href="https://qt4cg.org/specifications/xpath-functions-40/#func-boolean">Section 8.3.1 fn:boolean</a><sup><small>FO</small></sup>.</p>
+               </dd>
+               <dt><a href="#dt-element-name-matching-rule">element name matching rule</a></dt>
+               <dd>
+                  <p>When 
+                  an unprefixed lexical QName
+               is expanded using the <b>element name matching rule</b> rule, then it uses the 
+                  <a title="default namespace for elements and types" class="termref" href="#dt-default-namespace-elements-and-types">default namespace for elements and types</a>. If this is absent, then 
+                  it uses the <a title="no-namespace rule" class="termref" href="#dt-no-namespace-rule">no-namespace rule</a>. But if it takes the special value <code>##any</code>,
+                  then the name is taken as matching any <a title="expanded QName" class="termref" href="#dt-expanded-qname">expanded QName</a> with the corresponding local part,
+                  regardless of namespace: that is, the  unprefixed name <code>local</code> is interpreted
+                  as <code>*:local</code>.</p>
                </dd>
                <dt><a href="#dt-empty-sequence">empty sequence</a></dt>
                <dd>
@@ -25756,12 +26386,13 @@ local element declaration).
                <dd>
                   <p>
                            <b>In-scope named item types.</b> This is a mapping from 
-                        <a title="expanded QName" class="termref" href="#dt-expanded-qname">expanded QName</a> to 
+                        <a title="expanded QName" class="termref" href="#dt-expanded-qname">expanded QNames</a> to 
                         <a title="named item type" class="termref" href="#dt-named-item-type">named item types</a>.</p>
                </dd>
                <dt><a href="#dt-in-scope-namespaces">in-scope namespaces</a></dt>
                <dd>
-                  <p>The <b>in-scope namespaces</b> property of an element node is a set of namespace bindings, each of which associates a namespace prefix with a URI.</p>
+                  <p>The <b>in-scope namespaces</b> property of an element node is a set of 
+         <a title="namespace binding" class="termref" href="#dt-namespace-binding">namespace bindings</a>, each of which associates a namespace prefix with a URI.</p>
                </dd>
                <dt><a href="#dt-issd">in-scope schema definitions</a></dt>
                <dd>
@@ -25789,11 +26420,11 @@ local element declaration).
                <dd>
                   <p>
                            <b>In-scope variables.</b> 
-This is a mapping from <a title="expanded QName" class="termref" href="#dt-expanded-qname">expanded QName</a> to type. It defines the
-set of variables that are available for reference within an
-expression. The <a title="expanded QName" class="termref" href="#dt-expanded-qname">expanded QName</a> is the name of the variable, and the type is the
-<a title="static type" class="termref" href="#dt-static-type">static type</a> of the
-variable.</p>
+                           This is a mapping from <a title="expanded QName" class="termref" href="#dt-expanded-qname">expanded QNames</a> to sequence types. It defines the
+                           set of variables that are available for reference within an
+                           expression. The <a title="expanded QName" class="termref" href="#dt-expanded-qname">expanded QName</a> is the name of the variable, and the type is the
+                           <a title="static type" class="termref" href="#dt-static-type">static type</a> of the
+                           variable.</p>
                </dd>
                <dt><a href="#dt-item">item</a></dt>
                <dd>
@@ -25898,6 +26529,12 @@ or a <a title="function item" class="termref" href="#dt-function-item">function 
                   <p>A <b>named item type</b>
                       is an <code>ItemType</code> identified by an <a title="expanded QName" class="termref" href="#dt-expanded-qname">expanded QName</a>.</p>
                </dd>
+               <dt><a href="#dt-namespace-binding">namespace binding</a></dt>
+               <dd>
+                  <p>A <b>namespace binding</b>
+         is a pair comprising a namespace prefix (which is either an <code>xs:NCName</code> or empty),
+         and a namespace URI.</p>
+               </dd>
                <dt><a href="#dt-namespace-sensitive">namespace-sensitive</a></dt>
                <dd>
                   <p>The <b>namespace-sensitive</b>
@@ -25931,6 +26568,11 @@ or a <a title="function item" class="termref" href="#dt-function-item">function 
                   <p>A <b>node test</b> is a condition on the name, kind (element, attribute, text, document, comment,
 		  or processing instruction), and/or  <a title="type annotation" class="termref" href="#dt-type-annotation">type annotation</a> of a node. 
       A node test determines which nodes contained by an axis are selected by a <a title="step" class="termref" href="#dt-step">step</a>.</p>
+               </dd>
+               <dt><a href="#dt-no-namespace-rule">no-namespace rule</a></dt>
+               <dd>
+                  <p>When an unprefixed lexical QName
+               is expanded using the <b>no-namespace rule</b>, it is interpreted as having an absent namespace URI.</p>
                </dd>
                <dt><a href="#non-delimiting-token">non-delimiting terminal symbol</a></dt>
                <dd>
@@ -26198,6 +26840,15 @@ as described in <a href="#xslt-xquery-serialization-40">[XSLT and XQuery Seriali
                   <p>A sequence containing exactly one item is called a
 	 <b>singleton</b>.</p>
                </dd>
+               <dt><a href="#dt-singleton-enumeration-type">singleton enumeration type</a></dt>
+               <dd>
+                  <p>An 
+                     enumeration type with a single enumerated value (such as
+                     <code>enum("red")</code>) is an anonymous <a title="atomic type" class="termref" href="#dt-atomic-type">atomic type</a>
+                     derived from <code>xs:string</code> by restriction using an enumeration facet
+                     that permits only the value <code>"red"</code>. This is referred to
+                     as a <b>singleton enumeration type</b>.</p>
+               </dd>
                <dt><a href="#dt-singleton-focus">singleton focus</a></dt>
                <dd>
                   <p>A <b>singleton focus</b> is a <a title="fixed focus" class="termref" href="#dt-fixed-focus">fixed focus</a> in which the
@@ -26414,7 +27065,7 @@ the context in which the value occurs.</p>
                <dd>
                   <p>
                            <b>Variable values</b>. 
-        This is a mapping from <a title="expanded QName" class="termref" href="#dt-expanded-qname">expanded QName</a> to value. 
+        This is a mapping from <a title="expanded QName" class="termref" href="#dt-expanded-qname">expanded QNames</a> to values. 
         It contains the
 				same <a title="expanded QName" class="termref" href="#dt-expanded-qname">expanded QNames</a> as the <a title="in-scope variables" class="termref" href="#dt-in-scope-variables">in-scope variables</a> in the
 				<a title="static context" class="termref" href="#dt-static-context">static context</a> for the expression. The <a title="expanded QName" class="termref" href="#dt-expanded-qname">expanded QName</a> is the name of the variable and the value is the dynamic value of the variable, which includes its <a title="dynamic type" class="termref" href="#dt-dynamic-type">dynamic type</a>.</p>
@@ -27781,10 +28432,9 @@ the ways in which warnings are handled, are <a title="implementation defined" cl
                   <p>See <a href="#id-function-coercion"><b>3.4.4 Function Coercion</b></a></p>
                </li>
                <li>
-                  <p>
-          The static typing feature has been dropped.
-        </p>
-                  <p>See <a href="#id-conformance"><b>5 Conformance</b></a></p>
+                  <p>A dynamic function call can now be applied to a sequence of functions, and in particular
+               to an empty sequence. This makes it easier to chain a sequence of calls.</p>
+                  <p>See <a href="#id-eval-dynamic-function-call"><b>4.5.3.1 Evaluating Dynamic Function Calls</b></a></p>
                </li>
                <li>
                   <p>
@@ -27793,6 +28443,10 @@ the ways in which warnings are handled, are <a title="implementation defined" cl
                      <code>document-node(*)</code> matches any well-formed XML document (as distinct from a document fragment).
                   </p>
                   <p>See <a href="#node-types"><b>3.2.7 Node Types</b></a></p>
+               </li>
+               <li>
+                  <p>QName literals are new in 4.0.</p>
+                  <p>See <a href="#id-qname-literals"><b>4.2.1.3 QName Literals</b></a></p>
                </li>
                <li>
                   <p>PR <a href="https://github.com/qt4cg/qtspecs/pull/28">28&nbsp;</a></p>
@@ -28123,6 +28777,10 @@ the ways in which warnings are handled, are <a title="implementation defined" cl
              The static typing option has been dropped.
            </p>
                   <p>See <a href="#id-processing-model"><b>2.3 Processing Model</b></a></p>
+                  <p>
+          The static typing feature has been dropped. 
+        </p>
+                  <p>See <a href="#id-conformance"><b>5 Conformance</b></a></p>
                </li>
                <li>
                   <p>PR <a href="https://github.com/qt4cg/qtspecs/pull/1361">1361&nbsp;</a></p>
@@ -28221,6 +28879,30 @@ the ways in which warnings are handled, are <a title="implementation defined" cl
                   <p>PR <a href="https://github.com/qt4cg/qtspecs/pull/1898">1898&nbsp;</a></p>
                   <p>The rules for subtyping of document node types have been refined.</p>
                   <p>See <a href="#id-item-subtype-documents"><b>3.3.2.4.2 Subtyping Nodes: Document Nodes</b></a></p>
+               </li>
+               <li>
+                  <p>PR <a href="https://github.com/qt4cg/qtspecs/pull/1991">1991&nbsp;</a></p>
+                  <p>
+                  Named record types used in the signatures of built-in functions are now available as standard
+                  in the static context.
+               </p>
+                  <p>See <a href="#static_context"><b>2.2.1 Static Context</b></a></p>
+               </li>
+               <li>
+                  <p>PR <a href="https://github.com/qt4cg/qtspecs/pull/2026">2026&nbsp;</a></p>
+                  <p>
+          The module feature is no longer an optional feature; processing of library modules
+          is now required.
+        </p>
+                  <p>See <a href="#id-conformance"><b>5 Conformance</b></a></p>
+               </li>
+               <li>
+                  <p>PR <a href="https://github.com/qt4cg/qtspecs/pull/2055">2055&nbsp;</a></p>
+                  <p>
+               Sequences, arrays, and maps can be destructured in a <code>let</code> 
+               expression to extract their components into multiple variables. 
+            </p>
+                  <p>See <a href="#id-let-expressions"><b>4.12.2 Let Expressions</b></a></p>
                </li>
             </ol>
          </div>
