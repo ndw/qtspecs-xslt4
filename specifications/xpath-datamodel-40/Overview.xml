@@ -2494,7 +2494,7 @@ return
                        value := $value)
   else ()</pre></div><p>The order of JNodes returned by the <code>j-children</code> accessor is significant, and is
       as defined by the above expression.</p><div class="example">
-<div class="exampleHeader"><a id="d5e8083"/>Example: A JTree derived by parsing JSON</div><p>In a JTree derived from JSON, every member of an array will always be either a single item
+<div class="exampleHeader"><a id="d4e8083"/>Example: A JTree derived by parsing JSON</div><p>In a JTree derived from JSON, every member of an array will always be either a single item
           (a string, number, boolean, array, or map),
         or an empty sequence representing the JSON value <code>null</code>. Similarly, every entry
         in a map will have a key that is a single <code>xs:string</code>, and a corresponding
@@ -2517,7 +2517,7 @@ return
         <b>·position·</b> property set to 1. This is because every construct in JSON 
         (arrays, objects, strings, number, booleans, and <code>null</code>) maps to an XDM sequence
         of length 0 or 1.</p></div><p> </p><div class="example">
-<div class="exampleHeader"><a id="d5e8287"/>Example: A JTree representing arbitrary XDM content</div><p>Consider a JTree that wraps a map constructed by the following XQuery expression:</p><div class="exampleInner"><pre>{
+<div class="exampleHeader"><a id="d4e8287"/>Example: A JTree representing arbitrary XDM content</div><p>Consider a JTree that wraps a map constructed by the following XQuery expression:</p><div class="exampleInner"><pre>{
    "a": 1,
    "b": ("x", "y"),
    "c": [(10, 20), 30],
