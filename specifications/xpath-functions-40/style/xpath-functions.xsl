@@ -318,6 +318,20 @@
                   <code class="assign">:= </code>
                   <code><xsl:sequence select="@default/string()"/></code>
                   <xsl:if test="not($last)">,</xsl:if>
+                  <xsl:if test="not(@note) and @default/string() != '()'">
+                    <code class="arg-note">
+                      <xsl:text>   (: </xsl:text>
+                      <a href="#default-omitted-arg">Default</a>
+                      <xsl:text> :)</xsl:text>
+                    </code>
+                  </xsl:if>
+                </xsl:if>
+                <xsl:if test="@note">
+                  <code class="arg-note">
+                    <xsl:text>   (: </xsl:text>
+                    <a href="#{@note}">Note</a>
+                    <xsl:text> :)</xsl:text>
+                  </code>
                 </xsl:if>
               </td>
             </tr>

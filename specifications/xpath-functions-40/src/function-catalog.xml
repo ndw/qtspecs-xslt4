@@ -5598,7 +5598,7 @@ return normalize-unicode(concat($v1, $v2))</eg>
             separator between adjacent items.</p>
       </fos:summary>
       <fos:rules>
-         <p>If the second argument is omitted or the empty sequence, the effect is the same as
+         <p id="on-empty-separator">If the second argument is omitted or an empty sequence, the effect is the same as
             calling the two-argument version with <code>$separator</code> set to a zero-length
             string.</p>
          <p>The coercion rules ensure that the supplied <code>$values</code> argument is first converted to
@@ -11387,7 +11387,8 @@ return ($value - unix-dateTime()) div seconds(0.001)</eg>
       <fos:signatures>
          <fos:proto name="adjust-dateTime-to-timezone" return-type="xs:dateTime?">
             <fos:arg name="value" type="xs:dateTime?"/>
-            <fos:arg name="timezone" type="xs:dayTimeDuration?" default="fn:implicit-timezone()"/>
+            <fos:arg name="timezone" type="xs:dayTimeDuration?" default="fn:implicit-timezone()"
+                     note="on-empty-timezone"/>
          </fos:proto>
       </fos:signatures>
       <fos:properties arity="1">
@@ -11415,7 +11416,7 @@ return ($value - unix-dateTime()) div seconds(0.001)</eg>
          <p> If <code>$value</code> does not have a timezone component and <code>$timezone</code> is
             not the empty sequence, then the result is <code>$value</code> with <code>$timezone</code>
             as the timezone component.</p>
-         <p> If <code>$value</code> has a timezone component and <code>$timezone</code> is the empty
+         <p id="on-empty-timezone"> If <code>$value</code> has a timezone component and <code>$timezone</code> is the empty
             sequence, then the result is the local value of <code>$value</code> without its timezone
             component.</p>
          <p> If <code>$value</code> has a timezone component and <code>$timezone</code> is not the

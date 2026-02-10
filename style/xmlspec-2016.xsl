@@ -1427,6 +1427,9 @@
   <!-- p: a standard paragraph; we do a little work to try to
        unwrap nested blocks that can't nest in HTML. -->
   <xsl:template match="p">
+    <xsl:if test="@id">
+      <xsl:message>YES THIS ONE: <xsl:value-of select="@id"/></xsl:message>
+    </xsl:if>
     <xsl:variable name="atts" as="attribute()*">
       <xsl:if test="@id">
         <xsl:attribute name="id">
