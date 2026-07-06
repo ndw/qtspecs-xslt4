@@ -13,7 +13,7 @@
          
          <h1><a id="title"></a>XPath and XQuery Functions and Operators 4.0 </h1>
          
-         <h2><a id="w3c-doctype"></a>W3C Editor's Draft 26&nbsp;June&nbsp;2026</h2>
+         <h2><a id="w3c-doctype"></a>W3C Editor's Draft 6&nbsp;July&nbsp;2026</h2>
          <dl>
             <dt>This version:</dt>
             <dd>
@@ -3986,7 +3986,7 @@ Michael Sperberg-McQueen&nbsp;(1954–2024).</p>
                      <p class="prefix"><b>Note:</b></p>
                      <p id="default-on-empty">
                   If no argument is supplied for a parameter that has a default value, the default
-                  value is used. If the parameter is marked <code>(:default-on-empty:)</code>,
+                  value is used. If the parameter is marked <code class="arg-note">(:default-on-empty:)</code>,
                   the default value is also used when the supplied argument is the empty sequence.
                   Otherwise, the empty sequence is treated according to the function-specific rules.</p>
                      <p>The marker is only used on parameters that have default values.</p>
@@ -73442,26 +73442,29 @@ return $variables( #Q{http://example.com/dyn}value )</pre>
                               <td>1.0, 2.0, 3.0, 4.0</td>
                               <td class="fos-thin" colspan="2">Serialization parameters for the principal result document. The supplied map
                                  follows the same rules that apply to a map supplied as the second argument of
-                                 <a href="#func-serialize"><code>fn:serialize</code></a>. 
+                                 <a href="#func-serialize"><code>fn:serialize</code></a>. These parameters interact with serialization
+                                 parameters defined in the invoked stylesheet, as follows:
+                                 
                                  <ul>
                                     <li>
-                                       <p>When a parameter is supplied, the corresponding value overrides or augments
-                        the value specified in the unnamed <code>xsl:output</code> declaration (or
+                                       <p>When a serialization parameter is present in the map, the corresponding value overrides or augments
+                        the value specified in the unnamed <code>xsl:output</code> declaration of the invoked stylesheet (or
                         its default), following the same rules as when one <code>xsl:output</code>
                         declaration overrides another with lower import precedence.</p>
                                     </li>
                                     <li>
-                                       <p>When a parameter is supplied and the corresponding value is the empty
+                                       <p>When a serialization parameter is supplied and the corresponding value is the empty
                         sequence (for example, <code>{ "standalone": () }</code>), any value
-                        specified in the unnamed <code>xsl:output</code> declaration is overridden
+                        specified in the unnamed <code>xsl:output</code> declaration of the invoked stylesheet is overridden
                         by the default value. </p>
                                     </li>
                                     <li>
-                                       <p>When a parameter is not supplied in <code>serialization-params</code> (that
+                                       <p>When a serialization parameter is not supplied in the map (that
                         is, when the key is absent) the value that applies is the value appearing in
                         the unnamed <code>xsl:output</code> declaration, or its default. </p>
                                     </li>
                                  </ul>
+                                 
                                  <ul>
                                     <li>
                                        <p><b>Type: </b><code>map(xs:anyAtomicType, item()*)</code></p>
@@ -77095,7 +77098,7 @@ There is no constructor function for <code>xs:NOTATION</code>. Constructors are 
    a namespace-sensitive item type, and union types that have a namespace-sensitive member type. See <a href="#constructor-qname-notation"><b>22.2 Constructor functions for xs:QName and xs:NOTATION</b></a>.</p>
                <div class="example">
                   
-                  <div class="exampleHeader"><a id="d6e85686"></a>Example: Using a Constructor Function for a User-Defined Atomic Type</div>
+                  <div class="exampleHeader"><a id="d6e85684"></a>Example: Using a Constructor Function for a User-Defined Atomic Type</div>
                   <p>Consider a situation where the static context contains an atomic type
                     called <code>hatSize</code> defined in a schema whose target namespace is bound
                     to the prefix <code>eg</code>. In such a case the following constructor function is available to users:</p>
