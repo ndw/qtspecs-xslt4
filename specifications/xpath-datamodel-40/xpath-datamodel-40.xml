@@ -2105,7 +2105,7 @@ to the node returned by <function>parent</function>.
 </p></item></ulist></def></gitem></glist><p>The following properties have no value:
 <emph role="infoset-property">specified</emph>
 <emph role="infoset-property">attribute type</emph>
-<emph role="infoset-property">references</emph>.</p></div4></div3><div3 id="NamespaceNode"><head>Namespace nodes</head><div4 id="NamespaceNodeOverview"><head>Overview</head><p>Each namespace node represents the binding of a namespace URI to a 
+<emph role="infoset-property">references</emph>.</p></div4></div3><div3 id="NamespaceNode"><head>Namespace nodes</head><changes><change issue="2897" date="2026-10-14">The namespace axis is no longer deprecated.</change></changes><div4 id="NamespaceNodeOverview"><head>Overview</head><p>Each namespace node represents the binding of a namespace URI to a 
 namespace prefix or to the default namespace. Implementations that do not 
 use namespace nodes may represent the same information using the 
 <emph role="dm-node-property">namespaces</emph> property of
@@ -2121,13 +2121,9 @@ of an element <emph>E</emph>, then the parent of <emph>N</emph>
 the namespaces of <emph>E</emph>.</p></item><item><p>A namespace node <rfc2119>must</rfc2119> not have the
 name <code nobreak="false">xmlns</code> nor the string-value
 <code nobreak="false">http://www.w3.org/2000/xmlns/</code>.</p></item></olist><p>The data model permits namespace nodes without parents; see below.
-</p><p>In XPath 1.0, namespace nodes were directly accessible by applications, by
-means of the namespace axis. In XPath <phrase diff="chg" at="2013-12-06">3.1</phrase> the namespace axis is deprecated,
-and it is not available at all in XQuery <phrase diff="chg" at="2013-12-06">3.1</phrase>. 
-XPath <phrase diff="chg" at="2013-12-06">3.1</phrase> implementations are
-not required to expose the namespace axis, though they may do so if they
-wish to offer backwards compatibility.</p><p>The information held in namespace
-nodes is instead made available to applications using functions defined
+</p><p>Applications can access namespace nodes directly using the namespace axis,
+if the host language exposes it.</p><p>The information held in namespace
+nodes is also made available to applications using functions defined
 in <bibref diff="chg" at="2022-11-05" ref="xpath-functions-40"/>. Some properties of namespace nodes are
 not exposed by these functions: in particular, properties related to the
 identity of namespace nodes, their parentage, and their position in document
@@ -2607,7 +2603,8 @@ values, only on keys. The semantics of equality when comparing keys are describe
     are processed is the <termref def="dt-entry-order"/> of the map.</p><p>The function is exposed in XPath most directly through the function <function>map:for-each</function>, but
       it also underpins all other functions giving access to maps, such as <function>map:size</function>,
       <function>map:contains</function>, and <function>map:get</function>.</p></div3></div2><div2 id="records"><head>Records</head><changes><change issue="1979" PR="2566" date="2026-03-31">Records are now a subtype of maps.</change><change issue="2972" date="2026-10-12">Only labeled record types create records; maps
-      that match simple record types remain plain maps.</change></changes><!--<p>A record is a set of key-value pairs where the keys are strings
+      that match simple record types remain plain maps.</change><change issue="2933">Data integrity for record types can be ensured by defining a
+    declarative integrity constraint.</change></changes><!--<p>A record is a set of key-value pairs where the keys are strings
   that are statically known. Records are maps, but are constrained
   to have a regular structure.</p>--><p><termdef id="dt-record-type" term="record type">A <term>record type</term>
   defines a sequence of fields, each field being characterized by a name (which
@@ -2625,7 +2622,15 @@ values, only on keys. The semantics of equality when comparing keys are describe
           of the relevant record type; furthermore, records are not allowed to contain fields other than
           those defined by the record type. A <termref def="dt-record">record</termref> can be regarded
           as a map carrying a type annotation (or label) identifying the labeled record type to which it belongs.
-    </termdef></p></item></ulist><p><termdef id="dt-record" term="record">A <term>record</term> is a <termref def="dt-map-item"/> that
+    </termdef></p></item></ulist><p><termdef id="dt-integrity-constraint" term="integrity constraint">A 
+      <termref def="dt-labeled-record-type"/> may define an <term>integrity constraint</term>. This is a predicate (written as
+  an XPath or XQuery expression) which must be true for all instances of the record type.</termdef> For example, a record
+  representing a duration as <code nobreak="false">record(months as xs:integer, seconds as xs:decimal)</code> might
+  have an integrity constraint <code nobreak="false">compare(?months, 0) * compare(?seconds, 0) ge 0</code> to declare
+  that if either value is negative, then both must be negative.</p><note><p>Object-oriented languages protect the integrity of values by encapsulating the data within a collection
+    of methods: the methods contain procedural code to check updates for consistency. XDM instead adopts
+    a declarative approach: an integrity constraint is expressed as an expression which must always
+    evaluate to true.</p></note><p><termdef id="dt-record" term="record">A <term>record</term> is a <termref def="dt-map-item"/> that
   has a <termref def="dt-type-annotation"/>, called its label, identifying it as belonging to a 
       specific <termref def="dt-labeled-record-type"/>.
   </termdef></p><note><p>A map that merely matches a simple record type, without any label, 
